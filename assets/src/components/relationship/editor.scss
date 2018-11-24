@@ -1,0 +1,149 @@
+$gumponent-relationship__modal-gutter: 16px;
+
+.gumponent-relationship {
+
+	&__modal {
+
+		&__actions {
+			text-align: right;
+			padding: $gumponent-relationship__modal-gutter;
+		}
+
+		.components-modal {
+
+			&__header {
+				margin: 0;
+
+				&-heading {
+					font-size: 1.3em;
+				}
+			}
+
+			&__content {
+				padding: 0;
+			}
+		}
+
+		@media screen and (min-width: 600px) {
+			width: 50%;
+
+			// Fix react-beautiful-dnd conflict:
+			transform: none;
+			top: calc(50% - 222px);
+			left: calc(25%);
+			animation: none;
+		}
+	}
+
+	&__search-container {
+		padding: $gumponent-relationship__modal-gutter;
+	}
+
+	&__search {
+		width: 100%;
+		padding: 11px 16px !important;
+	}
+
+	&__panel {
+		display: flex;
+		font-size: 0.9em;
+		border-top: 1px solid #e2e4e7;
+		border-bottom: 1px solid #e2e4e7;
+
+		&__search-items,
+		&__selected-items {
+			width: 50%;
+			height: 250px;
+			display: flex;
+			overflow-y: auto;
+		}
+
+		&__search-items {
+			border-right: 1px solid #e2e4e7;
+			background-color: #f9f9f9;
+		}
+
+		&__selected-items {
+
+			a {
+				cursor: grab;
+			}
+		}
+	}
+
+	&__items {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		list-style-type: none;
+		margin: 0;
+
+		.components-spinner {
+			position: absolute;
+			margin: -9px 0 0 -9px;
+			top: 50%;
+			left: 50%;
+			z-index: 5;
+		}
+
+		&--loading {
+
+			&:before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-color: #fff;
+				opacity: 0.2;
+				z-index: 3;
+			}
+		}
+
+		&__item {
+			display: block;
+			margin: 0;
+
+			a {
+				display: block;
+				color: inherit;
+				padding: 10px;
+				text-decoration: none;
+
+				&:hover {
+					background-color: #0073aa;
+					color: #fff;
+				}
+			}
+
+			&--selected {
+				opacity: 0.5;
+
+				a:hover {
+					color: inherit;
+					cursor: default;
+					background-color: transparent;
+				}
+			}
+		}
+	}
+
+	&__selected-items {
+		list-style-type: none !important;
+		font-size: 0.9em;
+		position: relative;
+		padding: 10px !important;
+		background-color: #fef8ee;
+		margin: 10px 0 0 0 !important;
+
+		li {
+			margin: 0;
+		}
+
+		.components-spinner {
+			float: none;
+			margin: 0;
+		}
+	}
+}

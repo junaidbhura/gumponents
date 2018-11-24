@@ -1,0 +1,15 @@
+# Windows and Mac files
+[Tt]humbs.db
+.DS_Store
+node_modules
+
+# Root.
+/*
+!/assets
+!/inc
+!.gitignore
+!gumponents.php
+!README.md
+!package-lock.json
+!package.json
+!webpack.config.js
