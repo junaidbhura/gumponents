@@ -1,4 +1,4 @@
-![Gumponents!](assets/images/documentation/logo.png | width=500)
+<img src="assets/images/documentation/logo.png" width="500" alt="Gumponents!">
 
 # Advanced Gutenberg components for WordPress.
 
