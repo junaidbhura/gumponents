@@ -41,28 +41,28 @@ class ImageContainer extends React.Component {
 		const { open, placeholder, onRemove }  = this.props;
 
 		return (
-			<span className="select-image__container">
+			<span className="gumponents-select-image__container">
 				{ isEmpty( image ) &&
 					<Placeholder
 						label={ placeholder }
 						icon="format-image">
 						<Button
 							onClick={ open }
-							className="select-image__button"
+							className="gumponents-select-image__button"
 						/>
 					</Placeholder>
 				}
 				{ ! isEmpty( image ) &&
-					<div className="select-image__image-container">
-						<div className="select-image__inline-menu">
+					<div className="gumponents-select-image__image-container">
+						<div className="gumponents-select-image__inline-menu">
 							<IconButton
 								icon="no-alt"
 								onClick={ onRemove }
-								className="select-image__inline-menu__remove"
+								className="gumponents-select-image__inline-menu__remove"
 								label={ __( 'Remove Image' ) }
 							/>
 						</div>
-						<img onClick={ open } src={ image.src } className="select-image__img" />
+						<img onClick={ open } src={ image.src } className="gumponents-select-image__img" />
 					</div>
 				}
 			</span>

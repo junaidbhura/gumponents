@@ -3,6 +3,7 @@ import './editor.scss';
 import wp from 'wp';
 import React from 'react';
 import classnames from 'classnames';
+import isEmpty from 'lodash/isEmpty';
 
 import ImageContainer from './image-container';
 
@@ -48,7 +49,12 @@ class SelectImage extends React.Component {
 		}
 
 		return (
-			<div className={ classnames( 'select-image', className, ! placeholder ? 'select-image--no-placeholder' : null ) }>
+			<div className={ classnames(
+				'gumponents-select-image',
+				className,
+				! isEmpty( image ) ? 'gumponents-select-image--selected' : null,
+				! placeholder ? 'gumponents-select-image--no-placeholder' : null
+			) }>
 				<MediaUpload
 					onSelect={ media => {
 						if ( ! media ) {

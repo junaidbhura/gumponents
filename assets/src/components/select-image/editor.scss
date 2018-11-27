@@ -1,9 +1,13 @@
-.select-image {
+.gumponents-select-image {
 	background-color: #f9f9f9;
 	overflow: hidden;
 	position: relative;
 	text-align: center;
 	height: 100px;
+
+	&--selected {
+		background-color: transparent;
+	}
 
 	&__container {
 		display: block;
