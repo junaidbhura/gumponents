@@ -91,7 +91,6 @@ const getItems = ( state, ids, type ) => {
 				toFetch.push( id );
 			}
 		} );
-		console.log( state, toFetch );
 
 		if ( 0 !== toFetch.length ) {
 			apiFetch( {

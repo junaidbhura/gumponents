@@ -10,6 +10,7 @@ const {
 	Button,
 	Modal,
 	Spinner,
+	BaseControl,
 } = wp.components;
 
 import './data';
@@ -58,7 +59,7 @@ class Relationship extends React.Component {
 	}
 
 	render() {
-		let { buttonLabel, modalTitle, noSelectionLabel, minimal, searchQuery } = this.props;
+		let { buttonLabel, modalTitle, noSelectionLabel, minimal, searchQuery, help } = this.props;
 		const { items, loading, modalOpen } = this.state;
 
 		if ( ! buttonLabel ) {
@@ -75,7 +76,9 @@ class Relationship extends React.Component {
 		}
 
 		return (
-			<div className="gumponent-relationship">
+			<BaseControl
+				help={ help }
+				className="gumponent-relationship">
 				<Button
 					isDefault
 					isBusy={ minimal && loading }
@@ -123,7 +126,7 @@ class Relationship extends React.Component {
 						</div>
 					</Modal>
 				}
-			</div>
+			</BaseControl>
 		);
 	}
 
