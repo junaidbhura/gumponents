@@ -3,12 +3,14 @@
  */
 
 import SelectImage from './components/select-image';
-import Relationship from './components/relationship';
+import PostRelationshipControl from './components/post-relationship-control';
+import TaxonomyRelationshipControl from './components/taxonomy-relationship-control';
 
 window.gumponents = {
 	// Components.
 	components: {
 		SelectImage,
-		Relationship,
+		PostRelationshipControl,
+		TaxonomyRelationshipControl,
 	},
 };

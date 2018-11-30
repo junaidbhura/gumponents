@@ -1,11 +1,8 @@
 import './editor.scss';
 
+import React from 'react';
 import wp from 'wp';
 import classnames from 'classnames';
-
-const {
-	apiFetch
-} = wp;
 
 const { __ } = wp.i18n;
 
@@ -13,11 +10,11 @@ const {
 	Button,
 	Modal,
 	Spinner,
+	BaseControl,
 } = wp.components;
 
+import './data';
 import Selector from './selector';
-
-const apiPath = '/gumponents/relationship/v1/initialize';
 
 class Relationship extends React.Component {
 
@@ -36,43 +33,16 @@ class Relationship extends React.Component {
 	}
 
 	componentDidMount() {
-		if ( ! this.state.initialized && this.props.items && 0 === this.state.items.length && 0 !== this.props.items.length ) {
+		if ( ! this.state.initialized && this.props.value && 0 === this.state.items.length && 0 !== this.props.value.length ) {
 			this.setState( {
 				loading: true,
 			} );
-
-			let {
-				type,
-				postTypes,
-				taxonomies,
-				items,
-				filter,
-			} = this.props;
-
-			if ( ! type ) {
-				type = 'post';
-			}
-
-			apiFetch( {
-				path: apiPath,
-				data: 'post' === type ? {
-					'type': 'post',
-					'post_types': postTypes,
-					'items': items,
-					'filter': filter,
-				} : {
-					'type': 'taxonomy',
-					'taxonomies': taxonomies,
-					'items': items,
-					'filter': filter,
-				},
-				method: 'post',
-			} ).then( items => {
+			this.props.getInitialItems.then( items => {
 				this.setState( {
 					loading: false,
-					initialized: true,
 					items: items,
 				} );
+				this.props.onSetItems( items );
 			} );
 		}
 	}
@@ -82,20 +52,15 @@ class Relationship extends React.Component {
 			items: this.items,
 			modalOpen: false,
 		} );
-	}
-
-	componentDidUpdate( prevProps, prevState ) {
-		if ( prevState.items !== this.state.items && this.props.onSelect ) {
-			this.props.onSelect( this.getValues( this.state.items ) );
+		if ( this.props.onSelect ) {
+			this.props.onSelect( this.items.map( item => item.value ) );
 		}
-	}
-
-	getValues( items ) {
-		return items.map( item => item['value'] );
+		this.props.onSetItems( this.items );
 	}
 
 	render() {
-		let { buttonLabel, modalTitle, noSelectionLabel, minimal, type, postTypes, postTaxonomies, taxonomies, filter } = this.props;
+		let { buttonLabel, modalTitle, noSelectionLabel, minimal, searchQuery, help } = this.props;
+		const { items, loading, modalOpen } = this.state;
 
 		if ( ! buttonLabel ) {
 			buttonLabel = __( 'Select' );
@@ -110,10 +75,10 @@ class Relationship extends React.Component {
 			minimal = false;
 		}
 
-		const { items, loading, modalOpen } = this.state;
-
 		return (
-			<div className="gumponent-relationship">
+			<BaseControl
+				help={ help }
+				className="gumponent-relationship">
 				<Button
 					isDefault
 					isBusy={ minimal && loading }
@@ -147,13 +112,9 @@ class Relationship extends React.Component {
 						className="gumponent-relationship__modal"
 						onRequestClose={ () => this.setState( { modalOpen: false } ) }>
 						<Selector
-							type={ type }
-							postTypes={ postTypes }
-							postTaxonomies={ postTaxonomies }
-							taxonomies={ taxonomies }
-							filter={ filter }
 							onSelect={ items => { this.items = items; } }
 							selected={ items }
+							searchQuery={ searchQuery }
 						/>
 						<div className="gumponent-relationship__modal__actions">
 							<Button
@@ -165,7 +126,7 @@ class Relationship extends React.Component {
 						</div>
 					</Modal>
 				}
-			</div>
+			</BaseControl>
 		);
 	}
 

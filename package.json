@@ -23,7 +23,6 @@
     "mini-css-extract-plugin": "^0.4.5",
     "node-sass": "^4.9.2",
     "react-beautiful-dnd": "^10.0.2",
-    "react-select": "^2.1.1",
     "sass-loader": "^7.1.0",
     "uglifyjs-webpack-plugin": "^1.2.7",
     "webpack": "^4.16.4",

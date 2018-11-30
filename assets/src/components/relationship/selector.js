@@ -1,14 +1,8 @@
-import wp from 'wp';
 import React from 'react';
 
 import SearchItems from './search-items';
 import SelectedItems from './selected-items';
 
-const {
-	apiFetch
-} = wp;
-
-const apiPath     = '/gumponents/relationship/v1/query';
 const typingDelay = 300;
 
 class Selector extends React.Component {
@@ -51,39 +45,15 @@ class Selector extends React.Component {
 	}
 
 	triggerSearch() {
-		const {
-			type,
-			postTypes,
-			postTaxonomies,
-			taxonomies,
-			filter,
-		} = this.props;
-
-		this.setState( {
-			searching: true,
-		} );
-
-		apiFetch( {
-			path: apiPath,
-			data: 'post' === type ? {
-				'type': 'post',
-				'post_types': postTypes,
-				'post_taxonomies': postTaxonomies,
-				'search': this.state.search,
-				'filter': filter,
-			} : {
-				'type': 'taxonomy',
-				'taxonomies': taxonomies,
-				'search': this.state.search,
-				'filter': filter,
-			},
-			method: 'post',
-		} ).then( results => {
-			this.setState( {
-				results: results,
-				searching: false,
-			} )
-		} );
+		if ( this.props.searchQuery ) {
+			this.setState( { searching: true } );
+			this.props.searchQuery( this.state.search ).then( results => {
+				this.setState( {
+					searching: false,
+					results,
+				} );
+			} );
+		}
 	}
 
 	render() {
