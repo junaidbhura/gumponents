@@ -9,6 +9,7 @@ const { registerStore } = wp.data;
 
 const DEFAULT_STATE = {
 	posts: [],
+	taxonomies: [],
 };
 
 const { apiFetch } = wp;
@@ -22,6 +23,13 @@ const actions = {
 		};
 	},
 
+	setTaxonomies( taxonomies ) {
+		return {
+			type: 'SET_TAXONOMIES',
+			items: taxonomies,
+		};
+	},
+
 };
 
 registerStore( 'gumponents/relationship', {
@@ -32,6 +40,11 @@ registerStore( 'gumponents/relationship', {
 					...state,
 					posts: unionWith( state.posts, action.items, isEqual ),
 				};
+			case 'SET_TAXONOMIES':
+				return {
+					...state,
+					taxonomies: unionWith( state.taxonomies, action.items, isEqual ),
+				};
 		}
 		return state;
 	},
@@ -41,38 +54,62 @@ registerStore( 'gumponents/relationship', {
 	selectors: {
 
 		getPosts( state, ids ) {
-			return new Promise( ( resolve, reject ) => {
-				let posts   = [];
-				let toFetch = [];
-				ids.map( ( id, index ) => {
-					let cached = state.posts.find( post => post.id === id );
-					if ( cached ) {
-						posts[ index ] = cached;
-					} else {
-						toFetch.push( id );
-					}
-				} );
+			return getItems( state, ids, 'posts' );
+		},
 
-				if ( 0 !== toFetch.length ) {
-					apiFetch( {
-						path: `/gumponents/relationship/v1/posts/initialize`,
-						data: {
-							type: 'post',
-							items: toFetch,
-						},
-						method: 'post',
-					} )
-					.then( results => {
-						if ( 0 !== results.length ) {
-							posts = unionWith( posts, results, isEqual );
-						}
-						resolve( posts );
-					} )
-				} else {
-					resolve( posts );
-				}
-			} );
+		getTaxonomies( state, ids ) {
+			return getItems( state, ids, 'taxonomies' );
 		},
 
 	},
 } );
+
+const getItems = ( state, ids, type ) => {
+	let apiPath, hayStack;
+
+	switch ( type ) {
+		case 'posts':
+			apiPath = '/gumponents/relationship/v1/posts/initialize';
+			hayStack = state.posts;
+			break;
+		case 'taxonomies':
+			apiPath = '/gumponents/relationship/v1/taxonomies/initialize';
+			hayStack = state.taxonomies;
+			break;
+		default:
+			return [];
+	}
+
+	return new Promise( resolve => {
+		let items   = [];
+		let toFetch = [];
+		ids.map( ( id, index ) => {
+			let cached = hayStack.find( item => item.id === id );
+			if ( cached ) {
+				items[ index ] = cached;
+			} else {
+				toFetch.push( id );
+			}
+		} );
+		console.log( state, toFetch );
+
+		if ( 0 !== toFetch.length ) {
+			apiFetch( {
+				path: apiPath,
+				data: {
+					type: 'post',
+					items: toFetch,
+				},
+				method: 'post',
+			} )
+			.then( results => {
+				if ( 0 !== results.length ) {
+					items = unionWith( items, results, isEqual );
+				}
+				resolve( items );
+			} )
+		} else {
+			resolve( items );
+		}
+	} );
+};

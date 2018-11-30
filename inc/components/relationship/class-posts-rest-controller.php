@@ -74,6 +74,12 @@ class PostsRestController extends RestController {
 						),
 						'default'     => [ 'post' ],
 					),
+					'post_taxonomies' => array(
+						'required'    => false,
+						'type'        => 'array',
+						'description' => __( 'Post Taxonomies', 'gumponents' ),
+						'default'     => [],
+					),
 					'filter'     => array(
 						'required'          => false,
 						'type'              => 'string',
@@ -156,7 +162,7 @@ class PostsRestController extends RestController {
 		}
 
 		$args = apply_filters(
-			'gumponents_relationship_query' . $filter,
+			'gumponents_posts_relationship_query' . $filter,
 			$args
 		);
 
