@@ -1,11 +1,8 @@
 import './editor.scss';
 
+import React from 'react';
 import wp from 'wp';
 import classnames from 'classnames';
-
-const {
-	apiFetch
-} = wp;
 
 const { __ } = wp.i18n;
 
@@ -16,8 +13,6 @@ const {
 } = wp.components;
 
 import Selector from './selector';
-
-const apiPath = '/gumponents/relationship/v1/initialize';
 
 class Relationship extends React.Component {
 
@@ -35,67 +30,19 @@ class Relationship extends React.Component {
 		this.itemsSelected = this.itemsSelected.bind( this );
 	}
 
-	componentDidMount() {
-		if ( ! this.state.initialized && this.props.items && 0 === this.state.items.length && 0 !== this.props.items.length ) {
-			this.setState( {
-				loading: true,
-			} );
-
-			let {
-				type,
-				postTypes,
-				taxonomies,
-				items,
-				filter,
-			} = this.props;
-
-			if ( ! type ) {
-				type = 'post';
-			}
-
-			apiFetch( {
-				path: apiPath,
-				data: 'post' === type ? {
-					'type': 'post',
-					'post_types': postTypes,
-					'items': items,
-					'filter': filter,
-				} : {
-					'type': 'taxonomy',
-					'taxonomies': taxonomies,
-					'items': items,
-					'filter': filter,
-				},
-				method: 'post',
-			} ).then( items => {
-				this.setState( {
-					loading: false,
-					initialized: true,
-					items: items,
-				} );
-			} );
-		}
-	}
-
 	itemsSelected() {
 		this.setState( {
 			items: this.items,
 			modalOpen: false,
 		} );
-	}
-
-	componentDidUpdate( prevProps, prevState ) {
-		if ( prevState.items !== this.state.items && this.props.onSelect ) {
-			this.props.onSelect( this.getValues( this.state.items ) );
+		if ( this.props.onSelect ) {
+			this.props.onSelect( this.items.map( item => item.value ) );
 		}
 	}
 
-	getValues( items ) {
-		return items.map( item => item['value'] );
-	}
-
 	render() {
-		let { buttonLabel, modalTitle, noSelectionLabel, minimal, type, postTypes, postTaxonomies, taxonomies, filter } = this.props;
+		let { buttonLabel, modalTitle, noSelectionLabel, minimal, searchQuery } = this.props;
+		const { items, loading, modalOpen } = this.state;
 
 		if ( ! buttonLabel ) {
 			buttonLabel = __( 'Select' );
@@ -109,8 +56,6 @@ class Relationship extends React.Component {
 		if ( ! minimal ) {
 			minimal = false;
 		}
-
-		const { items, loading, modalOpen } = this.state;
 
 		return (
 			<div className="gumponent-relationship">
@@ -147,13 +92,9 @@ class Relationship extends React.Component {
 						className="gumponent-relationship__modal"
 						onRequestClose={ () => this.setState( { modalOpen: false } ) }>
 						<Selector
-							type={ type }
-							postTypes={ postTypes }
-							postTaxonomies={ postTaxonomies }
-							taxonomies={ taxonomies }
-							filter={ filter }
 							onSelect={ items => { this.items = items; } }
 							selected={ items }
+							searchQuery={ searchQuery }
 						/>
 						<div className="gumponent-relationship__modal__actions">
 							<Button

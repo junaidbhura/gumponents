@@ -3,12 +3,12 @@
  */
 
 import SelectImage from './components/select-image';
-import Relationship from './components/relationship';
+import PostRelationshipControl from './components/post-relationship-control';
 
 window.gumponents = {
 	// Components.
 	components: {
 		SelectImage,
-		Relationship,
+		PostRelationshipControl,
 	},
 };
