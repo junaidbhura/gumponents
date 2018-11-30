@@ -54,6 +54,7 @@ class Relationship extends React.Component {
 		if ( this.props.onSelect ) {
 			this.props.onSelect( this.items.map( item => item.value ) );
 		}
+		this.props.onSetItems( this.items );
 	}
 
 	render() {

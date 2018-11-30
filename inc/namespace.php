@@ -24,7 +24,7 @@ function setup() {
  * Register REST endpoints.
  */
 function register_rest_endpoints() {
-	new Components\Relationship\RestController();
+	new Components\Relationship\PostsRestController();
 }
 
 /**

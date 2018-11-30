@@ -55,7 +55,7 @@ registerStore( 'gumponents/relationship', {
 
 				if ( 0 !== toFetch.length ) {
 					apiFetch( {
-						path: `/gumponents/relationship/v1/initialize`,
+						path: `/gumponents/relationship/v1/posts/initialize`,
 						data: {
 							type: 'post',
 							items: toFetch,

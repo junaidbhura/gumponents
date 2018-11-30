@@ -20,9 +20,8 @@ class PostRelationshipControl extends React.Component {
 					const { postTypes, taxonomies, filter } = this.props;
 					return new Promise( resolve => {
 						apiFetch( {
-							path: '/gumponents/relationship/v1/query',
+							path: '/gumponents/relationship/v1/posts/query',
 							data: {
-								'type': 'post',
 								'post_types': postTypes,
 								'post_taxonomies': taxonomies,
 								'search': query,
