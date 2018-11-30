@@ -62,36 +62,6 @@ class RestController extends WP_REST_Controller {
 							'taxonomy',
 						),
 					),
-					'post_types'      => array(
-						'required'    => true,
-						'type'        => 'array',
-						'description' => __( 'Post Types', 'gumponents' ),
-						'items'       => array(
-							'type'              => 'string',
-							'sanitize_callback' => 'sanitize_text_field',
-						),
-						'default'     => [ 'post' ],
-					),
-					'post_taxonomies' => array(
-						'required'    => false,
-						'type'        => 'array',
-						'description' => __( 'Post Taxonomies', 'gumponents' ),
-						'items'       => array(
-							'type'              => 'string',
-							'sanitize_callback' => 'sanitize_text_field',
-						),
-						'default'     => [],
-					),
-					'taxonomies'      => array(
-						'required'    => true,
-						'type'        => 'array',
-						'description' => __( 'Taxonomies', 'gumponents' ),
-						'items'       => array(
-							'type'              => 'string',
-							'sanitize_callback' => 'sanitize_text_field',
-						),
-						'default'     => [ 'category' ],
-					),
 					'items'           => array(
 						'required'    => true,
 						'type'        => 'array',
@@ -196,12 +166,11 @@ class RestController extends WP_REST_Controller {
 		$args   = apply_filters(
 			'gumponents_relationship_query' . $filter,
 			array(
-				'post_status'            => 'publish',
-				'post_type'              => $params['post_types'],
-				'posts_per_page'         => -1,
-				'post__in'               => $params['items'],
-				'no_found_rows'          => true,
-				'orderby'                => 'post__in',
+				'post_type'      => array_values( get_post_types() ), // 'any' doesn't show all post types.
+				'posts_per_page' => -1,
+				'post__in'       => $params['items'],
+				'no_found_rows'  => true,
+				'orderby'        => 'post__in',
 			)
 		);
 

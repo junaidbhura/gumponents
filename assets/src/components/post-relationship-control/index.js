@@ -5,6 +5,11 @@ import Relationship from '../relationship';
 
 const { apiFetch } = wp;
 
+const {
+	withSelect,
+	withDispatch,
+} = wp.data;
+
 class PostRelationshipControl extends React.Component {
 
 	render() {
@@ -33,4 +38,14 @@ class PostRelationshipControl extends React.Component {
 
 }
 
-export default PostRelationshipControl;
+export default withSelect( ( select, ownProps ) => {
+	return {
+		getInitialItems: select( 'gumponents/relationship' ).getPosts( ownProps.value ),
+	};
+} )( withDispatch( ( dispatch, ownProps ) => {
+	return {
+		onSetItems( items ) {
+			dispatch( 'gumponents/relationship' ).setPosts( items );
+		},
+	};
+} )( PostRelationshipControl ) );

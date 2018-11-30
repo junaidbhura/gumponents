@@ -12,6 +12,7 @@ const {
 	Spinner,
 } = wp.components;
 
+import './data';
 import Selector from './selector';
 
 class Relationship extends React.Component {
@@ -28,6 +29,21 @@ class Relationship extends React.Component {
 
 		this.items = [];
 		this.itemsSelected = this.itemsSelected.bind( this );
+	}
+
+	componentDidMount() {
+		if ( ! this.state.initialized && this.props.value && 0 === this.state.items.length && 0 !== this.props.value.length ) {
+			this.setState( {
+				loading: true,
+			} );
+			this.props.getInitialItems.then( items => {
+				this.setState( {
+					loading: false,
+					items: items,
+				} );
+				this.props.onSetItems( items );
+			} );
+		}
 	}
 
 	itemsSelected() {
