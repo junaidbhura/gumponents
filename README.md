@@ -49,7 +49,7 @@ An example of getting all posts in a custom post type `post` with associated tax
 ```js
 <PostRelationshipControl
     postTypes="people"
-    postTaxonomies={ [ { people_roles: [ 'ceo', 'management' ] } ] }
+    taxonomies={ [ { people_roles: [ 'ceo', 'management' ] } ] }
     value={ people.map( person => person.ID ) }
     onSelect={ people => setAttributes( { people } ) }
     buttonLabel="Select People"
