@@ -18,6 +18,7 @@ class SelectImage extends React.Component {
 
 		this.state = {
 			image: {},
+			media: {},
 		};
 	}
 
@@ -32,6 +33,9 @@ class SelectImage extends React.Component {
 	componentDidUpdate( prevProps, prevState ) {
 		if ( prevState.image !== this.state.image && this.props.onChange ) {
 			this.props.onChange( JSON.stringify( this.state.image ) );
+		}
+		if ( prevState.media !== this.state.media && this.props.onMedia ) {
+			this.props.onMedia( this.state.media );
 		}
 	}
 
@@ -60,6 +64,7 @@ class SelectImage extends React.Component {
 						if ( ! media ) {
 							this.setState( {
 								image: {},
+								media: {},
 							} );
 							return;
 						}
@@ -73,6 +78,7 @@ class SelectImage extends React.Component {
 								alt: media.alt,
 								size: size,
 							},
+							media,
 						} );
 					} }
 					type="image"
@@ -82,7 +88,7 @@ class SelectImage extends React.Component {
 							placeholder={ placeholder }
 							image={ image }
 							open={ open }
-							onRemove={ () => this.setState( { image: {} } ) }
+							onRemove={ () => this.setState( { image: {}, media: {} } ) }
 						/>
 					) }
 				/>
