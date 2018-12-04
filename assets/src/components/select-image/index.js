@@ -4,6 +4,7 @@ import wp from 'wp';
 import React from 'react';
 import classnames from 'classnames';
 import isEmpty from 'lodash/isEmpty';
+import has from 'lodash/has';
 
 import ImageContainer from './image-container';
 
@@ -67,6 +68,10 @@ class SelectImage extends React.Component {
 								media: {},
 							} );
 							return;
+						}
+
+						if ( ! has( media.sizes, size ) ) {
+							size = 'full';
 						}
 
 						this.setState( {
