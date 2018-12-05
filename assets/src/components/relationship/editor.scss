@@ -86,7 +86,8 @@ $gumponent-relationship__modal-gutter: 16px;
 			z-index: 5;
 		}
 
-		&--loading {
+		&--loading,
+		&--disabled {
 
 			&:before {
 				content: "";

@@ -64,6 +64,8 @@ class Selector extends React.Component {
 			searching,
 		} = this.state;
 
+		const { maxItems } = this.props;
+
 		return (
 			<div className="gumponent-relationship">
 				<div className="gumponent-relationship__search-container">
@@ -83,6 +85,7 @@ class Selector extends React.Component {
 				<div className="gumponent-relationship__panel">
 					<div className="gumponent-relationship__panel__search-items">
 						<SearchItems
+							disabled={ maxItems > 0 && selected.length >= maxItems }
 							items={ results }
 							loading={ searching }
 							selected={ selected }

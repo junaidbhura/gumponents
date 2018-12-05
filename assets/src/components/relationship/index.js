@@ -59,7 +59,7 @@ class Relationship extends React.Component {
 	}
 
 	render() {
-		let { buttonLabel, modalTitle, noSelectionLabel, minimal, searchQuery, help } = this.props;
+		let { buttonLabel, modalTitle, noSelectionLabel, minimal, searchQuery, help, max } = this.props;
 		const { items, loading, modalOpen } = this.state;
 
 		if ( ! buttonLabel ) {
@@ -73,6 +73,9 @@ class Relationship extends React.Component {
 		}
 		if ( ! minimal ) {
 			minimal = false;
+		}
+		if ( ! max ) {
+			max = -1;
 		}
 
 		return (
@@ -112,6 +115,7 @@ class Relationship extends React.Component {
 						className="gumponent-relationship__modal"
 						onRequestClose={ () => this.setState( { modalOpen: false } ) }>
 						<Selector
+							maxItems={ max }
 							onSelect={ items => { this.items = items; } }
 							selected={ items }
 							searchQuery={ searchQuery }

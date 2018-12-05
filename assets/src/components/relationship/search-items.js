@@ -16,6 +16,7 @@ class SearchItems extends React.Component {
 			loading: false,
 			items: [],
 			selected: [],
+			disabled: false,
 		};
 
 		if ( this.props.loading ) {
@@ -26,6 +27,9 @@ class SearchItems extends React.Component {
 		}
 		if ( this.props.selected ) {
 			this.state.selected = this.props.selected;
+		}
+		if ( this.props.disabled ) {
+			this.state.disabled = this.props.disabled;
 		}
 	}
 
@@ -41,6 +45,9 @@ class SearchItems extends React.Component {
 		if ( prevProps.selected !== this.props.selected ) {
 			newState.selected = this.props.selected;
 		}
+		if ( prevProps.disabled !== this.props.disabled ) {
+			newState.disabled = this.props.disabled;
+		}
 
 		if ( ! isEmpty( newState ) ) {
 			this.setState( newState );
@@ -52,10 +59,11 @@ class SearchItems extends React.Component {
 			loading,
 			items,
 			selected,
+			disabled,
 		} = this.state;
 
 		return (
-			<ul className={ classnames( 'gumponent-relationship__items', ( loading ? 'gumponent-relationship__items--loading' : null ) ) }>
+			<ul className={ classnames( 'gumponent-relationship__items', ( loading ? 'gumponent-relationship__items--loading' : null ), ( disabled ? 'gumponent-relationship__items--disabled' : null ) ) }>
 				{ loading &&
 					<Spinner />
 				}
