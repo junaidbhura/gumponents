@@ -28,4 +28,13 @@ class RestController extends WP_REST_Controller {
 		$this->register_routes();
 	}
 
+	/**
+	 * Only logged in users can do this.
+	 *
+	 * @return bool
+	 */
+	public function get_items_permissions_check() {
+		return apply_filters( 'gumponents_relationship_rest_permission', is_user_logged_in() );
+	}
+
 }

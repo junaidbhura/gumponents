@@ -26,10 +26,11 @@ class TaxonomiesRestController extends RestController {
 			$this->namespace,
 			'/taxonomies/initialize',
 			array(
-				'methods'  => 'POST',
-				'callback' => array( $this, 'get_initial_items' ),
-				'args'     => array(
-					'items'           => array(
+				'methods'             => 'POST',
+				'callback'            => array( $this, 'get_initial_items' ),
+				'permission_callback' => array( $this, 'get_items_permissions_check' ),
+				'args'                => array(
+					'items' => array(
 						'required'    => true,
 						'type'        => 'array',
 						'description' => __( 'Items', 'gumponents' ),
@@ -47,9 +48,10 @@ class TaxonomiesRestController extends RestController {
 			$this->namespace,
 			'/taxonomies/query',
 			array(
-				'methods'  => 'POST',
-				'callback' => array( $this, 'get_items' ),
-				'args'     => array(
+				'methods'             => 'POST',
+				'callback'            => array( $this, 'get_items' ),
+				'permission_callback' => array( $this, 'get_items_permissions_check' ),
+				'args'                => array(
 					'search'     => array(
 						'required'          => true,
 						'type'              => 'string',

@@ -33,10 +33,11 @@ class PostsRestController extends RestController {
 			$this->namespace,
 			'/posts/initialize',
 			array(
-				'methods'  => 'POST',
-				'callback' => array( $this, 'get_initial_items' ),
-				'args'     => array(
-					'items'           => array(
+				'methods'             => 'POST',
+				'callback'            => array( $this, 'get_initial_items' ),
+				'permission_callback' => array( $this, 'get_items_permissions_check' ),
+				'args'                => array(
+					'items' => array(
 						'required'    => true,
 						'type'        => 'array',
 						'description' => __( 'Items', 'gumponents' ),
@@ -54,17 +55,18 @@ class PostsRestController extends RestController {
 			$this->namespace,
 			'/posts/query',
 			array(
-				'methods'  => 'POST',
-				'callback' => array( $this, 'get_items' ),
-				'args'     => array(
-					'search'     => array(
+				'methods'             => 'POST',
+				'callback'            => array( $this, 'get_items' ),
+				'permission_callback' => array( $this, 'get_items_permissions_check' ),
+				'args'                => array(
+					'search'          => array(
 						'required'          => true,
 						'type'              => 'string',
 						'description'       => __( 'Search Term', 'gumponents' ),
 						'sanitize_callback' => 'sanitize_text_field',
 						'default'           => '',
 					),
-					'post_types' => array(
+					'post_types'      => array(
 						'required'    => true,
 						'type'        => 'array',
 						'description' => __( 'Post Types', 'gumponents' ),
@@ -80,7 +82,7 @@ class PostsRestController extends RestController {
 						'description' => __( 'Post Taxonomies', 'gumponents' ),
 						'default'     => [],
 					),
-					'filter'     => array(
+					'filter'          => array(
 						'required'          => false,
 						'type'              => 'string',
 						'description'       => __( 'Custom Filter', 'gumponents' ),
