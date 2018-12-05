@@ -1,6 +1,6 @@
 <img src="https://user-images.githubusercontent.com/2512525/49289206-01d88f00-f4f3-11e8-8a79-efe8e5a2fcb4.png" width="600" alt="Gumponents!">
 
-# Super userful Gutenberg components for WordPress.
+# Super useful Gutenberg components for WordPress.
 
 Gumponents are a bunch of Gutenberg components, built in React, which are meant to be used by WordPress developers while building Gutenberg blocks.
 
@@ -55,6 +55,7 @@ An example of getting all posts in a custom post type `post` with associated tax
     buttonLabel="Select People"
     help="Select people"
     filter="people_meta"
+    max="2"
 />
 ```
 
