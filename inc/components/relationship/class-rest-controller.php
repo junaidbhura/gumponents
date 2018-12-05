@@ -31,9 +31,10 @@ class RestController extends WP_REST_Controller {
 	/**
 	 * Only logged in users can do this.
 	 *
+	 * @param \WP_REST_Request $request Full data about the request.
 	 * @return bool
 	 */
-	public function get_items_permissions_check() {
+	public function get_items_permissions_check( $request ) {
 		return apply_filters( 'gumponents_relationship_rest_permission', is_user_logged_in() );
 	}
 
