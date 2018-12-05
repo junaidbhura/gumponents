@@ -8,6 +8,7 @@ node_modules
 !/assets
 !/inc
 !.gitignore
+!composer.json
 !gumponents.php
 !README.md
 !package-lock.json

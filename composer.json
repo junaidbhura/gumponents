@@ -1,0 +1,22 @@
+{
+  "name": "junaidbhura/gumponents",
+  "description": "Super useful Gutenberg components for WordPress.",
+  "homepage": "https://github.com/junaidbhura/gumponents",
+  "keywords": [
+    "wordpress",
+    "gutenberg",
+    "react"
+  ],
+  "authors": [
+    {
+      "name":"Junaid Bhura",
+      "email":"info@junaidbhura.com",
+      "homepage":"https://junaidbhura.com"
+    }
+  ],
+  "support" : {
+    "issues": "https://github.com/junaidbhura/gumponents/issues",
+    "source": "https://github.com/junaidbhura/gumponents"
+  },
+  "type": "wordpress-plugin"
+}
