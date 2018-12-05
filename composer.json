@@ -18,5 +18,8 @@
     "issues": "https://github.com/junaidbhura/gumponents/issues",
     "source": "https://github.com/junaidbhura/gumponents"
   },
-  "type": "wordpress-plugin"
+  "type": "wordpress-plugin",
+  "require": {
+    "composer/installers": "~1.0"
+  }
 }
