@@ -1,0 +1,24 @@
+.gumponents-image-control {
+	padding: 0;
+
+	.spinner {
+		margin: 0;
+	}
+
+	.components-button + .components-button {
+		margin-top: 1em;
+		margin-right: 8px;
+	}
+
+	.components-responsive-wrapper__content {
+		width: 100%;
+		height: auto;
+	}
+
+	&__preview {
+		display: block;
+		width: 100%;
+		padding: 0;
+		transition: all .1s ease-out;
+	}
+}
