@@ -4,7 +4,7 @@
  * Description: Advanced Gutenberg components for WordPress.
  * Author: Junaid Bhura
  * Author URI: https://junaidbhura.com
- * Version: 0.0.5
+ * Version: 0.0.6
  *
  * @package JB\Gumponents
  */
