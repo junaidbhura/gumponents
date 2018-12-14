@@ -36,10 +36,19 @@ class ImageControl extends React.Component {
 
 	componentDidMount() {
 		if ( this.props.value ) {
-			this.setState( {
-				id: this.props.value,
-				loading: true,
-			} );
+			if ( this.props.media ) {
+				this.setState( {
+					id: this.props.media.id,
+					media: this.props.media,
+					loading: false,
+					initialized: true,
+				} );
+			} else {
+				this.setState( {
+					id: this.props.value,
+					loading: true,
+				} );
+			}
 		}
 	}
 
