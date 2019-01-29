@@ -55,7 +55,7 @@ class ImageControl extends React.Component {
 	componentDidUpdate( prevProps, prevState ) {
 		if ( prevState.media !== this.state.media ) {
 			if ( this.props.onSelect ) {
-				this.props.onSelect( this.state.media );
+				this.props.onSelect( this.getImageDetails( this.state.media ), this.state.media );
 			}
 		}
 		if ( ! this.state.initialized && prevProps.media !== this.props.media ) {
@@ -65,6 +65,47 @@ class ImageControl extends React.Component {
 				initialized: true,
 			} );
 		}
+	}
+
+	getImageDetails( media ) {
+		if ( ! media ) {
+			return {};
+		}
+
+		let size = 'full';
+		let src, width, height;
+
+		if ( this.props.size ) {
+			size = this.props.size;
+		}
+
+		if ( has( media, 'media_details' ) ) {
+			if ( has( media, [ 'media_details', 'sizes', size ] ) ) {
+				width = media.media_details.sizes[ size ].width;
+				height = media.media_details.sizes[ size ].height;
+				src = media.media_details.sizes[ size ].source_url;
+			} else {
+				width = media.media_details.width;
+				height = media.media_details.height;
+				src = media.source_url;
+			}
+		} else if ( has( media, 'sizes' ) ) {
+			if ( ! has( media.sizes, size ) ) {
+				size = 'full';
+			}
+			width = media.sizes[ size ].width;
+			height = media.sizes[ size ].height;
+			src = media.sizes[ size ].url;
+		}
+
+		return {
+			id: media.id,
+			src,
+			width,
+			height,
+			alt: media.alt,
+			size,
+		};
 	}
 
 	render() {
