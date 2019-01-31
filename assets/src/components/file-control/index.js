@@ -75,7 +75,7 @@ class FileControl extends React.Component {
 
 			this.props.onSetMedia( media );
 
-			if ( this.props.onSelect ) {
+			if ( this.props.onChange ) {
 				this.props.onChange( media );
 			}
 		};
@@ -85,10 +85,6 @@ class FileControl extends React.Component {
 				id: null,
 				media: null,
 			} );
-
-			if ( this.props.onRemove ) {
-				this.props.onChange( null );
-			}
 		};
 
 		return (
