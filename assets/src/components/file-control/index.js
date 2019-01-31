@@ -1,8 +1,6 @@
 import wp from 'wp';
 import React from 'react';
 
-import './data';
-
 const { __ } = wp.i18n;
 
 const {

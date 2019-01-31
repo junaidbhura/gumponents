@@ -13,7 +13,6 @@ const {
 	BaseControl,
 } = wp.components;
 
-import './data';
 import Selector from './selector';
 
 class Relationship extends React.Component {
