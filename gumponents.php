@@ -6,7 +6,7 @@
  * Author URI: https://junaidbhura.com
  * Version: 0.0.7
  *
- * @package JB\Gumponents
+ * @package gumponents
  */
 
 namespace JB\Gumponents;

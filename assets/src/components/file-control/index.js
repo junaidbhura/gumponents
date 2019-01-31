@@ -1,3 +1,5 @@
+import './editor.scss'
+
 import wp from 'wp';
 import React from 'react';
 
@@ -112,10 +114,11 @@ class FileControl extends React.Component {
 					<div className="gumponents-file-control__details">
 						{ media &&
 							<div className="gumponents-file-control__details-container">
-								<img
-									src={media.icon}
-									className="gumponents-file-control__icon"
-								/>
+								<div className="gumponents-file-control__icon">
+									<img
+										src={media.icon}
+									/>
+								</div>
 								<div className="gumponents-file-control__file-details">
 									<p>{ media.filename }</p>
 									<p>{ media.filesizeHumanReadable }</p>

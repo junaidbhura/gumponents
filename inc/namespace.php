@@ -2,7 +2,7 @@
 /**
  * Namespace functions.
  *
- * @package JB\Gumponents
+ * @package gumponents
  */
 
 namespace JB\Gumponents;
