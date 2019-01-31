@@ -2,10 +2,10 @@
 /**
  * Posts Rest API Controller.
  *
- * @package JB\Gumponents\Components\Relationship
+ * @package gumponents
  */
 
-namespace JB\Gumponents\Components\Relationship;
+namespace JB\Gumponents\RestApi\Relationship;
 
 use WP_REST_Request;
 use WP_REST_Response;
@@ -14,7 +14,7 @@ use WP_Query;
 /**
  * Class Rest.
  */
-class PostsRestController extends RestController {
+class PostsController extends Controller {
 
 	/**
 	 * Store search term.

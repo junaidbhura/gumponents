@@ -2,17 +2,17 @@
 /**
  * Rest API Controller.
  *
- * @package JB\Gumponents\Components\Relationship
+ * @package gumponents
  */
 
-namespace JB\Gumponents\Components\Relationship;
+namespace JB\Gumponents\RestApi\Relationship;
 
 use WP_REST_Controller;
 
 /**
  * Class Rest.
  */
-class RestController extends WP_REST_Controller {
+class Controller extends WP_REST_Controller {
 
 	/**
 	 * Namespace.

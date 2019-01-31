@@ -1,0 +1,24 @@
+.gumponents-file-control {
+
+	&__details {
+		margin: 8px 0;
+	}
+
+	.components-spinner {
+		float: none;
+		margin: 0;
+	}
+
+	&__details-container {
+		display: flex;
+	}
+
+	&__icon {
+		width: 24px;
+		margin-right: 8px;
+	}
+
+	p {
+		margin: 0;
+	}
+}

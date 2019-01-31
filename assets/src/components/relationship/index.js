@@ -13,7 +13,6 @@ const {
 	BaseControl,
 } = wp.components;
 
-import './data';
 import Selector from './selector';
 
 class Relationship extends React.Component {
@@ -59,7 +58,7 @@ class Relationship extends React.Component {
 	}
 
 	render() {
-		let { buttonLabel, modalTitle, noSelectionLabel, minimal, searchQuery, help, max } = this.props;
+		let { label, buttonLabel, modalTitle, noSelectionLabel, minimal, searchQuery, help, max } = this.props;
 		const { items, loading, modalOpen } = this.state;
 
 		if ( ! buttonLabel ) {
@@ -80,6 +79,7 @@ class Relationship extends React.Component {
 
 		return (
 			<BaseControl
+				label={ label }
 				help={ help }
 				className="gumponent-relationship">
 				<Button

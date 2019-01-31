@@ -2,7 +2,7 @@
 /**
  * Namespace functions.
  *
- * @package JB\Gumponents
+ * @package gumponents
  */
 
 namespace JB\Gumponents;
@@ -24,8 +24,9 @@ function setup() {
  * Register REST endpoints.
  */
 function register_rest_endpoints() {
-	new Components\Relationship\PostsRestController();
-	new Components\Relationship\TaxonomiesRestController();
+	new RestApi\Relationship\PostsController();
+	new RestApi\Relationship\TaxonomiesController();
+	new RestApi\MediaController();
 }
 
 /**
