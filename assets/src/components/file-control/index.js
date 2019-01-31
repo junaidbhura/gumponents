@@ -85,6 +85,10 @@ class FileControl extends React.Component {
 				id: null,
 				media: null,
 			} );
+
+			if ( this.props.onChange ) {
+				this.props.onChange( null );
+			}
 		};
 
 		return (
@@ -112,7 +116,7 @@ class FileControl extends React.Component {
 							<div className="gumponents-file-control__details-container">
 								<div className="gumponents-file-control__icon">
 									<img
-										src={media.icon}
+										src={ media.icon }
 									/>
 								</div>
 								<div className="gumponents-file-control__file-details">
