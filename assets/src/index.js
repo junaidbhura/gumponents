@@ -7,6 +7,7 @@ import SelectImage from './components/select-image';
 import PostRelationshipControl from './components/post-relationship-control';
 import TaxonomyRelationshipControl from './components/taxonomy-relationship-control';
 import ImageControl from './components/image-control';
+import FileControl from './components/file-control';
 
 window.gumponents = {
 	// Components.
@@ -16,5 +17,6 @@ window.gumponents = {
 		PostRelationshipControl,
 		TaxonomyRelationshipControl,
 		ImageControl,
+		FileControl,
 	},
 };

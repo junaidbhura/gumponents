@@ -26,6 +26,7 @@ function setup() {
 function register_rest_endpoints() {
 	new Components\Relationship\PostsRestController();
 	new Components\Relationship\TaxonomiesRestController();
+	new MediaRestController();
 }
 
 /**
