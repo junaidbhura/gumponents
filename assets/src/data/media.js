@@ -2,6 +2,7 @@
  * Data Store.
  */
 
+import wp from 'wp';
 import unionWith from 'lodash/unionWith';
 import isEqual from 'lodash/isEqual';
 
@@ -39,22 +40,18 @@ registerStore( 'gumponents/media', {
 	actions,
 
 	selectors: {
-
 		getMedia( state, id ) {
-
-			return new Promise( resolve => {
-				let cached = state.media.find( item => item.id === id );
+			return new Promise( ( resolve ) => {
+				const cached = state.media.find( ( item ) => item.id === id );
 				if ( cached ) {
 					resolve( cached );
 				} else {
 					apiFetch( {
 						path: `/gumponents/media/v1/get?id=${ id }`,
 					} )
-					.then( media => resolve( media ) );
+						.then( ( media ) => resolve( media ) );
 				}
 			} );
-
 		},
-
 	},
 } );

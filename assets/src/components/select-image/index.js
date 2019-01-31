@@ -13,7 +13,6 @@ const {
 } = wp.editor;
 
 class SelectImage extends React.Component {
-
 	constructor( props ) {
 		super( props );
 
@@ -43,10 +42,13 @@ class SelectImage extends React.Component {
 	render() {
 		const { image } = this.state;
 
-		let {
+		const {
 			className,
-			size,
 			placeholder,
+		} = this.props;
+
+		let {
+			size,
 		} = this.props;
 
 		if ( 'undefined' === typeof size ) {
@@ -61,7 +63,7 @@ class SelectImage extends React.Component {
 				! placeholder ? 'gumponents-select-image--no-placeholder' : null
 			) }>
 				<MediaUpload
-					onSelect={ media => {
+					onSelect={ ( media ) => {
 						if ( ! media ) {
 							this.setState( {
 								image: {},
@@ -100,7 +102,6 @@ class SelectImage extends React.Component {
 			</div>
 		);
 	}
-
 }
 
 export default SelectImage;

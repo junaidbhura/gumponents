@@ -4,7 +4,6 @@ import isEmpty from 'lodash/isEmpty';
 import isString from 'lodash/isString';
 
 class Img extends React.Component {
-
 	render() {
 		const { value, className } = this.props;
 
@@ -27,7 +26,6 @@ class Img extends React.Component {
 			/>
 		);
 	}
-
 }
 
 export default Img;

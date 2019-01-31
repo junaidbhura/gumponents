@@ -6,7 +6,6 @@ import SelectedItems from './selected-items';
 const typingDelay = 300;
 
 class Selector extends React.Component {
-
 	constructor( props ) {
 		super( props );
 
@@ -47,7 +46,7 @@ class Selector extends React.Component {
 	triggerSearch() {
 		if ( this.props.searchQuery ) {
 			this.setState( { searching: true } );
-			this.props.searchQuery( this.state.search ).then( results => {
+			this.props.searchQuery( this.state.search ).then( ( results ) => {
 				this.setState( {
 					searching: false,
 					results,
@@ -74,7 +73,7 @@ class Selector extends React.Component {
 						className="gumponent-relationship__search"
 						placeholder="Search"
 						value={ search }
-						onChange={ e => {
+						onChange={ ( e ) => {
 							this.setState( {
 								search: e.target.value,
 							} );
@@ -89,8 +88,8 @@ class Selector extends React.Component {
 							items={ results }
 							loading={ searching }
 							selected={ selected }
-							onSelected={ item => {
-								this.setState( prevState => {
+							onSelected={ ( item ) => {
+								this.setState( ( prevState ) => {
 									return {
 										selected: [ ...prevState.selected, item ],
 									};
@@ -101,10 +100,10 @@ class Selector extends React.Component {
 					<div className="gumponent-relationship__panel__selected-items">
 						<SelectedItems
 							items={ selected }
-							onUpdated={ selected => this.setState( { selected } ) }
-							onUnselected={ item => this.setState( prevState => {
+							onUpdated={ ( selected ) => this.setState( { selected } ) }
+							onUnselected={ ( item ) => this.setState( ( prevState ) => {
 								return {
-									selected: prevState.selected.filter( thing => thing.value !== item.value ),
+									selected: prevState.selected.filter( ( thing ) => thing.value !== item.value ),
 								};
 							} ) }
 						/>
@@ -113,7 +112,6 @@ class Selector extends React.Component {
 			</div>
 		);
 	}
-
 }
 
 export default Selector;

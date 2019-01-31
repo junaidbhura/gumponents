@@ -1,4 +1,4 @@
-import './editor.scss'
+import './editor.scss';
 
 import wp from 'wp';
 import React from 'react';
@@ -21,7 +21,6 @@ const {
 } = wp.data;
 
 class FileControl extends React.Component {
-
 	constructor( props ) {
 		super( props );
 
@@ -36,7 +35,7 @@ class FileControl extends React.Component {
 			this.setState( {
 				id: this.props.value,
 			} );
-			this.props.getMedia.then( media => {
+			this.props.getMedia.then( ( media ) => {
 				this.setState( {
 					media,
 				} );
@@ -45,7 +44,7 @@ class FileControl extends React.Component {
 		}
 	}
 
-	componentDidUpdate( prevProps, prevState ) {
+	componentDidUpdate( prevProps ) {
 		if ( prevProps.media !== this.props.media ) {
 			this.setState( {
 				media: this.props.media,
@@ -55,7 +54,8 @@ class FileControl extends React.Component {
 
 	render() {
 		const { id, media } = this.state;
-		let { help, label, selectLabel, removeLabel } = this.props;
+		const { help } = this.props;
+		let { label, selectLabel, removeLabel } = this.props;
 
 		if ( ! label ) {
 			label = __( 'Select file' );
@@ -117,6 +117,7 @@ class FileControl extends React.Component {
 								<div className="gumponents-file-control__icon">
 									<img
 										src={ media.icon }
+										alt=""
 									/>
 								</div>
 								<div className="gumponents-file-control__file-details">
@@ -138,7 +139,6 @@ class FileControl extends React.Component {
 			</BaseControl>
 		);
 	}
-
 }
 
 export default withSelect( ( select, ownProps ) => {
@@ -148,7 +148,7 @@ export default withSelect( ( select, ownProps ) => {
 	return {
 		getMedia: value ? getMedia( value ) : null,
 	};
-} )( withDispatch( ( dispatch, ownProps ) => {
+} )( withDispatch( ( dispatch ) => {
 	return {
 		onSetMedia( media ) {
 			dispatch( 'gumponents/media' ).setMedia( media );

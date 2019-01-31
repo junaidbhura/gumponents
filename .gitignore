@@ -7,7 +7,12 @@ node_modules
 /*
 !/assets
 !/inc
+!.editorconfig
+!.eslintignore
+!.eslintrc.json
 !.gitignore
+!.stylelintignore
+!.stylelintrc
 !composer.json
 !gumponents.php
 !README.md

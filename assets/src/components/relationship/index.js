@@ -16,7 +16,6 @@ const {
 import Selector from './selector';
 
 class Relationship extends React.Component {
-
 	constructor( props ) {
 		super( props );
 
@@ -36,7 +35,7 @@ class Relationship extends React.Component {
 			this.setState( {
 				loading: true,
 			} );
-			this.props.getInitialItems.then( items => {
+			this.props.getInitialItems.then( ( items ) => {
 				this.setState( {
 					loading: false,
 					items: items,
@@ -52,13 +51,14 @@ class Relationship extends React.Component {
 			modalOpen: false,
 		} );
 		if ( this.props.onSelect ) {
-			this.props.onSelect( this.items.map( item => item.value ) );
+			this.props.onSelect( this.items.map( ( item ) => item.value ) );
 		}
 		this.props.onSetItems( this.items );
 	}
 
 	render() {
-		let { label, buttonLabel, modalTitle, noSelectionLabel, minimal, searchQuery, help, max } = this.props;
+		const { label, searchQuery, help } = this.props;
+		let { buttonLabel, modalTitle, noSelectionLabel, minimal, max } = this.props;
 		const { items, loading, modalOpen } = this.state;
 
 		if ( ! buttonLabel ) {
@@ -97,7 +97,7 @@ class Relationship extends React.Component {
 						{ ! loading && 0 !== items.length &&
 							items.map( ( item, index ) => {
 								if ( 3 === index ) {
-									return <li>... { `${ items.length - 3 } ${ __( 'more' ) }` }</li>
+									return <li>... { `${ items.length - 3 } ${ __( 'more' ) }` }</li>;
 								} else if ( index > 3 ) {
 									return;
 								}
@@ -116,7 +116,9 @@ class Relationship extends React.Component {
 						onRequestClose={ () => this.setState( { modalOpen: false } ) }>
 						<Selector
 							maxItems={ max }
-							onSelect={ items => { this.items = items; } }
+							onSelect={ ( items ) => {
+								this.items = items;
+							} }
 							selected={ items }
 							searchQuery={ searchQuery }
 						/>
@@ -133,7 +135,6 @@ class Relationship extends React.Component {
 			</BaseControl>
 		);
 	}
-
 }
 
 export default Relationship;

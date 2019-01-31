@@ -5,7 +5,9 @@
   "main": "blocks.js",
   "scripts": {
     "build": "webpack --config ./webpack.config.js --mode production --env=production",
-    "dev": "webpack --config ./webpack.config.js --mode production --env=development --watch"
+    "dev": "webpack --config ./webpack.config.js --mode production --env=development --watch",
+    "lint-js": "eslint assets/src",
+    "lint-css": "stylelint assets/src"
   },
   "author": "Junaid Bhura",
   "license": "ISC",
