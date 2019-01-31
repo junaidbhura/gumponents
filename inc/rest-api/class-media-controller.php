@@ -5,14 +5,14 @@
  * @package gumponents
  */
 
-namespace JB\Gumponents;
+namespace JB\Gumponents\RestApi;
 
 use WP_REST_Controller;
 
 /**
  * Class Rest.
  */
-class MediaRestController extends WP_REST_Controller {
+class MediaController extends WP_REST_Controller {
 
 	/**
 	 * Namespace.

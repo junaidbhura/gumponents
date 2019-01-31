@@ -24,9 +24,9 @@ function setup() {
  * Register REST endpoints.
  */
 function register_rest_endpoints() {
-	new Components\Relationship\PostsRestController();
-	new Components\Relationship\TaxonomiesRestController();
-	new MediaRestController();
+	new RestApi\Relationship\PostsController();
+	new RestApi\Relationship\TaxonomiesController();
+	new RestApi\MediaController();
 }
 
 /**
