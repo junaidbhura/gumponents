@@ -5,12 +5,22 @@ node_modules
 
 # Root.
 /*
+!.circleci
+!.bin
+!.tests
 !/assets
 !/inc
+!.editorconfig
+!.eslintignore
+!.eslintrc.json
 !.gitignore
+!.stylelintignore
+!.stylelintrc
 !composer.json
 !gumponents.php
 !README.md
 !package-lock.json
 !package.json
+!phpcs.xml
+!phpunit.xml.dist
 !webpack.config.js

@@ -89,7 +89,7 @@ $gumponent-relationship__modal-gutter: 16px;
 		&--loading,
 		&--disabled {
 
-			&:before {
+			&::before {
 				content: "";
 				position: absolute;
 				top: 0;

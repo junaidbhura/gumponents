@@ -2,6 +2,7 @@
  * Data Store.
  */
 
+import wp from 'wp';
 import unionWith from 'lodash/unionWith';
 import isEqual from 'lodash/isEqual';
 
@@ -80,11 +81,11 @@ const getItems = ( state, ids, type ) => {
 			return [];
 	}
 
-	return new Promise( resolve => {
-		let items   = [];
-		let toFetch = [];
+	return new Promise( ( resolve ) => {
+		let items = [];
+		const toFetch = [];
 		ids.map( ( id, index ) => {
-			let cached = hayStack.find( item => item.id === id );
+			const cached = hayStack.find( ( item ) => item.id === id );
 			if ( cached ) {
 				items[ index ] = cached;
 			} else {
@@ -101,12 +102,12 @@ const getItems = ( state, ids, type ) => {
 				},
 				method: 'post',
 			} )
-			.then( results => {
-				if ( 0 !== results.length ) {
-					items = unionWith( items, results, isEqual );
-				}
-				resolve( items );
-			} )
+				.then( ( results ) => {
+					if ( 0 !== results.length ) {
+						items = unionWith( items, results, isEqual );
+					}
+					resolve( items );
+				} );
 		} else {
 			resolve( items );
 		}

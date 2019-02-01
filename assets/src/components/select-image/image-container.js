@@ -11,7 +11,6 @@ const {
 const { __ } = wp.i18n;
 
 class ImageContainer extends React.Component {
-
 	constructor( props ) {
 		super( props );
 
@@ -38,7 +37,7 @@ class ImageContainer extends React.Component {
 
 	render() {
 		const { image } = this.state;
-		const { open, placeholder, onRemove }  = this.props;
+		const { open, placeholder, onRemove } = this.props;
 
 		return (
 			<span className="gumponents-select-image__container">
@@ -62,13 +61,14 @@ class ImageContainer extends React.Component {
 								label={ __( 'Remove Image' ) }
 							/>
 						</div>
-						<img onClick={ open } src={ image.src } className="gumponents-select-image__img" />
+						<a href="#" onClick={ open }>
+							<img src={ image.src } alt="" className="gumponents-select-image__img" />
+						</a>
 					</div>
 				}
 			</span>
 		);
 	}
-
 }
 
 export default ImageContainer;

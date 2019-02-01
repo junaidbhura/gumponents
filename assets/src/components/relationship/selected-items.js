@@ -13,7 +13,6 @@ const {
 } = wp.components;
 
 class SelectedItems extends React.Component {
-
 	constructor( props ) {
 		super( props );
 
@@ -42,7 +41,7 @@ class SelectedItems extends React.Component {
 			return;
 		}
 
-		const newItems    = Array.from( this.state.items );
+		const newItems = Array.from( this.state.items );
 		const [ removed ] = newItems.splice( result.source.index, 1 );
 		newItems.splice( result.destination.index, 0, removed );
 
@@ -62,7 +61,7 @@ class SelectedItems extends React.Component {
 		return (
 			<DragDropContext onDragEnd={ this.onDragEnd }>
 				<Droppable droppableId="selected-items">
-					{ provided => (
+					{ ( provided ) => (
 						<ul
 							className={ classnames( 'gumponent-relationship__items', ( loading ? 'gumponent-relationship__items--loading' : null ) ) }
 							ref={ provided.innerRef }
@@ -73,8 +72,8 @@ class SelectedItems extends React.Component {
 							{
 								items.map( ( item, index ) => {
 									return (
-										<Draggable draggableId={ item.id } index={ index }>
-											{ provided => (
+										<Draggable draggableId={ item.id } index={ index } key={ index }>
+											{ ( provided ) => (
 												<li
 													className="gumponent-relationship__items__item"
 													ref={ provided.innerRef }
@@ -83,7 +82,7 @@ class SelectedItems extends React.Component {
 												>
 													<a
 														href="#"
-														onClick={ e => {
+														onClick={ ( e ) => {
 															e.preventDefault();
 															this.props.onUnselected( item );
 														} }
@@ -103,7 +102,6 @@ class SelectedItems extends React.Component {
 			</DragDropContext>
 		);
 	}
-
 }
 
 export default SelectedItems;

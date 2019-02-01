@@ -8,7 +8,6 @@ const {
 } = wp.components;
 
 class SearchItems extends React.Component {
-
 	constructor( props ) {
 		super( props );
 
@@ -34,7 +33,7 @@ class SearchItems extends React.Component {
 	}
 
 	componentDidUpdate( prevProps ) {
-		let newState = {};
+		const newState = {};
 
 		if ( prevProps.loading !== this.props.loading ) {
 			newState.loading = this.props.loading;
@@ -68,15 +67,16 @@ class SearchItems extends React.Component {
 					<Spinner />
 				}
 				{
-					items.map( item => {
-						const itemAlreadySelected = selected.find( sel => sel.id === item.id );
+					items.map( ( item ) => {
+						const itemAlreadySelected = selected.find( ( sel ) => sel.id === item.id );
 						return (
 							<li
-								className={ classnames( 'gumponent-relationship__items__item', itemAlreadySelected ? 'gumponent-relationship__items__item--selected': null ) }
+								key={ item.id }
+								className={ classnames( 'gumponent-relationship__items__item', itemAlreadySelected ? 'gumponent-relationship__items__item--selected' : null ) }
 							>
 								<a
 									href="#"
-									onClick={ e => {
+									onClick={ ( e ) => {
 										e.preventDefault();
 										if ( ! itemAlreadySelected ) {
 											this.props.onSelected( item );
@@ -90,7 +90,6 @@ class SearchItems extends React.Component {
 			</ul>
 		);
 	}
-
 }
 
 export default SearchItems;

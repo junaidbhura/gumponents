@@ -23,7 +23,6 @@ const {
 } = wp.editor;
 
 class ImageControl extends React.Component {
-
 	constructor( props ) {
 		super( props );
 
@@ -38,7 +37,7 @@ class ImageControl extends React.Component {
 			this.setState( {
 				id: this.props.value,
 			} );
-			this.props.getMedia.then( media => {
+			this.props.getMedia.then( ( media ) => {
 				this.setState( {
 					media,
 				} );
@@ -47,7 +46,7 @@ class ImageControl extends React.Component {
 		}
 	}
 
-	componentDidUpdate( prevProps, prevState ) {
+	componentDidUpdate( prevProps ) {
 		if ( prevProps.media !== this.props.media ) {
 			this.setState( {
 				media: this.props.media,
@@ -88,7 +87,8 @@ class ImageControl extends React.Component {
 
 	render() {
 		const { id, media } = this.state;
-		let { label, help, selectLabel, removeLabel } = this.props;
+		const { label, help } = this.props;
+		let { selectLabel, removeLabel } = this.props;
 		const imageDetails = this.getImageDetails( media );
 
 		if ( ! selectLabel ) {
@@ -136,7 +136,7 @@ class ImageControl extends React.Component {
 						{ media &&
 							<MediaUpload
 								title={ selectLabel }
-								onSelect={ media => onSelectImage( media ) }
+								onSelect={ ( media ) => onSelectImage( media ) }
 								type="image"
 								value={ id }
 								render={ ( { open } ) => (
@@ -146,7 +146,7 @@ class ImageControl extends React.Component {
 												naturalWidth={ imageDetails.width }
 												naturalHeight={ imageDetails.height }
 											>
-												<img src={ imageDetails.src } />
+												<img src={ imageDetails.src } alt="" />
 											</ResponsiveWrapper>
 										}
 									</Button>
@@ -163,7 +163,7 @@ class ImageControl extends React.Component {
 				{ ! media &&
 					<MediaUpload
 						title={ selectLabel }
-						onSelect={ media => onSelectImage( media ) }
+						onSelect={ ( media ) => onSelectImage( media ) }
 						type="image"
 						render={ ( { open } ) => (
 							<Button
@@ -179,7 +179,6 @@ class ImageControl extends React.Component {
 			</BaseControl>
 		);
 	}
-
 }
 
 export default withSelect( ( select, ownProps ) => {
@@ -189,7 +188,7 @@ export default withSelect( ( select, ownProps ) => {
 	return {
 		getMedia: value ? getMedia( value ) : null,
 	};
-} )( withDispatch( ( dispatch, ownProps ) => {
+} )( withDispatch( ( dispatch ) => {
 	return {
 		onSetMedia( media ) {
 			dispatch( 'gumponents/media' ).setMedia( media );
