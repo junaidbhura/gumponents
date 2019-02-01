@@ -5,6 +5,9 @@ node_modules
 
 # Root.
 /*
+!.circleci
+!.bin
+!.tests
 !/assets
 !/inc
 !.editorconfig
@@ -18,4 +21,6 @@ node_modules
 !README.md
 !package-lock.json
 !package.json
+!phpcs.xml
+!phpunit.xml.dist
 !webpack.config.js
