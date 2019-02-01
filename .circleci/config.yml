@@ -3,8 +3,6 @@ workflows:
   main:
     jobs:
       - php56-build
-      - php70-build
-      - php71-build
       - php72-build
 
 version: 2
@@ -75,18 +73,6 @@ jobs:
             phpunit
             WP_MULTISITE=1 phpunit
             SKIP_DB_CREATE=true
-
-  php70-build:
-    <<: *php_job
-    docker:
-      - image: circleci/php:7.0
-      - image: *mysql_image
-
-  php71-build:
-    <<: *php_job
-    docker:
-      - image: circleci/php:7.1
-      - image: *mysql_image
 
   php72-build:
     <<: *php_job

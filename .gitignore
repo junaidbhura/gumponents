@@ -21,6 +21,6 @@ node_modules
 !README.md
 !package-lock.json
 !package.json
-!phpcs.xml
+!phpcs.xml.dist
 !phpunit.xml.dist
 !webpack.config.js
