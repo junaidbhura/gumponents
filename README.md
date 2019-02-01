@@ -4,119 +4,32 @@
 
 # Super useful Gutenberg components for WordPress.
 
-Gumponents are a bunch of Gutenberg components, built in React, which are meant to be used by WordPress developers while building Gutenberg blocks.
+Gumponents offer some crucial missing Gutenberg components, essential to create advanced blocks.
 
-They are not blocks, rather, what you would use to build advanced blocks.
+Individual Gumponents aim to be depracated over time, when components similar or better land in WordPress core.
 
-**Please note**: Gumponents may be depracated over time, if something similar or better lands in WordPress core! It is still in beta, so please use accordingly!
+## Quick Links
 
-## Usage
-
-Download and enable this plugin. You now have Gumponents! 🎉
-
-Make sure to add `gumponents` as a dependency when you're enqueueing your editor assets:
-
-```php
-wp_enqueue_script(
-    'your-script',
-    plugins_url( 'path/to/blocks.js', __FILE__ ),
-    array(
-        ...
-        'gumponents', // That!
-        ...
-    ),
-);
-```
-
-When you do this, you get a global `gumponents` object to use in your JavaScript like so:
-
-```js
-const { PostRelationshipControl } = gumponents.components;
-```
+[Documentation](https://github.com/junaidbhura/gumponents/wiki) | [Setup](https://github.com/junaidbhura/gumponents/wiki/Setup) | [Roadmap](https://github.com/junaidbhura/gumponents/projects/1)
 
 ## Components
 
-Here are the components that are currently part of this bundle, with more on the way.
+### PostRelationshipControl
 
-### Relationship
+![post-relationship-control](https://user-images.githubusercontent.com/2512525/52121336-368dd180-266f-11e9-9cdd-37317a83a7e3.gif)
 
-Choose post types or taxonomies to relate to your post!
+### TaxonomyRelationshipControl
 
-![Relationship - Posts](https://user-images.githubusercontent.com/2512525/49289288-449a6700-f4f3-11e8-8ac3-2b56b72c7e41.gif)
+![taxonomy-relationship-control](https://user-images.githubusercontent.com/2512525/52122521-342d7680-2673-11e9-88d7-f15f33245d86.gif)
 
-#### Post type usage
+### FileControl
 
-An example of getting all posts in a custom post type `post` with associated taxonomy terms.
+![file-control](https://user-images.githubusercontent.com/2512525/52123616-9c318c00-2676-11e9-910e-15daf6e144da.gif)
 
-```js
-<PostRelationshipControl
-    postTypes="people"
-    taxonomies={ [ { people_roles: [ 'ceo', 'management' ] } ] }
-    value={ people.map( person => person.ID ) }
-    onSelect={ people => setAttributes( { people } ) }
-    buttonLabel="Select People"
-    help="Select people"
-    filter="people_meta"
-    max="2"
-/>
-```
+### ImageControl
 
-Notice that `filter` property? You can pass a custom filter to customize the results!
-
-The value of the filter property get's appended to two filters:
-
-#### `gumponents_posts_relationship_query`
-This filters the `WP_Query` before executing it.
-
-#### `gumponents_posts_relationship_results`
-This filters the results before sending it to the editor.
-
-For example:
-
-```php
-add_filter( 'gumponents_posts_relationship_results_people_meta', function ( $results ) {
-	if ( ! empty( $results ) ) {
-		foreach ( $results as $key => $result ) {
-			$results[ $key ]['value']->post_meta = array(
-				'designation' => get_post_meta( $result['id'], 'designation', true ),
-			);
-		}
-	}
-	return $results;
-} );
-```
-
-You now have post meta along with the posts to work with in the editor 😎
-
-![Relationship - Taxonomy](https://user-images.githubusercontent.com/2512525/49289292-46642a80-f4f3-11e8-8fe7-2b620c86ffd4.gif)
-
-#### Taxonomy usage
-
-An example of getting all taxonomy terms in a custom taxonomy:
-
-```js
-<TaxonomyRelationshipControl
-    minimal
-    taxonomies="people_roles"
-    value={ taxonomy }
-    onSelect={ taxonomy => {
-        setAttributes( {
-            taxonomy: taxonomy.map( tax => tax.term_id ),
-        } );
-    } }
-/>
-```
-
-Notice the `minimal` property? That's if you just want the button, without the selected items displayed!
+![image-control](https://user-images.githubusercontent.com/2512525/52124187-583f8680-2678-11e9-8119-fbf842b88848.gif)
 
 ### SelectImage
 
-This provides an easy way to select and work with images in the editor. (More documentation to follow)
-
-Example usage:
-
-```js
-<SelectImage
-    placeholder="Select an image"
-/>
-``` 
+![select-image](https://user-images.githubusercontent.com/2512525/52124683-f41dc200-2679-11e9-8466-485d7e4b7d27.gif)
