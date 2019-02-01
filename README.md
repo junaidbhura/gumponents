@@ -2,11 +2,13 @@
 
 <img src="https://user-images.githubusercontent.com/2512525/52129802-685f6200-2688-11e9-908e-494cabd016d9.png" width="600" alt="Gumponents!">
 
-# Super useful Gutenberg components for WordPress.
+# Essential Gutenberg components for WordPress.
 
-Gumponents offer some crucial missing Gutenberg components, essential to create advanced blocks.
+Gumponents offer some **crucial** missing Gutenberg components, essential to create advanced blocks. 🚀
 
-Individual Gumponents aim to be depracated over time, when components similar or better land in WordPress core.
+Individual Gumponents aim to be deprecated over time, when components similar or better land in WordPress core.
+
+They are not blocks, but rather, what you would use to build advanced blocks.
 
 ## Quick Links
 
@@ -17,6 +19,8 @@ Individual Gumponents aim to be depracated over time, when components similar or
 ### PostRelationshipControl
 
 ![post-relationship-control](https://user-images.githubusercontent.com/2512525/52121336-368dd180-266f-11e9-9cdd-37317a83a7e3.gif)
+
+#### Example
 
 ```js
 import { PostRelationshipControl } = gumponents.components;
@@ -38,6 +42,8 @@ import { PostRelationshipControl } = gumponents.components;
 
 ![taxonomy-relationship-control](https://user-images.githubusercontent.com/2512525/52122521-342d7680-2673-11e9-88d7-f15f33245d86.gif)
 
+#### Example
+
 ```js
 import { TaxonomyRelationshipControl } = gumponents.components;
 
@@ -56,6 +62,8 @@ import { TaxonomyRelationshipControl } = gumponents.components;
 
 ![file-control](https://user-images.githubusercontent.com/2512525/52123616-9c318c00-2676-11e9-910e-15daf6e144da.gif)
 
+#### Example
+
 ```js
 import { FileControl } = gumponents.components;
 
@@ -71,6 +79,8 @@ import { FileControl } = gumponents.components;
 ### ImageControl
 
 ![image-control](https://user-images.githubusercontent.com/2512525/52124187-583f8680-2678-11e9-8119-fbf842b88848.gif)
+
+#### Example
 
 ```js
 import { ImageControl } = gumponents.components;
@@ -88,6 +98,8 @@ import { ImageControl } = gumponents.components;
 ### SelectImage
 
 ![select-image](https://user-images.githubusercontent.com/2512525/52124683-f41dc200-2679-11e9-8466-485d7e4b7d27.gif)
+
+#### Example
 
 ```js
 import { SelectImage } = gumponents.components;
