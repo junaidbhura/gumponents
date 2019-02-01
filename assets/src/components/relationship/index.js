@@ -101,7 +101,7 @@ class Relationship extends React.Component {
 								} else if ( index > 3 ) {
 									return;
 								}
-								return <li>✓ { item.label }</li>
+								return <li key={ index }>✓ { item.label }</li>;
 							} )
 						}
 						{ ! loading && 0 === items.length &&

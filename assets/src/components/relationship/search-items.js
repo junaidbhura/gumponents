@@ -67,10 +67,11 @@ class SearchItems extends React.Component {
 					<Spinner />
 				}
 				{
-					items.map( item => {
+					items.map( ( item ) => {
 						const itemAlreadySelected = selected.find( ( sel ) => sel.id === item.id );
 						return (
 							<li
+								key={ item.id }
 								className={ classnames( 'gumponent-relationship__items__item', itemAlreadySelected ? 'gumponent-relationship__items__item--selected' : null ) }
 							>
 								<a

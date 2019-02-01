@@ -72,7 +72,7 @@ class SelectedItems extends React.Component {
 							{
 								items.map( ( item, index ) => {
 									return (
-										<Draggable draggableId={ item.id } index={ index }>
+										<Draggable draggableId={ item.id } index={ index } key={ index }>
 											{ ( provided ) => (
 												<li
 													className="gumponent-relationship__items__item"

@@ -61,7 +61,9 @@ class ImageContainer extends React.Component {
 								label={ __( 'Remove Image' ) }
 							/>
 						</div>
-						<img onClick={ open } src={ image.src } alt="" className="gumponents-select-image__img" />
+						<a href="#" onClick={ open }>
+							<img src={ image.src } alt="" className="gumponents-select-image__img" />
+						</a>
 					</div>
 				}
 			</span>
