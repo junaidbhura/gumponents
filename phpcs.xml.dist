@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 <ruleset name="WordPress Coding Standards">
-	<rule ref="WordPress-Extra" />
+	<rule ref="WordPress-Extra">
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+		<exclude name="PEAR.Functions.FunctionCallSignature.MultipleArguments" />
+		<exclude name="PEAR.Functions.FunctionCallSignature.CloseBracketLine" />
+		<exclude name="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket" />
+		<exclude name="WordPress.Security.EscapeOutput.DeprecatedWhitelistCommentFound" />
+	</rule>
 	<rule ref="WordPress-Docs" />
 
 	<!-- Check all PHP files in directory tree by default. -->

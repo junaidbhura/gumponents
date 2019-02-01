@@ -83,7 +83,7 @@ class TaxonomiesController extends Controller {
 	 * @param array $params API params.
 	 * @return WP_REST_Response
 	 */
-	function get_initial_items( $params ) {
+	public function get_initial_items( $params ) {
 		$results = get_terms( array(
 			'include'    => $params['items'],
 			'orderby'    => 'include',
