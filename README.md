@@ -1,6 +1,6 @@
 [![CircleCI](https://circleci.com/gh/junaidbhura/gumponents.svg?style=svg)](https://circleci.com/gh/junaidbhura/gumponents)
 
-<img src="https://user-images.githubusercontent.com/2512525/49289206-01d88f00-f4f3-11e8-8a79-efe8e5a2fcb4.png" width="600" alt="Gumponents!">
+<img src="https://user-images.githubusercontent.com/2512525/52129802-685f6200-2688-11e9-908e-494cabd016d9.png" width="600" alt="Gumponents!">
 
 # Super useful Gutenberg components for WordPress.
 
@@ -10,7 +10,7 @@ Individual Gumponents aim to be depracated over time, when components similar or
 
 ## Quick Links
 
-[Documentation](https://github.com/junaidbhura/gumponents/wiki) | [Setup](https://github.com/junaidbhura/gumponents/wiki/Setup) | [Roadmap](https://github.com/junaidbhura/gumponents/projects/1)
+[Documentation](https://github.com/junaidbhura/gumponents/wiki) | [Roadmap](https://github.com/junaidbhura/gumponents/projects/1)
 
 ## Components
 
@@ -18,18 +18,93 @@ Individual Gumponents aim to be depracated over time, when components similar or
 
 ![post-relationship-control](https://user-images.githubusercontent.com/2512525/52121336-368dd180-266f-11e9-9cdd-37317a83a7e3.gif)
 
+```js
+import { PostRelationshipControl } = gumponents.components;
+
+<PostRelationshipControl
+	label="Select people"
+	help="Select people"
+	postTypes="people"
+	taxonomies={ [ { people_roles: [ 'ceo', 'management' ] } ] }
+	value={ people.map( person => person.ID ) }
+	onSelect={ people => setAttributes( { people } ) }
+	buttonLabel="Select People"
+	filter="people_meta"
+	max="1"
+/>
+```
+
 ### TaxonomyRelationshipControl
 
 ![taxonomy-relationship-control](https://user-images.githubusercontent.com/2512525/52122521-342d7680-2673-11e9-88d7-f15f33245d86.gif)
+
+```js
+import { TaxonomyRelationshipControl } = gumponents.components;
+
+<TaxonomyRelationshipControl
+	label="Select people roles"
+	taxonomies="people_roles"
+	value={ taxonomy.map( tax => tax.term_id ) }
+	onSelect={ taxonomy => setAttributes( { taxonomy } ) }
+	buttonLabel="Select People Roles"
+	filter="people_meta"
+	max="1"
+/>
+```
 
 ### FileControl
 
 ![file-control](https://user-images.githubusercontent.com/2512525/52123616-9c318c00-2676-11e9-910e-15daf6e144da.gif)
 
+```js
+import { FileControl } = gumponents.components;
+
+<FileControl
+	label="Choose file"
+	selectLabel="Choose video"
+	removeLabel="Remove this video"
+	onChange={ file => setAttributes( { file: file ? JSON.stringify( { id: file.id, name: file.filename } ) : null } ) }
+	value={ id }
+/>
+```
+
 ### ImageControl
 
 ![image-control](https://user-images.githubusercontent.com/2512525/52124187-583f8680-2678-11e9-8119-fbf842b88848.gif)
 
+```js
+import { ImageControl } = gumponents.components;
+
+<ImageControl
+	label="Choose image"
+	selectLabel="Choose image"
+	removeLabel="Remove this image"
+	size="thumbnail"
+	value={ file ? parsedFile.id : null }
+	onChange={ ( image, media ) => setAttributes( { image: image ? JSON.stringify( { id: image.id, url: image.src } ) : null } ) }
+/>
+```
+
 ### SelectImage
 
 ![select-image](https://user-images.githubusercontent.com/2512525/52124683-f41dc200-2679-11e9-8466-485d7e4b7d27.gif)
+
+```js
+import { SelectImage } = gumponents.components;
+
+...
+
+attributes: {
+	image: {
+		type: 'string',
+	},
+},
+
+...
+
+<SelectImage
+	image={ image }
+	size="full"
+	onChange={ image => setAttributes( { image } ) }
+/>
+```
