@@ -1,7 +1,7 @@
 {
   "name": "gumponents",
   "version": "1.0.0",
-  "description": "Advanced Gutenberg components for WordPress.",
+  "description": "Essential Gutenberg components for WordPress.",
   "main": "blocks.js",
   "scripts": {
     "build": "webpack --config ./webpack.config.js --mode production --env=production",

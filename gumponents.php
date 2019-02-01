@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Gumponents
- * Description: Advanced Gutenberg components for WordPress.
+ * Description: Essential Gutenberg components for WordPress.
  * Author: Junaid Bhura
  * Author URI: https://junaidbhura.com
  * Version: 0.1.0
