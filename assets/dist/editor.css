@@ -4,5 +4,5 @@
 
 .gumponents-image-control{padding:0}.gumponents-image-control__preview{margin-bottom:8px;display:block;width:100%;padding:0;transition:all 0.1s ease-out}.gumponents-image-control .components-spinner{float:none;margin:0}.gumponents-image-control .components-responsive-wrapper__content{width:100%;height:auto}
 
-.gumponents-file-control__details{margin:8px 0}.gumponents-file-control .components-spinner{float:none;margin:0}.gumponents-file-control__details-container{display:flex}.gumponents-file-control__icon{width:24px;margin-right:8px}.gumponents-file-control p{margin:0}
+.gumponents-file-control__details{margin:8px 0}.gumponents-file-control .components-spinner{float:none;margin:0}.gumponents-file-control__details-container{display:flex}.gumponents-file-control__icon{margin-right:8px}.gumponents-file-control__icon img{width:24px;max-width:none}.gumponents-file-control p{margin:0}
 

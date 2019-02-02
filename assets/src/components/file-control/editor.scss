@@ -14,8 +14,12 @@
 	}
 
 	&__icon {
-		width: 24px;
 		margin-right: 8px;
+
+		img {
+			width: 24px;
+			max-width: none;
+		}
 	}
 
 	p {
