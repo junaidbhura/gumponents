@@ -25,14 +25,14 @@ class SelectImage extends React.Component {
 	componentDidMount() {
 		if ( this.props.image ) {
 			this.setState( {
-				image: JSON.parse( this.props.image ),
+				image: this.props.image,
 			} );
 		}
 	}
 
 	componentDidUpdate( prevProps, prevState ) {
 		if ( prevState.image !== this.state.image && this.props.onChange ) {
-			this.props.onChange( JSON.stringify( this.state.image ) );
+			this.props.onChange( this.state.image );
 		}
 		if ( prevState.media !== this.state.media && this.props.onMedia ) {
 			this.props.onMedia( this.state.media );
