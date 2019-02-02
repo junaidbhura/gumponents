@@ -3,6 +3,7 @@ import './editor.scss';
 import wp from 'wp';
 import React from 'react';
 import has from 'lodash/has';
+import isObject from 'lodash/isObject';
 
 const {
 	withSelect,
@@ -28,29 +29,32 @@ class ImageControl extends React.Component {
 
 		this.state = {
 			id: null,
+			value: null,
 			media: null,
 		};
 	}
 
 	componentDidMount() {
 		if ( this.props.value ) {
-			this.setState( {
-				id: this.props.value,
-			} );
-			this.props.getMedia.then( ( media ) => {
+			if ( ! isObject( this.props.value ) ) {
 				this.setState( {
-					media,
+					id: this.props.value,
 				} );
-				this.props.onSetMedia( media );
-			} );
-		}
-	}
-
-	componentDidUpdate( prevProps ) {
-		if ( prevProps.media !== this.props.media ) {
-			this.setState( {
-				media: this.props.media,
-			} );
+				this.props.getMedia.then( ( media ) => {
+					this.setState( {
+						id: media.id,
+						value: this.getImageDetails( media ),
+						media,
+					} );
+					this.props.onSetMedia( media );
+				} );
+			} else {
+				this.setState( {
+					id: this.props.value.id,
+					value: this.props.value,
+					media: null,
+				} );
+			}
 		}
 	}
 
@@ -86,10 +90,9 @@ class ImageControl extends React.Component {
 	}
 
 	render() {
-		const { id, media } = this.state;
+		const { id, value } = this.state;
 		const { label, help } = this.props;
 		let { selectLabel, removeLabel } = this.props;
-		const imageDetails = this.getImageDetails( media );
 
 		if ( ! selectLabel ) {
 			selectLabel = __( 'Select image' );
@@ -99,21 +102,25 @@ class ImageControl extends React.Component {
 		}
 
 		const onSelectImage = ( media ) => {
+			const value = this.getImageDetails( media );
+
 			this.setState( {
 				id: media.id,
+				value,
 				media,
 			} );
 
 			this.props.onSetMedia( media );
 
 			if ( this.props.onChange ) {
-				this.props.onChange( this.getImageDetails( media ), media );
+				this.props.onChange( value, media );
 			}
 		};
 
 		const onRemoveImage = () => {
 			this.setState( {
 				id: null,
+				value: null,
 				media: null,
 			} );
 
@@ -130,10 +137,10 @@ class ImageControl extends React.Component {
 			>
 				{ id &&
 					<div className="gumponents-image-control__preview">
-						{ ! media &&
+						{ ! value &&
 							<Spinner />
 						}
-						{ media &&
+						{ value &&
 							<MediaUpload
 								title={ selectLabel }
 								onSelect={ ( media ) => onSelectImage( media ) }
@@ -141,26 +148,24 @@ class ImageControl extends React.Component {
 								value={ id }
 								render={ ( { open } ) => (
 									<Button className="gumponents-image-control__preview" onClick={ open }>
-										{ media &&
-											<ResponsiveWrapper
-												naturalWidth={ imageDetails.width }
-												naturalHeight={ imageDetails.height }
-											>
-												<img src={ imageDetails.src } alt="" />
-											</ResponsiveWrapper>
-										}
+										<ResponsiveWrapper
+											naturalWidth={ value.width }
+											naturalHeight={ value.height }
+										>
+											<img src={ value.src } alt="" />
+										</ResponsiveWrapper>
 									</Button>
 								) }
 							/>
 						}
 					</div>
 				}
-				{ media &&
+				{ value &&
 					<Button onClick={ onRemoveImage } isLink isDestructive>
 						{ removeLabel }
 					</Button>
 				}
-				{ ! media &&
+				{ ! value &&
 					<MediaUpload
 						title={ selectLabel }
 						onSelect={ ( media ) => onSelectImage( media ) }
