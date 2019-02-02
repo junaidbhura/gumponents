@@ -67,12 +67,23 @@ import { TaxonomyRelationshipControl } = gumponents.components;
 ```js
 import { FileControl } = gumponents.components;
 
+...
+
+attributes: {
+	file: {
+		type: 'object',
+		default: null,
+	},
+},
+
+...
+
 <FileControl
 	label="Choose file"
 	selectLabel="Choose video"
 	removeLabel="Remove this video"
-	onChange={ file => setAttributes( { file: file ? JSON.stringify( { id: file.id, name: file.filename } ) : null } ) }
-	value={ id }
+	onChange={ file => setAttributes( { file: file ? { id: file.id, name: file.filename } : null } ) }
+	value={ file ? file.id : null }
 />
 ```
 
@@ -85,13 +96,24 @@ import { FileControl } = gumponents.components;
 ```js
 import { ImageControl } = gumponents.components;
 
+...
+
+attributes: {
+	image: {
+		type: 'object',
+		default: null,
+	},
+},
+
+...
+
 <ImageControl
 	label="Choose image"
 	selectLabel="Choose image"
 	removeLabel="Remove this image"
 	size="thumbnail"
-	value={ file ? parsedFile.id : null }
-	onChange={ ( image, media ) => setAttributes( { image: image ? JSON.stringify( { id: image.id, url: image.src } ) : null } ) }
+	value={ image }
+	onChange={ ( image, media ) => setAttributes( { image } ) }
 />
 ```
 
@@ -108,7 +130,8 @@ import { SelectImage } = gumponents.components;
 
 attributes: {
 	image: {
-		type: 'string',
+		type: 'object',
+		default: null,
 	},
 },
 
@@ -116,6 +139,7 @@ attributes: {
 
 <SelectImage
 	image={ image }
+	placeholder="Choose an image"
 	size="full"
 	onChange={ image => setAttributes( { image } ) }
 />
