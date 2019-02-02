@@ -18,6 +18,7 @@ node_modules
 !.stylelintrc
 !composer.json
 !gumponents.php
+!LICENSE
 !README.md
 !package-lock.json
 !package.json
