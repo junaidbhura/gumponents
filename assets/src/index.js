@@ -6,6 +6,7 @@ import './data/relationship';
 import './data/media';
 
 import Img from './components/img';
+import Figure from './components/figure';
 import SelectImage from './components/select-image';
 import PostRelationshipControl from './components/post-relationship-control';
 import TaxonomyRelationshipControl from './components/taxonomy-relationship-control';
@@ -16,6 +17,7 @@ window.gumponents = {
 	// Components.
 	components: {
 		Img,
+		Figure,
 		SelectImage,
 		PostRelationshipControl,
 		TaxonomyRelationshipControl,

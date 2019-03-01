@@ -37,7 +37,7 @@ class ImageContainer extends React.Component {
 
 	render() {
 		const { image } = this.state;
-		const { open, placeholder, onRemove } = this.props;
+		const { open, placeholder, onRemove, onEdit } = this.props;
 
 		return (
 			<span className="gumponents-select-image__container">
@@ -54,6 +54,12 @@ class ImageContainer extends React.Component {
 				{ ! isEmpty( image ) &&
 					<div className="gumponents-select-image__image-container">
 						<div className="gumponents-select-image__inline-menu">
+							<IconButton
+								icon="edit"
+								onClick={ onEdit }
+								className="gumponents-select-image__inline-menu__edit"
+								label={ __( 'Edit Image' ) }
+							/>
 							<IconButton
 								icon="no-alt"
 								onClick={ onRemove }

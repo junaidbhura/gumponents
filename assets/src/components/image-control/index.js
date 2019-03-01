@@ -85,6 +85,8 @@ class ImageControl extends React.Component {
 			width,
 			height,
 			alt: media.alt,
+			caption: media.caption,
+			title: media.title,
 			size,
 		};
 	}

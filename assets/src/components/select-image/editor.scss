@@ -66,13 +66,17 @@
 		position: absolute;
 		top: 0;
 		right: 0;
-		background-color: #0085ba;
 		display: inline-flex;
 		z-index: 20;
 
 		.components-button {
 			padding: 0;
 			color: #fff;
+			background-color: #0085ba;
+
+			+ .components-button {
+				margin-left: 5px;
+			}
 		}
 	}
 }
