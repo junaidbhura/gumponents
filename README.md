@@ -119,7 +119,7 @@ attributes: {
 
 ### SelectImage
 
-![select-image](https://user-images.githubusercontent.com/2512525/52124683-f41dc200-2679-11e9-8466-485d7e4b7d27.gif)
+![select-image](https://user-images.githubusercontent.com/2512525/53619432-5220d380-3c3f-11e9-8a93-d0504d9fc9ee.gif)
 
 #### Example
 
@@ -141,6 +141,9 @@ attributes: {
 	image={ image }
 	placeholder="Choose an image"
 	size="full"
-	onChange={ image => setAttributes( { image } ) }
+	onChange={ ( image, media ) => {
+		setAttributes( { image: null } ); // The block editor doesn't update objects correctly? 🤷‍♂️
+		setAttributes( { image } );
+	} }
 />
 ```
