@@ -23,6 +23,7 @@ class Img extends React.Component {
 				width={ image.width }
 				height={ image.height }
 				alt={ image.alt }
+				title={ ! isEmpty( image.title ) ? image.title : null }
 			/>
 		);
 	}

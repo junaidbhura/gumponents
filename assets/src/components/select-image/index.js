@@ -8,9 +8,17 @@ import has from 'lodash/has';
 
 import ImageContainer from './image-container';
 
+const { __ } = wp.i18n;
+
 const {
 	MediaUpload,
 } = wp.editor;
+
+const {
+	Modal,
+	TextControl,
+	TextareaControl,
+} = wp.components;
 
 class SelectImage extends React.Component {
 	constructor( props ) {
@@ -19,6 +27,7 @@ class SelectImage extends React.Component {
 		this.state = {
 			image: {},
 			media: {},
+			modalOpen: false,
 		};
 	}
 
@@ -32,15 +41,22 @@ class SelectImage extends React.Component {
 
 	componentDidUpdate( prevProps, prevState ) {
 		if ( prevState.image !== this.state.image && this.props.onChange ) {
-			this.props.onChange( this.state.image );
+			this.props.onChange( this.state.image, this.state.media );
 		}
 		if ( prevState.media !== this.state.media && this.props.onMedia ) {
 			this.props.onMedia( this.state.media );
 		}
 	}
 
+	updateImage( newImg ) {
+		this.setState( { image: newImg } );
+		if ( this.props.onChange ) {
+			this.props.onChange( newImg, this.state.media );
+		}
+	}
+
 	render() {
-		const { image } = this.state;
+		const { image, modalOpen } = this.state;
 
 		const {
 			className,
@@ -83,6 +99,8 @@ class SelectImage extends React.Component {
 								width: media.sizes[ size ].width,
 								height: media.sizes[ size ].height,
 								alt: media.alt,
+								caption: media.caption,
+								title: media.title,
 								size: size,
 							},
 							media,
@@ -96,9 +114,44 @@ class SelectImage extends React.Component {
 							image={ image }
 							open={ open }
 							onRemove={ () => this.setState( { image: {}, media: {} } ) }
+							onEdit={ () => this.setState( { modalOpen: true } ) }
 						/>
 					) }
 				/>
+				{ modalOpen &&
+					<Modal
+						title={ __( 'Edit Image', 'gumponents' ) }
+						className="gumponents-select-image__modal"
+						onRequestClose={ () => this.setState( { modalOpen: false } ) }>
+						<TextControl
+							label={ __( 'Alt Text', 'gumponents' ) }
+							value={ image.alt }
+							onChange={ ( alt ) => {
+								let newImg = image;
+								newImg.alt = alt;
+								this.updateImage( newImg );
+							} }
+						/>
+						<TextareaControl
+							label={ __( 'Caption', 'gumponents' ) }
+							value={ image.caption }
+							onChange={ ( caption ) => {
+								let newImg = image;
+								newImg.caption = caption;
+								this.updateImage( newImg );
+							} }
+						/>
+						<TextControl
+							label={ __( 'Title', 'gumponents' ) }
+							value={ image.title }
+							onChange={ ( title ) => {
+								let newImg = image;
+								newImg.title = title;
+								this.updateImage( newImg );
+							} }
+						/>
+					</Modal>
+				}
 			</div>
 		);
 	}
