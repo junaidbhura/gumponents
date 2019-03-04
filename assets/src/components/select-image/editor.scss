@@ -2,7 +2,6 @@
 	background-color: #f9f9f9;
 	overflow: hidden;
 	position: relative;
-	text-align: center;
 	height: 100px;
 
 	&--selected {
@@ -52,6 +51,7 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
+		text-align: center;
 
 		&__label {
 			margin-bottom: 0;

@@ -8,6 +8,10 @@ const {
 	IconButton,
 } = wp.components;
 
+const {
+	RichText,
+} = wp.editor;
+
 const { __ } = wp.i18n;
 
 class ImageContainer extends React.Component {
@@ -37,7 +41,7 @@ class ImageContainer extends React.Component {
 
 	render() {
 		const { image } = this.state;
-		const { open, placeholder, onRemove, onEdit } = this.props;
+		const { open, placeholder, showCaption, onRemove, onEdit, onCaptionEdit } = this.props;
 
 		return (
 			<span className="gumponents-select-image__container">
@@ -52,7 +56,7 @@ class ImageContainer extends React.Component {
 					</Placeholder>
 				}
 				{ ! isEmpty( image ) &&
-					<div className="gumponents-select-image__image-container">
+					<figure className="gumponents-select-image__image-container">
 						<div className="gumponents-select-image__inline-menu">
 							<IconButton
 								icon="edit"
@@ -70,7 +74,23 @@ class ImageContainer extends React.Component {
 						<a href="#" onClick={ open }>
 							<img src={ image.src } alt="" className="gumponents-select-image__img" />
 						</a>
-					</div>
+						{ ! isEmpty( image ) && showCaption &&
+							<figcaption className="gumponents-select-image__caption">
+								<RichText
+									value={ image.caption }
+									onChange={ ( caption ) => {
+										let updatedImage = image;
+										updatedImage.caption = caption;
+										this.setState( { image: updatedImage } );
+										onCaptionEdit( updatedImage );
+									} }
+									placeholder={ __( 'Caption...', 'gumponents' ) }
+									multiline={ false }
+									formattingControls={ [] }
+								/>
+							</figcaption>
+						}
+					</figure>
 				}
 			</span>
 		);

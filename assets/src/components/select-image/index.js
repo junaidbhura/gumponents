@@ -61,6 +61,7 @@ class SelectImage extends React.Component {
 		const {
 			className,
 			placeholder,
+			showCaption,
 		} = this.props;
 
 		let {
@@ -113,8 +114,10 @@ class SelectImage extends React.Component {
 							placeholder={ placeholder }
 							image={ image }
 							open={ open }
+							showCaption={ showCaption }
 							onRemove={ () => this.setState( { image: {}, media: {} } ) }
 							onEdit={ () => this.setState( { modalOpen: true } ) }
+							onCaptionEdit={ ( newImg ) => this.updateImage( newImg ) }
 						/>
 					) }
 				/>
