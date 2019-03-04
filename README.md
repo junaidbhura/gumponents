@@ -145,5 +145,6 @@ attributes: {
 		setAttributes( { image: null } ); // The block editor doesn't update objects correctly? 🤷‍♂️
 		setAttributes( { image } );
 	} }
+	showCaption={ false }
 />
 ```
