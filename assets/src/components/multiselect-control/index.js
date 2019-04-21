@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import wp from 'wp';
 import uniqBy from 'lodash/uniqBy';
 import find from 'lodash/find';
