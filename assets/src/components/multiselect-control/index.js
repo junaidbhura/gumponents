@@ -4,6 +4,8 @@ import uniqBy from 'lodash/uniqBy';
 import find from 'lodash/find';
 import forEach from 'lodash/forEach';
 
+const { __ } = wp.i18n;
+
 const {
 	BaseControl,
 	FormTokenField,
@@ -68,7 +70,11 @@ class MultiSelectControl extends Component {
 	}
 
 	render() {
-		const { help, label } = this.props;
+		const { help, max, placeholder, onInputChange, onFocus } = this.props;
+		let { label } = this.props;
+		if ( ! label ) {
+			label = __( 'Select' );
+		}
 		return (
 			<BaseControl
 				help={ help }
@@ -78,6 +84,10 @@ class MultiSelectControl extends Component {
 					label={ label }
 					value={ this.state.value.map( ( val ) => val.title ) }
 					suggestions={ this.state.options.map( ( option ) => option.title ) }
+					maxLength={ max }
+					placeholder={ placeholder }
+					onInputChange={ onInputChange }
+					onFocus={ onFocus }
 					onChange={ this.onChange }
 				/>
 			</BaseControl>
