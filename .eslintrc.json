@@ -2,6 +2,8 @@
   "extends": [ "plugin:@wordpress/eslint-plugin/recommended" ],
   "rules": {
     "no-shadow": "off",
-    "jsx-a11y/anchor-is-valid": "off"
+    "jsx-a11y/anchor-is-valid": "off",
+    "prefer-const": "off",
+    "@wordpress/dependency-group": "off"
   }
 }

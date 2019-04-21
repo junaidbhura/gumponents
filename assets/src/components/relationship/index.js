@@ -38,7 +38,7 @@ class Relationship extends React.Component {
 			this.props.getInitialItems.then( ( items ) => {
 				this.setState( {
 					loading: false,
-					items: items,
+					items,
 				} );
 				this.props.onSetItems( items );
 			} );
@@ -99,7 +99,7 @@ class Relationship extends React.Component {
 								if ( 3 === index ) {
 									return <li>... { `${ items.length - 3 } ${ __( 'more' ) }` }</li>;
 								} else if ( index > 3 ) {
-									return;
+									return; // eslint-disable-line
 								}
 								return <li key={ index }>✓ { item.label }</li>;
 							} )

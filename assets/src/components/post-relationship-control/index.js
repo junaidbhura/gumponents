@@ -24,7 +24,7 @@ class PostRelationshipControl extends React.Component {
 								post_types: postTypes,
 								post_taxonomies: taxonomies,
 								search: query,
-								filter: filter,
+								filter,
 							},
 							method: 'post',
 						} ).then( ( results ) => resolve( results ) );
