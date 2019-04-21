@@ -1,9 +1,9 @@
 // External dependencies.
-const MiniCssExtractPlugin  = require( 'mini-css-extract-plugin' );
+const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 const WebpackNotifierPlugin = require( 'webpack-notifier' );
-const UglifyJsPlugin        = require( 'uglifyjs-webpack-plugin' );
+const UglifyJsPlugin = require( 'uglifyjs-webpack-plugin' );
 
-module.exports = env => {
+module.exports = ( env ) => {
 
 	// Build configuration.
 	let config = {
@@ -18,7 +18,7 @@ module.exports = env => {
 						babelrc: false,
 						presets: [
 							[
-								require( 'babel-preset-env' ),
+								'@babel/preset-env',
 								{
 									modules: false,
 									targets: { browsers: [ 'extends @wordpress/browserslist-config' ] },
@@ -26,9 +26,8 @@ module.exports = env => {
 							],
 						],
 						plugins: [
-							require( 'babel-plugin-transform-react-jsx' ),
-							require( 'babel-plugin-transform-class-properties' ),
-							require( 'babel-plugin-transform-object-rest-spread' ),
+							'@babel/plugin-transform-react-jsx',
+							'@babel/plugin-proposal-object-rest-spread',
 						],
 					},
 				},
