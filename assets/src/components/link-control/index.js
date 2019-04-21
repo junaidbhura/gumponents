@@ -78,12 +78,16 @@ class LinkControl extends Component {
 				</Button>
 				{ '' !== this.state.url &&
 					<div className="gumponents-link-control__preview">
-						<a href={ this.state.url }>
+						<a
+							href={ this.state.url }
+							target="_blank"
+						>
 							{ '' === this.state.text && this.state.url }
 							{ '' !== this.state.text && this.state.text }
 							{ false !== this.state.newWindow &&
 								<Icon
 									icon="external"
+									size={ 15 }
 								/>
 							}
 						</a>
@@ -92,6 +96,7 @@ class LinkControl extends Component {
 				{ this.state.modalOpen &&
 					<Modal
 						title={ modalTitle }
+						shouldCloseOnClickOutside={ false }
 						className="gumponents-link-control__modal"
 						onRequestClose={ () => this.setState( { modalOpen: false } ) }
 					>
@@ -109,6 +114,11 @@ class LinkControl extends Component {
 									if ( post && '' === this.state.text ) {
 										this.setState( {
 											text: post.title,
+										} );
+									} else if ( '' === url ) {
+										this.setState( {
+											text: '',
+											newWindow: false,
 										} );
 									}
 								} }

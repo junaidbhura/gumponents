@@ -2,9 +2,33 @@
  * URL Input.
  */
 
+.gumponents-link-control {
+
+	&__preview {
+		background-color: #fef8ee;
+		padding: 10px;
+		word-break: break-all;
+		margin: 8px 0;
+
+		a {
+			display: flex;
+			align-items: center;
+		}
+
+		svg {
+			margin-left: 5px;
+			flex-shrink: 0;
+		}
+	}
+}
+
 .gumponents-url-control {
 
 	input[type="text"] {
 		width: 100%;
 	}
+}
+
+body.modal-open .components-popover:not(.is-mobile).is-bottom {
+	z-index: 999999;
 }
