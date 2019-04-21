@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import wp from 'wp';
 import uniqBy from 'lodash/uniqBy';
 import find from 'lodash/find';
+import forEach from 'lodash/forEach';
 
 const {
 	BaseControl,
@@ -38,7 +39,7 @@ class MultiSelectControl extends Component {
 
 	prepareValues( values, options ) {
 		let value = [];
-		values.map( ( val ) => {
+		forEach( values, ( val ) => { // eslint-ignore-line
 			const obj = find( options, [ 'value', val ] );
 			if ( obj ) {
 				value.push( obj );
@@ -49,7 +50,7 @@ class MultiSelectControl extends Component {
 
 	getValueFromTokens( tokens ) {
 		let value = [];
-		tokens.map( ( token ) => {
+		forEach( tokens, ( token ) => {
 			const obj = find( this.state.options, [ 'title', token ] );
 			if ( obj ) {
 				value.push( obj );

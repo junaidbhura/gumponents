@@ -102,7 +102,7 @@ class SelectImage extends React.Component {
 								alt: media.alt,
 								caption: media.caption,
 								title: media.title,
-								size: size,
+								size,
 							},
 							media,
 						} );

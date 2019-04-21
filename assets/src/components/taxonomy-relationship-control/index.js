@@ -21,9 +21,9 @@ class TaxonomyRelationshipControl extends React.Component {
 						apiFetch( {
 							path: '/gumponents/relationship/v1/taxonomies/query',
 							data: {
-								taxonomies: taxonomies,
+								taxonomies,
 								search: query,
-								filter: filter,
+								filter,
 							},
 							method: 'post',
 						} ).then( ( results ) => resolve( results ) );

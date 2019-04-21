@@ -84,7 +84,7 @@ const getItems = ( state, ids, type ) => {
 	return new Promise( ( resolve ) => {
 		let items = [];
 		const toFetch = [];
-		ids.map( ( id, index ) => {
+		ids.map( ( id, index ) => { // eslint-disable-line
 			const cached = hayStack.find( ( item ) => item.id === id );
 			if ( cached ) {
 				items[ index ] = cached;
