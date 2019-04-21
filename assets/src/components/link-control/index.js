@@ -81,6 +81,7 @@ class LinkControl extends Component {
 						<a
 							href={ this.state.url }
 							target="_blank"
+							rel="noopener noreferrer"
 						>
 							{ '' === this.state.text && this.state.url }
 							{ '' !== this.state.text && this.state.text }
