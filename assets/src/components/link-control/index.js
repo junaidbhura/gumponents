@@ -39,8 +39,10 @@ class LinkControl extends Component {
 
 	componentDidMount() {
 		if ( this.props.value ) {
-			if ( isObject( this.props.value ) && ! isEmpty( this.props.value ) ) {
-				this.setState( omit( this.props.value, [ 'modalOpen' ] ) );
+			if ( isObject( this.props.value ) ) {
+				if ( ! isEmpty( this.props.value ) ) {
+					this.setState( omit( this.props.value, [ 'modalOpen' ] ) );
+				}
 			} else {
 				this.setState( { url: this.props.value } );
 			}
@@ -49,7 +51,7 @@ class LinkControl extends Component {
 
 	componentDidUpdate( prevProps, prevState ) {
 		if ( this.props.onChange && ! isEqual( prevState, this.state ) ) {
-			this.props.onChange( this.state );
+			this.props.onChange( omit( this.state, [ 'modalOpen' ] ) );
 		}
 	}
 
