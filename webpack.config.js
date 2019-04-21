@@ -4,7 +4,6 @@ const WebpackNotifierPlugin = require( 'webpack-notifier' );
 const UglifyJsPlugin = require( 'uglifyjs-webpack-plugin' );
 
 module.exports = ( env ) => {
-
 	// Build configuration.
 	let config = {
 		entry: './assets/src/index.js',
@@ -22,7 +21,7 @@ module.exports = ( env ) => {
 								{
 									modules: false,
 									targets: { browsers: [ 'extends @wordpress/browserslist-config' ] },
-								}
+								},
 							],
 						],
 						plugins: [
@@ -43,11 +42,11 @@ module.exports = ( env ) => {
 							},
 						},
 					],
-				}
-			]
+				},
+			],
 		},
 		resolve: {
-			extensions: ['*', '.js', '.jsx']
+			extensions: [ '*', '.js', '.jsx' ],
 		},
 		output: {
 			path: __dirname,
@@ -64,8 +63,8 @@ module.exports = ( env ) => {
 							comments: false,
 							beautify: false,
 						},
-					}
-				} )
+					},
+				} ),
 			],
 		},
 		plugins: [
@@ -74,9 +73,12 @@ module.exports = ( env ) => {
 			} ),
 		],
 		externals: {
-			'react': 'React',
+			react: 'React',
 			'react-dom': 'ReactDOM',
 			wp: 'wp',
+		},
+		performance: {
+			hints: false,
 		},
 	};
 
@@ -89,5 +91,4 @@ module.exports = ( env ) => {
 	}
 
 	return config;
-
 };
