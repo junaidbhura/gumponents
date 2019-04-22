@@ -58,7 +58,7 @@ class Relationship extends React.Component {
 
 	render() {
 		const { label, searchQuery, help } = this.props;
-		let { buttonLabel, modalTitle, noSelectionLabel, minimal, max } = this.props;
+		let { buttonLabel, modalTitle, noSelectionLabel, minimal, max, filterControl } = this.props;
 		const { items, loading, modalOpen } = this.state;
 
 		if ( ! buttonLabel ) {
@@ -121,6 +121,7 @@ class Relationship extends React.Component {
 							} }
 							selected={ items }
 							searchQuery={ searchQuery }
+							filterControl={ filterControl }
 						/>
 						<div className="gumponent-relationship__modal__actions">
 							<Button

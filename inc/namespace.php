@@ -18,12 +18,16 @@ function setup() {
 
 	// Register REST endpoints.
 	add_action( 'rest_api_init', __NAMESPACE__ . '\\register_rest_endpoints' );
+
+	// Third-party plugins compatibility.
+	require_once __DIR__ . '/../plugins-compat/acf.php';
 }
 
 /**
  * Register REST endpoints.
  */
 function register_rest_endpoints() {
+	new RestApi\CoreController();
 	new RestApi\Relationship\PostsController();
 	new RestApi\Relationship\TaxonomiesController();
 	new RestApi\MediaController();

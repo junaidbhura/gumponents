@@ -2,6 +2,7 @@
  * Gumponents.
  */
 
+import './data/core';
 import './data/relationship';
 import './data/media';
 

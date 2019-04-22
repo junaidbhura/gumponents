@@ -22,11 +22,15 @@ class MultiSelectControl extends Component {
 	}
 
 	componentDidMount() {
-		const { options, value } = this.props;
+		const { options } = this.props;
+		let { value } = this.props;
 		if ( options ) {
 			this.setState( { options } );
 		}
 		if ( value ) {
+			if ( 'string' === typeof value ) {
+				value = [ value ];
+			}
 			this.setState( { value } );
 		}
 	}

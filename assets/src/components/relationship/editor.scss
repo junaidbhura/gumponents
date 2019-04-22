@@ -36,12 +36,20 @@ $gumponent-relationship__modal-gutter: 16px;
 	}
 
 	&__search-container {
-		padding: $gumponent-relationship__modal-gutter;
+		display: flex;
+		padding: 0 $gumponent-relationship__modal-gutter / 2;
 	}
 
-	&__search {
+	&__search,
+	&__filter {
+		flex: 1;
+		padding: $gumponent-relationship__modal-gutter $gumponent-relationship__modal-gutter / 2;
+	}
+
+	&__search-input {
 		width: 100%;
 		padding: 11px 16px !important;
+		flex: 1;
 	}
 
 	&__panel {

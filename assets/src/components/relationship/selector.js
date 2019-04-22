@@ -63,23 +63,30 @@ class Selector extends React.Component {
 			searching,
 		} = this.state;
 
-		const { maxItems } = this.props;
+		const { maxItems, filterControl } = this.props;
 
 		return (
 			<div className="gumponent-relationship">
 				<div className="gumponent-relationship__search-container">
-					<input
-						type="text"
-						className="gumponent-relationship__search"
-						placeholder="Search"
-						value={ search }
-						onChange={ ( e ) => {
-							this.setState( {
-								search: e.target.value,
-							} );
-							this.triggerTyping();
-						} }
-					/>
+					<div className="gumponent-relationship__search">
+						<input
+							type="text"
+							className="gumponent-relationship__search-input"
+							placeholder="Search"
+							value={ search }
+							onChange={ ( e ) => {
+								this.setState( {
+									search: e.target.value,
+								} );
+								this.triggerTyping();
+							} }
+						/>
+					</div>
+					{ filterControl &&
+						<div className="gumponent-relationship__filter">
+							{ filterControl }
+						</div>
+					}
 				</div>
 				<div className="gumponent-relationship__panel">
 					<div className="gumponent-relationship__panel__search-items">
