@@ -58,6 +58,70 @@ import { TaxonomyRelationshipControl } = gumponents.components;
 />
 ```
 
+### MultiSelectControl
+
+![multi-select-control](https://user-images.githubusercontent.com/2512525/56482870-83ae7080-6505-11e9-9ec6-9815818b4d38.gif)
+
+#### Example
+
+```js
+import { MultiSelectControl } = gumponents.components;
+
+...
+
+attributes: {
+	simpsons: {
+		type: 'array',
+		default: [],
+	},
+},
+
+...
+
+const options = [
+	{ value: 'bart', label: 'Bart' },
+	{ value: 'homer', label: 'Homer' },
+	{ value: 'marge', label: 'Marge' },
+];
+
+<MultiSelectControl
+	label="Choose Simpsons"
+	help="Choose your favorite characters."
+	options={ options }
+	value={ attributes.simpsons }
+	onChange={ ( simpsons ) => setAttributes( { simpsons } ) }
+	placeholder="D'oh"
+/>
+```
+
+### LinkControl
+
+![link-control](https://user-images.githubusercontent.com/2512525/56483259-e99bf780-6507-11e9-86ce-d905f5bbc74b.gif)
+
+#### Example
+
+```js
+import { LinkControl } = gumponents.components;
+
+...
+
+attributes: {
+	link: {
+		type: 'object',
+		default: {},
+	},
+},
+
+...
+
+<LinkControl
+	label="Select URL"
+	value={ attributes.link }
+	onChange={ ( link ) => setAttributes( { link } ) }
+	help="Enter a URL."
+/>
+```
+
 ### FileControl
 
 ![file-control](https://user-images.githubusercontent.com/2512525/52123616-9c318c00-2676-11e9-910e-15daf6e144da.gif)
