@@ -34,19 +34,21 @@ class PostRelationshipControl extends React.Component {
 
 		if ( this.props.showPostTypesFilter ) {
 			this.setState( { filterLoading: true } );
-			this.props.getPostTypes.then( ( postTypes ) => {
-				let filterPostTypes = [];
-				forEach( postTypes, ( postType ) => {
-					filterPostTypes.push( {
-						label: postType.label,
-						value: postType.name,
-					} );
+		}
+	}
+
+	componentDidUpdate( prevProps ) {
+		if ( this.props.allPostTypes !== prevProps.allPostTypes ) {
+			let filterPostTypes = [];
+			forEach( this.props.allPostTypes, ( postType ) => {
+				filterPostTypes.push( {
+					label: postType.label,
+					value: postType.name,
 				} );
-				this.setState( {
-					filterLoading: false,
-					filterPostTypes,
-				} );
-				this.props.onSetPostTypes( postTypes );
+			} );
+			this.setState( {
+				filterLoading: false,
+				filterPostTypes,
 			} );
 		}
 	}
@@ -101,15 +103,12 @@ class PostRelationshipControl extends React.Component {
 export default withSelect( ( select, ownProps ) => {
 	return {
 		getInitialItems: select( 'gumponents/relationship' ).getPosts( ownProps.value ),
-		getPostTypes: select( 'gumponents/core' ).getPostTypes(),
+		allPostTypes: select( 'gumponents/core' ).getPostTypes(),
 	};
 } )( withDispatch( ( dispatch ) => {
 	return {
 		onSetItems( items ) {
 			dispatch( 'gumponents/relationship' ).setPosts( items );
-		},
-		onSetPostTypes( postTypes ) {
-			dispatch( 'gumponents/core' ).setPostTypes( postTypes );
 		},
 	};
 } )( PostRelationshipControl ) );

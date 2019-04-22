@@ -21,6 +21,12 @@ const actions = {
 		};
 	},
 
+	getPostTypes() {
+		return {
+			type: 'GET_POST_TYPES',
+		};
+	},
+
 };
 
 registerStore( 'gumponents/core', {
@@ -39,16 +45,22 @@ registerStore( 'gumponents/core', {
 
 	selectors: {
 		getPostTypes( state ) {
-			return new Promise( ( resolve ) => {
-				if ( 0 !== state.postTypes.length ) {
-					resolve( state.postTypes );
-				} else {
-					apiFetch( {
-						path: `/gumponents/core/v1/get_post_types`,
-					} )
-						.then( ( postTypes ) => resolve( postTypes ) );
-				}
+			return state.postTypes;
+		},
+	},
+
+	controls: {
+		GET_POST_TYPES() {
+			return apiFetch( {
+				path: `/gumponents/core/v1/get_post_types`,
 			} );
+		},
+	},
+
+	resolvers: {
+		* getPostTypes() {
+			const postTypes = yield actions.getPostTypes();
+			return actions.setPostTypes( postTypes );
 		},
 	},
 } );
