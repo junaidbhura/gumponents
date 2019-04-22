@@ -32,25 +32,28 @@ class PostRelationshipControl extends React.Component {
 			this.setPostTypes( this.props.postTypes );
 		}
 
-		if ( this.props.showPostTypesFilter ) {
-			this.setState( { filterLoading: true } );
-		}
+		this.setState( { filterLoading: true } );
+		this.initPostTypes();
 	}
 
 	componentDidUpdate( prevProps ) {
 		if ( this.props.allPostTypes !== prevProps.allPostTypes ) {
-			let filterPostTypes = [];
-			forEach( this.props.allPostTypes, ( postType ) => {
-				filterPostTypes.push( {
-					label: postType.label,
-					value: postType.name,
-				} );
-			} );
-			this.setState( {
-				filterLoading: false,
-				filterPostTypes,
-			} );
+			this.initPostTypes();
 		}
+	}
+
+	initPostTypes() {
+		let filterPostTypes = [];
+		forEach( this.props.allPostTypes, ( postType ) => {
+			filterPostTypes.push( {
+				label: postType.label,
+				value: postType.name,
+			} );
+		} );
+		this.setState( {
+			filterLoading: false,
+			filterPostTypes,
+		} );
 	}
 
 	setPostTypes( postTypes ) {
