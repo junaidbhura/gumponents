@@ -1,5 +1,5 @@
 import wp from 'wp';
-import React from 'react';
+import React, { Fragment } from 'react';
 import forEach from 'lodash/forEach';
 
 import Relationship from '../relationship';
@@ -21,7 +21,9 @@ class PostRelationshipControl extends React.Component {
 		this.state = {
 			filterLoading: false,
 			filterPostTypes: [],
+			filterTaxonomies: [],
 			postTypes: [],
+			taxonomies: [],
 		};
 
 		this.setPostTypes = this.setPostTypes.bind( this );
@@ -34,11 +36,15 @@ class PostRelationshipControl extends React.Component {
 
 		this.setState( { filterLoading: true } );
 		this.initPostTypes();
+		this.initTaxonomies();
 	}
 
 	componentDidUpdate( prevProps ) {
 		if ( this.props.allPostTypes !== prevProps.allPostTypes ) {
 			this.initPostTypes();
+		}
+		if ( this.props.allTaxonomies !== prevProps.allTaxonomies ) {
+			this.initTaxonomies();
 		}
 	}
 
@@ -56,6 +62,20 @@ class PostRelationshipControl extends React.Component {
 		} );
 	}
 
+	initTaxonomies() {
+		let filterTaxonomies = [];
+		forEach( this.props.allTaxonomies, ( taxonomy ) => {
+			filterTaxonomies.push( {
+				label: taxonomy.name,
+				value: taxonomy.slug,
+			} );
+		} );
+		this.setState( {
+			filterLoading: false,
+			filterTaxonomies,
+		} );
+	}
+
 	setPostTypes( postTypes ) {
 		if ( 0 === postTypes.length ) {
 			postTypes = [ 'post' ];
@@ -67,13 +87,22 @@ class PostRelationshipControl extends React.Component {
 		let filterControl;
 		if ( this.props.showPostTypesFilter ) {
 			filterControl = (
-				<MultiSelectControl
-					placeholder={ __( 'Post Types' ) }
-					options={ this.state.filterPostTypes }
-					value={ this.state.postTypes }
-					isLoading={ this.state.filterLoading }
-					onChange={ this.setPostTypes }
-				/>
+				<Fragment>
+					<MultiSelectControl
+						placeholder={ __( 'Post Types' ) }
+						options={ this.state.filterPostTypes }
+						value={ this.state.postTypes }
+						isLoading={ this.state.filterLoading }
+						onChange={ this.setPostTypes }
+					/>
+					<MultiSelectControl
+						placeholder={ __( 'Taxonomies' ) }
+						options={ this.state.filterTaxonomies }
+						value={ this.state.taxonomies }
+						isLoading={ this.state.filterLoading }
+						onChange={ ( taxonomies ) => this.setState( { taxonomies } ) }
+					/>
+				</Fragment>
 			);
 		} else {
 			filterControl = null;
@@ -107,6 +136,7 @@ export default withSelect( ( select, ownProps ) => {
 	return {
 		getInitialItems: select( 'gumponents/relationship' ).getPosts( ownProps.value ),
 		allPostTypes: select( 'gumponents/core' ).getPostTypes(),
+		allTaxonomies: select( 'core' ).getTaxonomies(),
 	};
 } )( withDispatch( ( dispatch ) => {
 	return {
