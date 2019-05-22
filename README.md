@@ -183,6 +183,8 @@ attributes: {
 
 ### GalleryControl
 
+![gallery-control](https://user-images.githubusercontent.com/2512525/58150817-2136c480-7cab-11e9-86b6-19c3a544d831.gif)
+
 #### Example
 
 ```js
