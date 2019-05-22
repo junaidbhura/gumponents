@@ -181,6 +181,34 @@ attributes: {
 />
 ```
 
+### GalleryControl
+
+#### Example
+
+```js
+import { GalleryControl } = gumponents.components;
+
+...
+
+attributes: {
+	gallery: {
+		type: 'array',
+		default: [],
+	},
+},
+
+...
+
+<GalleryControl
+	size="medium"
+	onSelect={ ( gallery, media ) => {
+		setAttributes( { gallery: null } ); // The block editor doesn't update arrays correctly? 🤷‍♂️
+		setAttributes( { gallery } );
+	} }
+	value={ attributes.gallery }
+/>
+```
+
 ### SelectImage
 
 ![select-image](https://user-images.githubusercontent.com/2512525/53619432-5220d380-3c3f-11e9-8a93-d0504d9fc9ee.gif)
