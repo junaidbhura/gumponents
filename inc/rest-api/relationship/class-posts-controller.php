@@ -165,12 +165,19 @@ class PostsController extends Controller {
 
 		$args = apply_filters(
 			'gumponents_posts_relationship_query' . $filter,
-			$args
+			$args,
+			$params
 		);
 
-		add_filter( 'posts_where', array( $this, 'title_where_filter' ) );
+		$search_title = apply_filters( 'gumponents_posts_relationship_query_search_title', true );
+
+		if ( $search_title ) {
+			add_filter( 'posts_where', array( $this, 'title_where_filter' ) );
+		}
 		$results = new WP_Query( $args );
-		remove_filter( 'posts_where', array( $this, 'title_where_filter' ) );
+		if ( $search_title ) {
+			remove_filter( 'posts_where', array( $this, 'title_where_filter' ) );
+		}
 
 		if ( empty( $results->posts ) ) {
 			return rest_ensure_response( [] );
