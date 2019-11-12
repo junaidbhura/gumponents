@@ -2,6 +2,10 @@ $gumponent-relationship__modal-gutter: 16px;
 
 .gumponent-relationship {
 
+	.components-base-control__label {
+		display: block;
+	}
+
 	&__modal {
 
 		&__actions {

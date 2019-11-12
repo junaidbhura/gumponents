@@ -1,5 +1,9 @@
 .gumponents-gallery-control {
 
+	.components-base-control__label {
+		display: block;
+	}
+
 	&__total {
 		padding: 10px;
 		background-color: #fef8ee;

@@ -1,5 +1,9 @@
 .gumponents-file-control {
 
+	.components-base-control__label {
+		display: block;
+	}
+
 	&__details {
 		margin: 8px 0;
 	}

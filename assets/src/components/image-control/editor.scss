@@ -1,6 +1,10 @@
 .gumponents-image-control {
 	padding: 0;
 
+	.components-base-control__label {
+		display: block;
+	}
+
 	&__preview {
 		margin-bottom: 8px;
 		display: block;

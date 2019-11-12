@@ -4,6 +4,10 @@
 
 .gumponents-link-control {
 
+	.components-base-control__label {
+		display: block;
+	}
+
 	&__preview {
 		background-color: #fef8ee;
 		padding: 10px;
