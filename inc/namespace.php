@@ -46,6 +46,6 @@ function enqueue_editor_assets() {
 		'lodash',
 	];
 
-	wp_enqueue_script( 'gumponents', plugins_url( 'assets/dist/blocks.js', $plugin_file_path ), $deps, filemtime( "{$plugin_dir_path}/assets/dist/blocks.js" ), false );
-	wp_enqueue_style( 'gumponents', plugins_url( 'assets/dist/editor.css', $plugin_file_path ), [], filemtime( "{$plugin_dir_path}/assets/dist/editor.css" ) );
+	wp_enqueue_script( 'gumponents', plugins_url( 'assets/dist/blocks.js', $plugin_file_path ), $deps, '0.4.2', false );
+	wp_enqueue_style( 'gumponents', plugins_url( 'assets/dist/editor.css', $plugin_file_path ), [], '0.4.2' );
 }
