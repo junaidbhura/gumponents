@@ -5,6 +5,9 @@
  * @package gumponents
  */
 
+ini_set( 'display_errors', true );
+error_reporting( -1 );
+
 $_tests_dir = getenv( 'WP_TESTS_DIR' );
 
 if ( ! $_tests_dir ) {
