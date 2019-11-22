@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/junaidbhura/gumponents.svg?style=svg)](https://circleci.com/gh/junaidbhura/gumponents)
+![GitHub Actions](https://github.com/junaidbhura/gumponents/workflows/Coding%20Standards%20and%20Tests/badge.svg)
 
 <img src="https://user-images.githubusercontent.com/2512525/52129802-685f6200-2688-11e9-908e-494cabd016d9.png" width="600" alt="Gumponents!">
 

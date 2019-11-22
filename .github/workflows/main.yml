@@ -1,6 +1,6 @@
 name: Coding Standards and Tests
 
-on: [push,pull_request]
+on: [push]
 
 jobs:
   build:
@@ -23,9 +23,6 @@ jobs:
       run: |
         apt-get update
         apt-get install -y git subversion default-mysql-client
-        docker-php-ext-install -j$(nproc) pdo pdo_mysql mysqli mbstring
-        pecl install mcrypt-1.0.2
-        docker-php-ext-enable mcrypt
 
     - name: Checkout repository
       uses: actions/checkout@v1
