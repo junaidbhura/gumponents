@@ -5,8 +5,8 @@
  * @package gumponents
  */
 
-ini_set( 'display_errors', true );
-error_reporting( -1 );
+ini_set( 'display_errors', true ); // @codingStandardsIgnoreLine
+error_reporting( -1 ); // @codingStandardsIgnoreLine
 
 $_tests_dir = getenv( 'WP_TESTS_DIR' );
 
