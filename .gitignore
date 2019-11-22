@@ -5,8 +5,8 @@ node_modules
 
 # Root.
 /*
-!.circleci
 !.bin
+!.github
 !.tests
 !/assets
 !/inc
