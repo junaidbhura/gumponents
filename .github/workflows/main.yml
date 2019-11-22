@@ -23,6 +23,7 @@ jobs:
       run: |
         apt-get update
         apt-get install -y git subversion default-mysql-client
+        docker-php-ext-install -j$(nproc) pdo pdo_mysql mysqli mbstring
 
     - name: Checkout repository
       uses: actions/checkout@v1
