@@ -3,13 +3,15 @@
  * Plugin Name: Gumponents
  * Description: Essential Gutenberg components for WordPress.
  * Author: Junaid Bhura
- * Author URI: https://junaidbhura.com
+ * Author URI: https://junaid.dev
  * Version: 0.4.2
  *
  * @package gumponents
  */
 
 namespace JB\Gumponents;
+
+define( 'GUMPONENTS_VERSION', '0.4.2' );
 
 require_once __DIR__ . '/inc/autoload.php';
 require_once __DIR__ . '/inc/namespace.php';

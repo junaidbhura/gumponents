@@ -37,7 +37,7 @@ class PostRelationshipControl extends React.Component {
 
 export default withSelect( ( select, ownProps ) => {
 	return {
-		getInitialItems: select( 'gumponents/relationship' ).getPosts( ownProps.value ),
+		initialItems: select( 'gumponents/relationship' ).getPosts( ownProps.value ),
 	};
 } )( withDispatch( ( dispatch ) => {
 	return {

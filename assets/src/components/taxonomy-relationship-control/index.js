@@ -36,7 +36,7 @@ class TaxonomyRelationshipControl extends React.Component {
 
 export default withSelect( ( select, ownProps ) => {
 	return {
-		getInitialItems: select( 'gumponents/relationship' ).getTaxonomies( ownProps.value ),
+		initialItems: select( 'gumponents/relationship' ).getTaxonomies( ownProps.value ),
 	};
 } )( withDispatch( ( dispatch ) => {
 	return {

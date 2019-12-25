@@ -24,10 +24,24 @@ const actions = {
 		};
 	},
 
+	getPosts( postIds ) {
+		return {
+			type: 'GET_POSTS',
+			ids: postIds,
+		};
+	},
+
 	setTaxonomies( taxonomies ) {
 		return {
 			type: 'SET_TAXONOMIES',
 			items: taxonomies,
+		};
+	},
+
+	getTaxonomies( postIds ) {
+		return {
+			type: 'GET_TAXONOMIES',
+			ids: postIds,
 		};
 	},
 
@@ -55,61 +69,67 @@ registerStore( 'gumponents/relationship', {
 	selectors: {
 
 		getPosts( state, ids ) {
-			return getItems( state, ids, 'posts' );
+			const posts = [];
+			ids.forEach( ( id ) => {
+				const post = state.posts.find( ( post ) => post.id === id );
+				if ( post ) {
+					posts.push( post );
+				}
+			} );
+			return posts;
 		},
 
 		getTaxonomies( state, ids ) {
-			return getItems( state, ids, 'taxonomies' );
+			const taxonomies = [];
+			ids.forEach( ( id ) => {
+				const taxonomy = state.taxonomies.find( ( taxonomy ) => taxonomy.id === id );
+				if ( taxonomy ) {
+					taxonomies.push( taxonomy );
+				}
+			} );
+			return taxonomies;
 		},
 
 	},
-} );
 
-const getItems = ( state, ids, type ) => {
-	let apiPath, hayStack;
-
-	switch ( type ) {
-		case 'posts':
-			apiPath = '/gumponents/relationship/v1/posts/initialize';
-			hayStack = state.posts;
-			break;
-		case 'taxonomies':
-			apiPath = '/gumponents/relationship/v1/taxonomies/initialize';
-			hayStack = state.taxonomies;
-			break;
-		default:
-			return [];
-	}
-
-	return new Promise( ( resolve ) => {
-		let items = [];
-		const toFetch = [];
-		ids.map( ( id, index ) => { // eslint-disable-line
-			const cached = hayStack.find( ( item ) => item.id === id );
-			if ( cached ) {
-				items[ index ] = cached;
-			} else {
-				toFetch.push( id );
-			}
-		} );
-
-		if ( 0 !== toFetch.length ) {
-			apiFetch( {
-				path: apiPath,
+	controls: {
+		GET_POSTS( { ids } ) {
+			return apiFetch( {
+				path: '/gumponents/relationship/v1/posts/initialize',
 				data: {
 					type: 'post',
-					items: toFetch,
+					items: ids,
 				},
 				method: 'post',
-			} )
-				.then( ( results ) => {
-					if ( 0 !== results.length ) {
-						items = unionWith( items, results, isEqual );
-					}
-					resolve( items );
-				} );
-		} else {
-			resolve( items );
-		}
-	} );
-};
+			} );
+		},
+
+		GET_TAXONOMIES( { ids } ) {
+			return apiFetch( {
+				path: '/gumponents/relationship/v1/taxonomies/initialize',
+				data: {
+					items: ids,
+				},
+				method: 'post',
+			} );
+		},
+	},
+
+	resolvers: {
+		* getPosts( ids ) {
+			if ( 0 === ids.length ) {
+				return;
+			}
+			const posts = yield actions.getPosts( ids );
+			return actions.setPosts( posts );
+		},
+
+		* getTaxonomies( ids ) {
+			if ( 0 === ids.length ) {
+				return;
+			}
+			const taxonomies = yield actions.getTaxonomies( ids );
+			return actions.setTaxonomies( taxonomies );
+		},
+	},
+} );
