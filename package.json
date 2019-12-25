@@ -17,10 +17,10 @@
     "stylelint-config-wordpress": "^14.0.0"
   },
   "dependencies": {
-    "@babel/core": "^7.7.2",
-    "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
-    "@babel/plugin-transform-react-jsx": "^7.7.0",
-    "@babel/preset-env": "^7.7.1",
+    "@babel/core": "^7.7.7",
+    "@babel/plugin-proposal-object-rest-spread": "^7.7.7",
+    "@babel/plugin-transform-react-jsx": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
     "@wordpress/browserslist-config": "^2.6.0",
     "babel-loader": "^8.0.6",
     "classnames": "^2.2.6",
@@ -31,7 +31,7 @@
     "react-select": "^2.4.4",
     "sass-loader": "^7.3.1",
     "uglifyjs-webpack-plugin": "^2.2.0",
-    "webpack": "^4.41.2",
+    "webpack": "^4.41.4",
     "webpack-cli": "^3.3.10",
     "webpack-notifier": "^1.8.0"
   }

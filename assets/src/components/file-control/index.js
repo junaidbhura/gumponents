@@ -36,6 +36,11 @@ class FileControl extends React.Component {
 				id: this.props.value,
 			} );
 		}
+		if ( this.props.media ) {
+			this.setState( {
+				media: this.props.media,
+			} );
+		}
 	}
 
 	componentDidUpdate( prevProps ) {
