@@ -92,6 +92,7 @@ $gumponent-relationship__modal-gutter: 16px;
 
 		&--loading,
 		&--disabled {
+			overflow: hidden;
 
 			&::before {
 				content: "";
@@ -101,7 +102,7 @@ $gumponent-relationship__modal-gutter: 16px;
 				right: 0;
 				bottom: 0;
 				background-color: #fff;
-				opacity: 0.2;
+				opacity: 0.5;
 				z-index: 3;
 			}
 		}
