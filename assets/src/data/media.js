@@ -5,6 +5,7 @@
 import wp from 'wp';
 import unionWith from 'lodash/unionWith';
 import isEqual from 'lodash/isEqual';
+import isObject from 'lodash/isObject';
 
 const { registerStore } = wp.data;
 
@@ -20,6 +21,13 @@ const actions = {
 		return {
 			type: 'SET_MEDIA',
 			media,
+		};
+	},
+
+	getMedia( id ) {
+		return {
+			type: 'GET_MEDIA',
+			id,
 		};
 	},
 
@@ -40,18 +48,36 @@ registerStore( 'gumponents/media', {
 	actions,
 
 	selectors: {
-		getMedia( state, id ) {
-			return new Promise( ( resolve ) => {
-				const cached = state.media.find( ( item ) => item.id === id );
-				if ( cached ) {
-					resolve( cached );
-				} else {
-					apiFetch( {
-						path: `/gumponents/media/v1/get?id=${ id }`,
-					} )
-						.then( ( media ) => resolve( media ) );
-				}
+		getMedia( state, med ) {
+			if ( isObject( med ) ) {
+				med = med.id;
+			}
+			const media = state.media.find( ( item ) => item.id === med );
+			if ( media ) {
+				return media;
+			}
+			return null;
+		},
+	},
+
+	controls: {
+		GET_MEDIA( { id } ) {
+			return apiFetch( {
+				path: `/gumponents/media/v1/get?id=${ id }`,
 			} );
+		},
+	},
+
+	resolvers: {
+		* getMedia( id ) {
+			if ( null === id ) {
+				return;
+			}
+			if ( isObject( id ) ) {
+				id = id.id;
+			}
+			const media = yield actions.getMedia( id );
+			return actions.setMedia( media );
 		},
 	},
 } );

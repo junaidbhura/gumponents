@@ -40,14 +40,6 @@ class ImageControl extends React.Component {
 				this.setState( {
 					id: this.props.value,
 				} );
-				this.props.getMedia.then( ( media ) => {
-					this.setState( {
-						id: media.id,
-						value: this.getImageDetails( media ),
-						media,
-					} );
-					this.props.onSetMedia( media );
-				} );
 			} else {
 				this.setState( {
 					id: this.props.value.id,
@@ -55,6 +47,17 @@ class ImageControl extends React.Component {
 					media: null,
 				} );
 			}
+		}
+	}
+
+	componentDidUpdate( prevProps ) {
+		const { media } = this.props;
+		if ( prevProps.media !== media ) {
+			this.setState( {
+				id: media.id,
+				value: this.getImageDetails( media ),
+				media,
+			} );
 		}
 	}
 
@@ -193,7 +196,7 @@ export default withSelect( ( select, ownProps ) => {
 	const { value } = ownProps;
 
 	return {
-		getMedia: value ? getMedia( value ) : null,
+		media: value ? getMedia( value ) : null,
 	};
 } )( withDispatch( ( dispatch ) => {
 	return {

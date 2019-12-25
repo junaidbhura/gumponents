@@ -35,12 +35,6 @@ class FileControl extends React.Component {
 			this.setState( {
 				id: this.props.value,
 			} );
-			this.props.getMedia.then( ( media ) => {
-				this.setState( {
-					media,
-				} );
-				this.props.onSetMedia( media );
-			} );
 		}
 	}
 
@@ -146,7 +140,7 @@ export default withSelect( ( select, ownProps ) => {
 	const { value } = ownProps;
 
 	return {
-		getMedia: value ? getMedia( value ) : null,
+		media: value ? getMedia( value ) : null,
 	};
 } )( withDispatch( ( dispatch ) => {
 	return {
