@@ -22,7 +22,7 @@ class Relationship extends React.Component {
 		this.state = {
 			items: [],
 			initialized: false,
-			loading: false,
+			loading: true,
 			modalOpen: false,
 		};
 
@@ -30,17 +30,11 @@ class Relationship extends React.Component {
 		this.itemsSelected = this.itemsSelected.bind( this );
 	}
 
-	componentDidMount() {
-		if ( ! this.state.initialized && this.props.value && 0 === this.state.items.length && 0 !== this.props.value.length ) {
+	componentDidUpdate( prevProps ) {
+		if ( prevProps.initialItems !== this.props.initialItems ) {
 			this.setState( {
-				loading: true,
-			} );
-			this.props.getInitialItems.then( ( items ) => {
-				this.setState( {
-					loading: false,
-					items,
-				} );
-				this.props.onSetItems( items );
+				items: this.props.initialItems,
+				loading: false,
 			} );
 		}
 	}
