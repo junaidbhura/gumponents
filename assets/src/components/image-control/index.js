@@ -4,6 +4,7 @@ import wp from 'wp';
 import React from 'react';
 import has from 'lodash/has';
 import isObject from 'lodash/isObject';
+import classnames from 'classnames';
 
 const {
 	withSelect,
@@ -52,7 +53,7 @@ class ImageControl extends React.Component {
 
 	componentDidUpdate( prevProps ) {
 		const { media } = this.props;
-		if ( prevProps.media !== media ) {
+		if ( prevProps.media !== media && null !== media ) {
 			this.setState( {
 				id: media.id,
 				value: this.getImageDetails( media ),
@@ -138,7 +139,9 @@ class ImageControl extends React.Component {
 			<BaseControl
 				label={ label }
 				help={ help }
-				className="gumponents-image-control"
+				className={ classnames( 'gumponents-image-control', {
+					'gumponents-image-control--selected': null !== value,
+				} ) }
 			>
 				{ id &&
 					<div className="gumponents-image-control__preview">
