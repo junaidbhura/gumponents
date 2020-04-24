@@ -19,6 +19,11 @@ jobs:
           MYSQL_ROOT_PASSWORD: root
 
     steps:
+    - name: Install NodeJS
+      uses: actions/setup-node@v1
+      with:
+        node-version: '13.x'
+
     - name: Checkout repository
       uses: actions/checkout@v1
 
