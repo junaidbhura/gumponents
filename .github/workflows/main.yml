@@ -1,6 +1,6 @@
 name: Coding Standards and Tests
 
-on: [push]
+on: [ push ]
 
 env:
   WP_TESTS_DIR: /github/home/wp-tests/wordpress-tests-lib
@@ -11,7 +11,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container:
-      image: junaidbhura/wp-tests:php-7.3
+      image: junaidbhura/wp-tests:php-7.4
     services:
       mysql:
         image: mysql:5.7.27
@@ -19,6 +19,11 @@ jobs:
           MYSQL_ROOT_PASSWORD: root
 
     steps:
+    - name: Install NodeJS
+      uses: actions/setup-node@v1
+      with:
+        node-version: '13.x'
+
     - name: Checkout repository
       uses: actions/checkout@v1
 
@@ -28,6 +33,13 @@ jobs:
       with:
         path: /github/home/.composer/vendor
         key: composer-${{ hashFiles( '.github/workflows/main.yml' ) }}
+
+    - name: NodeJS cache
+      id: node-cache
+      uses: actions/cache@v1
+      with:
+        path: node_modules
+        key: node-${{ hashFiles( 'package-lock.json' ) }}
 
     - name: WordPress test suite cache
       id: wp-test-suite
@@ -43,12 +55,21 @@ jobs:
         composer global require wp-coding-standards/wpcs
         $HOME/.composer/vendor/bin/phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
 
-    - name: Install WordPress test suite
-      run: |
-        bash ./.bin/install-wp-tests.sh wordpress_test root root mysql latest
+    - name: Install NodeJS dependencies
+      if: steps.node-cache.outputs.cache-hit != 'true'
+      run: npm install
 
-    - name: Coding standards
+    - name: Install WordPress test suite
+      run: bash ./.bin/install-wp-tests.sh wordpress_test root root mysql latest
+
+    - name: PHP Coding standards
       run: $HOME/.composer/vendor/bin/phpcs
 
-    - name: Unit tests
+    - name: JavaScript Coding standards
+      run: npm run lint-js
+
+    - name: CSS Coding standards
+      run: npm run lint-css
+
+    - name: Tests
       run: $HOME/.composer/vendor/bin/phpunit
