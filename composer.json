@@ -10,8 +10,8 @@
   "authors": [
     {
       "name":"Junaid Bhura",
-      "email":"info@junaidbhura.com",
-      "homepage":"https://junaidbhura.com"
+      "email":"root@junaid.dev",
+      "homepage":"https://junaid.dev"
     }
   ],
   "support" : {
@@ -21,5 +21,9 @@
   "type": "wordpress-plugin",
   "require": {
     "composer/installers": "~1.0"
+  },
+  "scripts": {
+    "lint": "phpcs",
+    "test": "phpunit"
   }
 }
