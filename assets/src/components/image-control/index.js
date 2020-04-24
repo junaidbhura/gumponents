@@ -5,28 +5,59 @@ import has from 'lodash/has';
 import isObject from 'lodash/isObject';
 import classnames from 'classnames';
 
+const { Fragment } = wp.element;
 const {
 	withSelect,
 	withDispatch,
 } = wp.data;
-
 const {
 	useState,
 	useEffect,
 } = wp.element;
-
 const { __ } = wp.i18n;
-
 const {
 	Button,
 	Spinner,
 	BaseControl,
 	ResponsiveWrapper,
 } = wp.components;
+const { MediaUpload } = wp.blockEditor;
+const { compose } = wp.compose;
 
-const {
-	MediaUpload,
-} = wp.editor;
+/**
+ * Get formatted image details from a media object.
+ *
+ * @param {Object} media Media object.
+ * @param {string} thumbnailSize Thumbnail size.
+ * @return {Object} Formatted image details.
+ */
+export function getImageDetails( media, thumbnailSize = 'full' ) {
+	if ( ! media ) {
+		return {};
+	}
+
+	let src, width, height;
+
+	if ( has( media, 'sizes' ) ) {
+		if ( ! has( media.sizes, thumbnailSize ) ) {
+			thumbnailSize = 'full';
+		}
+		width = media.sizes[ thumbnailSize ].width;
+		height = media.sizes[ thumbnailSize ].height;
+		src = media.sizes[ thumbnailSize ].url;
+	}
+
+	return {
+		id: media.id,
+		src,
+		width,
+		height,
+		alt: media.alt,
+		caption: media.caption,
+		title: media.title,
+		size: thumbnailSize,
+	};
+}
 
 function ImageControl( { label, help, value, size, selectLabel = __( 'Select image' ), removeLabel = __( 'Remove image' ), onChange, onSetMedia, selectedMedia } ) {
 	const [ id, setId ] = useState( null );
@@ -48,50 +79,17 @@ function ImageControl( { label, help, value, size, selectLabel = __( 'Select ima
 	useEffect(
 		() => {
 			if ( isObject( selectedMedia ) ) {
-				setId( value.id );
-				setControlValue( value );
+				setId( selectedMedia.id );
+				setControlValue( getImageDetails( selectedMedia, size ) );
 			}
 		},
 		[ selectedMedia ]
 	);
 
-	const getImageDetails = ( media ) => {
-		if ( ! media ) {
-			return {};
-		}
-
-		let mediaSize = 'full';
-		let src, width, height;
-
-		if ( size ) {
-			mediaSize = size;
-		}
-
-		if ( has( media, 'sizes' ) ) {
-			if ( ! has( media.sizes, mediaSize ) ) {
-				mediaSize = 'full';
-			}
-			width = media.sizes[ mediaSize ].width;
-			height = media.sizes[ mediaSize ].height;
-			src = media.sizes[ mediaSize ].url;
-		}
-
-		return {
-			id: media.id,
-			src,
-			width,
-			height,
-			alt: media.alt,
-			caption: media.caption,
-			title: media.title,
-			size: mediaSize,
-		};
-	};
-
 	const onSelectImage = ( media ) => {
-		const image = getImageDetails( media );
+		const image = getImageDetails( media, size );
 
-		setId( null );
+		setId( image.id );
 		setControlValue( image );
 
 		onSetMedia( media );
@@ -130,14 +128,19 @@ function ImageControl( { label, help, value, size, selectLabel = __( 'Select ima
 							type="image"
 							value={ id }
 							render={ ( { open } ) => (
-								<Button className="gumponents-image-control__preview" onClick={ open }>
-									<ResponsiveWrapper
-										naturalWidth={ controlValue.width }
-										naturalHeight={ controlValue.height }
-									>
-										<img src={ controlValue.src } alt="" />
-									</ResponsiveWrapper>
-								</Button>
+								<Fragment>
+									<Button className="gumponents-image-control__preview" onClick={ open }>
+										<ResponsiveWrapper
+											naturalWidth={ controlValue.width }
+											naturalHeight={ controlValue.height }
+										>
+											<img src={ controlValue.src } alt="" />
+										</ResponsiveWrapper>
+									</Button>
+									<Button onClick={ open } isSecondary>
+										{ __( 'Replace Image' ) }
+									</Button>
+								</Fragment>
 							) }
 						/>
 					}
@@ -148,19 +151,20 @@ function ImageControl( { label, help, value, size, selectLabel = __( 'Select ima
 					{ removeLabel }
 				</Button>
 			}
-			{ ! controlValue &&
+			{ ! controlValue && ! id &&
 				<MediaUpload
 					title={ selectLabel }
 					onSelect={ ( media ) => onSelectImage( media ) }
-					type="image"
+					allowedTypes={ [ 'image' ] }
 					render={ ( { open } ) => (
-						<Button
-							isDefault
-							className="gumponents-image-control__select"
-							onClick={ open }
-						>
-							{ selectLabel }
-						</Button>
+						<div className="editor-post-featured-image__container">
+							<Button
+								onClick={ open }
+								className="editor-post-featured-image__toggle"
+							>
+								{ selectLabel }
+							</Button>
+						</div>
 					) }
 				/>
 			}
@@ -168,17 +172,20 @@ function ImageControl( { label, help, value, size, selectLabel = __( 'Select ima
 	);
 }
 
-export default withSelect( ( select, ownProps ) => {
-	const { getMedia } = select( 'gumponents/media' );
-	const { value } = ownProps;
+export default compose(
+	withSelect( ( select, ownProps ) => {
+		const { getMedia } = select( 'gumponents/media' );
+		const { value } = ownProps;
 
-	return {
-		selectedMedia: value ? getMedia( value ) : null,
-	};
-} )( withDispatch( ( dispatch ) => {
-	return {
-		onSetMedia( media ) {
-			dispatch( 'gumponents/media' ).setMedia( media );
-		},
-	};
-} )( ImageControl ) );
+		return {
+			selectedMedia: value ? getMedia( value ) : null,
+		};
+	} ),
+	withDispatch( ( dispatch ) => {
+		return {
+			onSetMedia( media ) {
+				dispatch( 'gumponents/media' ).setMedia( media );
+			},
+		};
+	} ),
+)( ImageControl );
