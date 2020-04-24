@@ -30,11 +30,11 @@ jobs:
         key: composer-${{ hashFiles( '.github/workflows/main.yml' ) }}
 
     - name: NodeJS cache
-        id: node-cache
-        uses: actions/cache@v1
-        with:
-          path: node_modules
-          key: node-${{ hashFiles( 'package-lock.json' ) }}
+      id: node-cache
+      uses: actions/cache@v1
+      with:
+        path: node_modules
+        key: node-${{ hashFiles( 'package-lock.json' ) }}
 
     - name: WordPress test suite cache
       id: wp-test-suite
