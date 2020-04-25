@@ -17,6 +17,7 @@ node_modules
 !.stylelintignore
 !.stylelintrc
 !composer.json
+!composer.lock
 !gumponents.php
 !LICENSE
 !README.md

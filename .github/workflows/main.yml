@@ -31,15 +31,15 @@ jobs:
       id: composer-cache
       uses: actions/cache@v1
       with:
-        path: /github/home/.composer/vendor
-        key: composer-${{ hashFiles( '.github/workflows/main.yml' ) }}
+        path: vendor
+        key: composer-${{ hashFiles( '.github/workflows/main.yml' ) }}-${{ hashFiles( 'composer.lock' ) }}
 
     - name: NodeJS cache
       id: node-cache
       uses: actions/cache@v1
       with:
         path: node_modules
-        key: node-${{ hashFiles( 'package-lock.json' ) }}
+        key: node-${{ hashFiles( '.github/workflows/main.yml' ) }}-${{ hashFiles( 'package-lock.json' ) }}
 
     - name: WordPress test suite cache
       id: wp-test-suite
@@ -51,9 +51,8 @@ jobs:
     - name: Install Composer dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: |
-        composer global require "phpunit/phpunit=6.1.0"
-        composer global require wp-coding-standards/wpcs
-        $HOME/.composer/vendor/bin/phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs
+        composer install
+        composer set-coding-standards
 
     - name: Install NodeJS dependencies
       if: steps.node-cache.outputs.cache-hit != 'true'
@@ -63,7 +62,7 @@ jobs:
       run: bash ./.bin/install-wp-tests.sh wordpress_test root root mysql latest
 
     - name: PHP Coding standards
-      run: $HOME/.composer/vendor/bin/phpcs
+      run: composer run lint
 
     - name: JavaScript Coding standards
       run: npm run lint-js
@@ -72,4 +71,4 @@ jobs:
       run: npm run lint-css
 
     - name: Tests
-      run: $HOME/.composer/vendor/bin/phpunit
+      run: composer run test

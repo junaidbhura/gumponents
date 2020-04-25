@@ -22,7 +22,13 @@
   "require": {
     "composer/installers": "~1.0"
   },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "*",
+    "phpunit/phpunit": "6.1.0",
+    "wp-coding-standards/wpcs": "*"
+  },
   "scripts": {
+    "set-coding-standards": "phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs",
     "lint": "phpcs",
     "test": "phpunit"
   }

@@ -4,6 +4,7 @@
   "scripts": {
     "build": "webpack --config ./webpack.config.js --mode production --env=production",
     "dev": "webpack --config ./webpack.config.js --mode production --env=development --watch",
+    "lint": "npm run lint-js && npm run lint-css && composer run lint",
     "lint-js": "eslint assets/src",
     "lint-css": "stylelint assets/src"
   },
