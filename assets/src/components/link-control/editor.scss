@@ -9,10 +9,13 @@
 	}
 
 	&__preview {
-		background-color: #fef8ee;
+		background-color: #f3f3f4;
+		border-radius: 3px;
 		padding: 10px;
+		color: #000;
+		box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
 		word-break: break-all;
-		margin: 8px 0;
+		margin: 8px 0 12px 0;
 
 		a {
 			display: flex;

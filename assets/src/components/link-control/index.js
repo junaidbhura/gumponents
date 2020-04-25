@@ -1,148 +1,119 @@
 import './editor.scss';
 
-import React, { Component } from 'react';
 import wp from 'wp';
 import isEmpty from 'lodash/isEmpty';
-import isObject from 'lodash/isObject';
-import isEqual from 'lodash/isEqual';
-import omit from 'lodash/omit';
 
 const { __ } = wp.i18n;
-
 const {
 	BaseControl,
 	Icon,
 } = wp.components;
-
-const {
-	URLInput,
-} = wp.blockEditor;
-
+const { URLInput } = wp.blockEditor;
 const {
 	Modal,
 	Button,
 	TextControl,
 	ToggleControl,
 } = wp.components;
+const {
+	useState,
+	useEffect,
+} = wp.element;
 
-class LinkControl extends Component {
-	constructor( props ) {
-		super( props );
+export default function LinkControl( { value, label, help, onUrl, onChange, buttonLabel = __( 'Select link' ), modalTitle = __( 'URL' ) } ) {
+	const [ modalOpen, setModalOpen ] = useState( false );
+	const [ url, setUrl ] = useState( '' );
+	const [ text, setText ] = useState( '' );
+	const [ newWindow, setNewWindow ] = useState( false );
 
-		this.state = {
-			url: '',
-			text: '',
-			newWindow: false,
-			modalOpen: false,
-		};
-	}
-
-	componentDidMount() {
-		if ( this.props.value ) {
-			if ( isObject( this.props.value ) ) {
-				if ( ! isEmpty( this.props.value ) ) {
-					this.setState( omit( this.props.value, [ 'modalOpen' ] ) );
-				}
-			} else {
-				this.setState( { url: this.props.value } );
+	useEffect(
+		() => {
+			if ( ! isEmpty( value ) ) {
+				setUrl( value.url );
+				setText( value.text );
+				setNewWindow( value.newWindow );
 			}
-		}
-	}
+		},
+		[ value ]
+	);
 
-	componentDidUpdate( prevProps, prevState ) {
-		if ( this.props.onChange && ! isEqual( prevState, this.state ) ) {
-			this.props.onChange( omit( this.state, [ 'modalOpen' ] ) );
-		}
-	}
-
-	render() {
-		const { label, help } = this.props;
-		let { buttonLabel, modalTitle } = this.props;
-
-		if ( ! buttonLabel ) {
-			buttonLabel = __( 'Select' );
-		}
-		if ( ! modalTitle ) {
-			modalTitle = __( 'URL' );
-		}
-
-		return (
-			<BaseControl
-				label={ label }
-				help={ help }
-				className="gumponents-link-control"
+	return (
+		<BaseControl
+			label={ label }
+			help={ help }
+			className="gumponents-link-control"
+		>
+			<Button
+				isDefault
+				onClick={ () => setModalOpen( true ) }
 			>
-				<Button
-					isDefault
-					onClick={ () => this.setState( { modalOpen: true } ) }
-				>
-					{ buttonLabel }
-				</Button>
-				{ '' !== this.state.url &&
-					<div className="gumponents-link-control__preview">
-						<a
-							href={ this.state.url }
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							{ '' === this.state.text && this.state.url }
-							{ '' !== this.state.text && this.state.text }
-							{ false !== this.state.newWindow &&
-								<Icon
-									icon="external"
-									size={ 15 }
-								/>
-							}
-						</a>
-					</div>
-				}
-				{ this.state.modalOpen &&
-					<Modal
-						title={ modalTitle }
-						shouldCloseOnClickOutside={ false }
-						className="gumponents-link-control__modal"
-						onRequestClose={ () => this.setState( { modalOpen: false } ) }
+				{ buttonLabel }
+			</Button>
+			{ ! isEmpty( value ) && '' !== url &&
+				<div className="gumponents-link-control__preview">
+					<a
+						href={ url }
+						target="_blank"
+						rel="noopener noreferrer"
 					>
-						<BaseControl
-							label={ __( 'URL' ) }
-							className="gumponents-url-control"
-						>
-							<URLInput
-								value={ this.state.url }
-								onChange={ ( url, post ) => {
-									if ( this.props.onUrl ) {
-										this.props.onUrl( url, post );
-									}
-									this.setState( { url } );
-									if ( post && '' === this.state.text ) {
-										this.setState( {
-											text: post.title,
-										} );
-									} else if ( '' === url ) {
-										this.setState( {
-											text: '',
-											newWindow: false,
-										} );
-									}
-								} }
+						{ '' === text && url }
+						{ text }
+						{ false !== newWindow &&
+							<Icon
+								icon="external"
+								size={ 15 }
 							/>
-						</BaseControl>
-						<TextControl
-							label={ __( 'Link Text' ) }
-							value={ this.state.text }
-							onChange={ ( text ) => this.setState( { text } ) }
-						/>
-						<ToggleControl
-							label={ __( 'New Tab' ) }
-							help={ __( 'Open link in a new tab?' ) }
-							checked={ this.state.newWindow }
-							onChange={ () => this.setState( { newWindow: ! this.state.newWindow } ) }
-						/>
-					</Modal>
-				}
-			</BaseControl>
-		);
-	}
-}
+						}
+					</a>
+				</div>
+			}
+			{ modalOpen &&
+				<Modal
+					title={ modalTitle }
+					shouldCloseOnClickOutside={ false }
+					className="gumponents-link-control__modal"
+					onRequestClose={ () => setModalOpen( false ) }
+				>
+					<BaseControl
+						label={ __( 'URL' ) }
+						className="gumponents-url-control"
+					>
+						<URLInput
+							value={ url }
+							onChange={ ( newUrl, post ) => {
+								if ( onUrl ) {
+									onUrl( newUrl, post );
+								}
 
-export default LinkControl;
+								let changes = {
+									url: newUrl,
+									text,
+									newWindow,
+								};
+								if ( post && '' === text ) {
+									changes.text = post.title;
+								} else if ( '' === newUrl ) {
+									changes.text = '';
+									changes.newWindow = false;
+								}
+
+								onChange( changes );
+							} }
+						/>
+					</BaseControl>
+					<TextControl
+						label={ __( 'Link Text' ) }
+						value={ text }
+						onChange={ ( text ) => onChange( { url, text, newWindow } ) }
+					/>
+					<ToggleControl
+						label={ __( 'New Tab' ) }
+						help={ __( 'Open link in a new tab?' ) }
+						checked={ newWindow }
+						onChange={ () => onChange( { url, text, newWindow: ! newWindow } ) }
+					/>
+				</Modal>
+			}
+		</BaseControl>
+	);
+}
