@@ -1,74 +1,52 @@
-import { Component } from 'react';
 import wp from 'wp';
 import Select from 'react-select';
-import forEach from 'lodash/forEach';
-import find from 'lodash/find';
 
 const {
-	BaseControl,
-} = wp.components;
+	useState,
+	useEffect,
+} = wp.element;
+const { BaseControl } = wp.components;
 
-class MultiSelectControl extends Component {
-	constructor( props ) {
-		super( props );
+export default function MultiSelectControl( { value = [], options = [], label, help, placeholder, onChange, ...reactSelectProps } ) {
+	const [ values, setValues ] = useState( [] );
 
-		this.state = {
-			options: [],
-			value: [],
-		};
+	useEffect(
+		() => setValues( options.filter( ( option ) => value.includes( option.value ) ) ),
+		[ value ]
+	);
 
-		this.onChange = this.onChange.bind( this );
-		this.getValues = this.getValues.bind( this );
-	}
-
-	componentDidMount() {
-		const { options, value } = this.props;
-		if ( options ) {
-			this.setState( { options } );
+	const valuesUpdated = ( values ) => {
+		if ( ! onChange ) {
+			return;
 		}
-		if ( value ) {
-			this.setState( { value } );
+
+		if ( null === values ) {
+			onChange( [] );
+			return;
 		}
-	}
 
-	onChange( values ) {
-		const value = values.map( ( val ) => val.value );
-		this.setState( { value } );
-		if ( this.props.onChange ) {
-			this.props.onChange( value, this.state.value );
-		}
-	}
-
-	getValues() {
-		let values = [];
-		forEach( this.state.value, ( value ) => {
-			const obj = find( this.state.options, [ 'value', value ] );
-			if ( obj ) {
-				values.push( obj );
-			}
-		} );
-		return values;
-	}
-
-	render() {
-		const { label, help, placeholder, ...reactSelectProps } = this.props;
-		return (
-			<BaseControl
-				label={ label }
-				help={ help }
-				className="gumponents-multi-select-control"
-			>
-				<Select
-					{ ...reactSelectProps }
-					value={ this.getValues() }
-					options={ this.state.options }
-					onChange={ this.onChange }
-					placeholder={ placeholder }
-					isMulti
-				/>
-			</BaseControl>
+		onChange(
+			options
+				.filter( ( option ) =>
+					values.map( ( token ) => token.value ).includes( option.value ) )
+				.map( ( option ) => option.value )
 		);
-	}
-}
+	};
 
-export default MultiSelectControl;
+	return (
+		<BaseControl
+			label={ label }
+			help={ help }
+			className="gumponents-multi-select-control"
+		>
+			<Select
+				{ ...reactSelectProps }
+				value={ values }
+				options={ options }
+				onChange={ valuesUpdated }
+				placeholder={ placeholder }
+				isMulti
+			/>
+		</BaseControl>
+	);
+}
