@@ -1,157 +1,122 @@
 import './editor.scss';
 
 import wp from 'wp';
-import React from 'react';
 
 const { __ } = wp.i18n;
-
 const {
 	Button,
 	BaseControl,
 	Spinner,
 } = wp.components;
-
+const { MediaUpload } = wp.editor;
 const {
-	MediaUpload,
-} = wp.editor;
-
+	useState,
+	useEffect,
+} = wp.element;
 const {
 	withSelect,
 	withDispatch,
 } = wp.data;
+const { compose } = wp.compose;
 
-class FileControl extends React.Component {
-	constructor( props ) {
-		super( props );
+function FileControl( { value, selectedFile, help, label = __( 'Select file' ), selectLabel = __( 'Select file' ), removeLabel = __( 'Remove file' ), onSetFile, onChange } ) {
+	const [ id, setId ] = useState( null );
+	const [ file, setFile ] = useState( null );
 
-		this.state = {
-			id: null,
-			media: null,
-		};
-	}
+	useEffect(
+		() => setId( value ),
+		[ value ]
+	);
 
-	componentDidMount() {
-		if ( this.props.value ) {
-			this.setState( {
-				id: this.props.value,
-			} );
+	useEffect(
+		() => setFile( selectedFile ),
+		[ selectedFile ]
+	);
+
+	const onSelectFile = ( media ) => {
+		setId( media.id );
+		setFile( media );
+
+		onSetFile( media );
+
+		if ( onChange ) {
+			onChange( media );
 		}
-		if ( this.props.media ) {
-			this.setState( {
-				media: this.props.media,
-			} );
+	};
+
+	const onRemoveFile = () => {
+		setId( null );
+		setFile( null );
+
+		if ( onChange ) {
+			onChange( null );
 		}
-	}
+	};
 
-	componentDidUpdate( prevProps ) {
-		if ( prevProps.media !== this.props.media ) {
-			this.setState( {
-				media: this.props.media,
-			} );
-		}
-	}
-
-	render() {
-		const { id, media } = this.state;
-		const { help } = this.props;
-		let { label, selectLabel, removeLabel } = this.props;
-
-		if ( ! label ) {
-			label = __( 'Select file' );
-		}
-		if ( ! selectLabel ) {
-			selectLabel = __( 'Select file' );
-		}
-		if ( ! removeLabel ) {
-			removeLabel = __( 'Remove file' );
-		}
-
-		const onSelectFile = ( media ) => {
-			this.setState( {
-				id: media.id,
-				media,
-			} );
-
-			this.props.onSetMedia( media );
-
-			if ( this.props.onChange ) {
-				this.props.onChange( media );
-			}
-		};
-
-		const onRemoveFile = () => {
-			this.setState( {
-				id: null,
-				media: null,
-			} );
-
-			if ( this.props.onChange ) {
-				this.props.onChange( null );
-			}
-		};
-
-		return (
-			<BaseControl
-				help={ help }
-				label={ label }
-				className="gumponents-file-control"
-			>
-				<MediaUpload
-					title={ selectLabel }
-					onSelect={ onSelectFile }
-					render={ ( { open } ) => (
-						<Button
-							isDefault
-							className="gumponents-file-control__select"
-							onClick={ open }
-						>
-							{ selectLabel }
-						</Button>
-					) }
-				/>
-				{ id &&
-					<div className="gumponents-file-control__details">
-						{ media &&
-							<div className="gumponents-file-control__details-container">
-								<div className="gumponents-file-control__icon">
-									<img
-										src={ media.icon }
-										alt=""
-									/>
-								</div>
-								<div className="gumponents-file-control__file-details">
-									<p>{ media.filename }</p>
-									<p>{ media.filesizeHumanReadable }</p>
-								</div>
-							</div>
-						}
-						{ ! media &&
-							<Spinner />
-						}
-					</div>
-				}
-				{ id && media &&
-					<Button onClick={ onRemoveFile } isLink isDestructive>
-						{ removeLabel }
+	return (
+		<BaseControl
+			help={ help }
+			label={ label }
+			className="gumponents-file-control"
+		>
+			<MediaUpload
+				title={ selectLabel }
+				onSelect={ onSelectFile }
+				render={ ( { open } ) => (
+					<Button
+						isDefault
+						className="gumponents-file-control__select"
+						onClick={ open }
+					>
+						{ selectLabel }
 					</Button>
-				}
-			</BaseControl>
-		);
-	}
+				) }
+			/>
+			{ id &&
+				<div className="gumponents-file-control__details">
+					{ file &&
+						<div className="gumponents-file-control__details-container">
+							<div className="gumponents-file-control__icon">
+								<img
+									src={ file.icon }
+									alt=""
+								/>
+							</div>
+							<div className="gumponents-file-control__file-details">
+								<p>{ file.filename }</p>
+								<p>{ file.filesizeHumanReadable }</p>
+							</div>
+						</div>
+					}
+					{ ! file &&
+						<Spinner />
+					}
+				</div>
+			}
+			{ id && file &&
+				<Button onClick={ onRemoveFile } isLink isDestructive>
+					{ removeLabel }
+				</Button>
+			}
+		</BaseControl>
+	);
 }
 
-export default withSelect( ( select, ownProps ) => {
-	const { getMedia } = select( 'gumponents/media' );
-	const { value } = ownProps;
+export default compose(
+	withSelect( ( select, ownProps ) => {
+		const { getMedia } = select( 'gumponents/media' );
+		const { value } = ownProps;
 
-	return {
-		media: value ? getMedia( value ) : null,
-	};
-} )( withDispatch( ( dispatch ) => {
-	return {
-		onSetMedia( media ) {
-			dispatch( 'gumponents/media' ).setMedia( media );
-		},
-	};
-} )( FileControl ) );
+		return {
+			selectedFile: value ? getMedia( value ) : null,
+		};
+	} ),
+	withDispatch( ( dispatch ) => {
+		return {
+			onSetFile( media ) {
+				dispatch( 'gumponents/media' ).setMedia( media );
+			},
+		};
+	} ),
+)( FileControl );
 
