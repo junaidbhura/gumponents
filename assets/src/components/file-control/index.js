@@ -19,24 +19,16 @@ const {
 } = wp.data;
 const { compose } = wp.compose;
 
-function FileControl( { value, selectedFile, help, label = __( 'Select file' ), selectLabel = __( 'Select file' ), removeLabel = __( 'Remove file' ), onSetFile, onChange } ) {
+function FileControl( { value, file, help, label = __( 'Select file' ), selectLabel = __( 'Select file' ), removeLabel = __( 'Remove file' ), onSetFile, onChange } ) {
 	const [ id, setId ] = useState( null );
-	const [ file, setFile ] = useState( null );
 
 	useEffect(
 		() => setId( value ),
 		[ value ]
 	);
 
-	useEffect(
-		() => setFile( selectedFile ),
-		[ selectedFile ]
-	);
-
 	const onSelectFile = ( media ) => {
 		setId( media.id );
-		setFile( media );
-
 		onSetFile( media );
 
 		if ( onChange ) {
@@ -46,7 +38,6 @@ function FileControl( { value, selectedFile, help, label = __( 'Select file' ), 
 
 	const onRemoveFile = () => {
 		setId( null );
-		setFile( null );
 
 		if ( onChange ) {
 			onChange( null );
@@ -108,7 +99,7 @@ export default compose(
 		const { value } = ownProps;
 
 		return {
-			selectedFile: value ? getMedia( value ) : null,
+			file: value ? getMedia( value ) : null,
 		};
 	} ),
 	withDispatch( ( dispatch ) => {
