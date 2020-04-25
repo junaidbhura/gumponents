@@ -16,7 +16,7 @@ const {
 
 const {
 	URLInput,
-} = wp.editor;
+} = wp.blockEditor;
 
 const {
 	Modal,

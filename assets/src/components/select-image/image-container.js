@@ -10,7 +10,7 @@ const {
 
 const {
 	RichText,
-} = wp.editor;
+} = wp.blockEditor;
 
 const { __ } = wp.i18n;
 

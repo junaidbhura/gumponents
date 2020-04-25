@@ -11,7 +11,7 @@ const {
 } = wp.components;
 const {
 	MediaUpload,
-} = wp.editor;
+} = wp.blockEditor;
 const {
 	Fragment,
 	useState,

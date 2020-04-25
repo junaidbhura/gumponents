@@ -12,7 +12,7 @@ const { __ } = wp.i18n;
 
 const {
 	MediaUpload,
-} = wp.editor;
+} = wp.blockEditor;
 
 const {
 	Modal,

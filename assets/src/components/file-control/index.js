@@ -8,7 +8,7 @@ const {
 	BaseControl,
 	Spinner,
 } = wp.components;
-const { MediaUpload } = wp.editor;
+const { MediaUpload } = wp.blockEditor;
 const {
 	useState,
 	useEffect,
