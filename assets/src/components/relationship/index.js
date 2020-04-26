@@ -1,134 +1,98 @@
 import './editor.scss';
 
-import React from 'react';
 import wp from 'wp';
 import classnames from 'classnames';
+import Selector from './selector';
 
 const { __ } = wp.i18n;
-
 const {
 	Button,
 	Modal,
 	Spinner,
 	BaseControl,
 } = wp.components;
+const {
+	useState,
+	useEffect,
+} = wp.element;
 
-import Selector from './selector';
+export default function Relationship( { initialItems, label, searchQuery, help, buttonLabel = __( 'Select' ), modalTitle = __( 'Select' ), noSelectionLabel = __( 'No selection' ), minimal = false, max = -1, onSelect, onSetItems } ) {
+	const [ items, setItems ] = useState( [] );
+	const [ userSelection, setUserSelection ] = useState( [] );
+	const [ loading, setLoading ] = useState( true );
+	const [ modalOpen, setModalOpen ] = useState( false );
 
-class Relationship extends React.Component {
-	constructor( props ) {
-		super( props );
+	useEffect(
+		() => {
+			setItems( initialItems );
+			setLoading( false );
+		},
+		[ initialItems ]
+	);
 
-		this.state = {
-			items: [],
-			initialized: false,
-			loading: true,
-			modalOpen: false,
-		};
-
-		this.items = [];
-		this.itemsSelected = this.itemsSelected.bind( this );
-	}
-
-	componentDidUpdate( prevProps ) {
-		if ( prevProps.initialItems !== this.props.initialItems ) {
-			this.setState( {
-				items: this.props.initialItems,
-				loading: false,
-			} );
+	const selectItems = () => {
+		setItems( userSelection );
+		setModalOpen( false );
+		if ( onSelect ) {
+			onSelect( userSelection.map( ( item ) => item.value ) );
 		}
-	}
+		onSetItems( userSelection );
+	};
 
-	itemsSelected() {
-		this.setState( {
-			items: this.items,
-			modalOpen: false,
-		} );
-		if ( this.props.onSelect ) {
-			this.props.onSelect( this.items.map( ( item ) => item.value ) );
-		}
-		this.props.onSetItems( this.items );
-	}
-
-	render() {
-		const { label, searchQuery, help } = this.props;
-		let { buttonLabel, modalTitle, noSelectionLabel, minimal, max } = this.props;
-		const { items, loading, modalOpen } = this.state;
-
-		if ( ! buttonLabel ) {
-			buttonLabel = __( 'Select' );
-		}
-		if ( ! modalTitle ) {
-			modalTitle = __( 'Select' );
-		}
-		if ( ! noSelectionLabel ) {
-			noSelectionLabel = __( 'No selection' );
-		}
-		if ( ! minimal ) {
-			minimal = false;
-		}
-		if ( ! max ) {
-			max = -1;
-		}
-
-		return (
-			<BaseControl
-				label={ label }
-				help={ help }
-				className="gumponent-relationship">
-				<Button
-					isDefault
-					isBusy={ minimal && loading }
-					onClick={ () => this.setState( { modalOpen: true } ) }
-				>
-					{ buttonLabel }
-				</Button>
-				{ ! minimal &&
-					<ul className={ classnames( 'gumponent-relationship__selected-items', loading ? 'gumponents-relationship__selected-items--loading' : null ) }>
-						{ loading &&
-							<li><Spinner /></li>
-						}
-						{ ! loading && 0 !== items.length &&
-							items.map( ( item, index ) => {
-								if ( 3 === index ) {
-									return <li>... { `${ items.length - 3 } ${ __( 'more' ) }` }</li>;
-								} else if ( index > 3 ) {
-									return; // eslint-disable-line
-								}
-								return <li key={ index }>✓ { item.label }</li>;
-							} )
-						}
-						{ ! loading && 0 === items.length &&
-							<li>{ noSelectionLabel }</li>
-						}
-					</ul>
-				}
-				{ modalOpen &&
-					<Modal
-						title={ modalTitle }
-						className="gumponent-relationship__modal"
-						onRequestClose={ () => this.setState( { modalOpen: false } ) }>
-						<Selector
-							maxItems={ max }
-							onSelect={ ( items ) => {
-								this.items = items;
-							} }
-							selected={ items }
-							searchQuery={ searchQuery }
-						/>
-						<div className="gumponent-relationship__modal__actions">
-							<Button
-								isPrimary
-								onClick={ this.itemsSelected }
-							>
-								{ __( 'Select' ) }
-							</Button>
-						</div>
-					</Modal>
-				}
-			</BaseControl>
-		);
-	}
+	return (
+		<BaseControl
+			label={ label }
+			help={ help }
+			className="gumponent-relationship"
+		>
+			<Button
+				isSecondary
+				isBusy={ minimal && loading }
+				onClick={ () => setModalOpen( true ) }
+			>
+				{ buttonLabel }
+			</Button>
+			{ ! minimal &&
+				<ul className={ classnames( 'gumponent-relationship__selected-items', { 'gumponents-relationship__selected-items--loading': loading } ) }>
+					{ loading &&
+						<li><Spinner /></li>
+					}
+					{ ! loading && 0 !== items.length &&
+						items.map( ( item, index ) => {
+							if ( 3 === index ) {
+								return <li>... { `${ items.length - 3 } ${ __( 'more' ) }` }</li>;
+							} else if ( index > 3 ) {
+								return; // eslint-disable-line
+							}
+							return <li key={ index }>✓ { item.label }</li>;
+						} )
+					}
+					{ ! loading && 0 === items.length &&
+						<li>{ noSelectionLabel }</li>
+					}
+				</ul>
+			}
+			{ modalOpen &&
+				<Modal
+					title={ modalTitle }
+					className="gumponent-relationship__modal"
+					onRequestClose={ () => setModalOpen( false ) }>
+					<Selector
+						maxItems={ max }
+						onSelect={ ( newItems ) => setUserSelection( newItems ) }
+						selected={ items }
+						searchQuery={ searchQuery }
+					/>
+					<div className="gumponent-relationship__modal__actions">
+						<Button
+							isPrimary
+							onClick={ selectItems }
+						>
+							{ __( 'Select' ) }
+						</Button>
+					</div>
+				</Modal>
+			}
+		</BaseControl>
+	);
 }
-
-export default Relationship;

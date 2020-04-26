@@ -106,33 +106,61 @@ $gumponent-relationship__modal-gutter: 16px;
 				z-index: 3;
 			}
 		}
+	}
 
-		&__item {
-			display: block;
-			margin: 0;
+	&__item {
+		margin: 0;
+		padding: 10px 43px 10px 10px;
+		text-align: left;
+		position: relative;
 
-			a {
-				display: block;
-				color: inherit;
-				padding: 10px;
-				text-decoration: none;
-
-				&:hover {
-					background-color: #0073aa;
-					color: #fff;
-				}
-			}
-
-			&--selected {
-				opacity: 0.5;
-
-				a:hover {
-					color: inherit;
-					cursor: default;
-					background-color: transparent;
-				}
-			}
+		&:hover {
+			background-color: #0073aa;
+			color: #fff;
 		}
+
+		> button {
+			width: 100%;
+			height: 100%;
+			margin: -10px;
+		}
+
+		&--selected {
+			opacity: 0.35;
+			cursor: default !important;
+		}
+	}
+
+	&__items--search &__item {
+		cursor: pointer;
+	}
+
+	&__item-action {
+		opacity: 0;
+		position: absolute;
+		right: 10px;
+		top: 50%;
+		margin-top: -13px;
+
+		button {
+			padding: 0 !important;
+			height: auto;
+			background-color: transparent !important;
+			box-shadow: none !important;
+		}
+
+		svg {
+			margin: 3px !important;
+			fill: #fff;
+		}
+	}
+
+	&__item:hover &__item-action {
+		opacity: 1;
+	}
+
+	&__item--selected:hover &__item-action {
+		opacity: 0 !important;
 	}
 
 	&__selected-items {
@@ -140,7 +168,10 @@ $gumponent-relationship__modal-gutter: 16px;
 		font-size: 0.9em;
 		position: relative;
 		padding: 10px !important;
-		background-color: #fef8ee;
+		background-color: #f3f3f4;
+		border-radius: 3px;
+		color: #000;
+		box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
 		margin: 10px 0 0 0 !important;
 
 		li {

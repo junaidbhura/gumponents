@@ -1,117 +1,68 @@
-import React from 'react';
-
+import wp from 'wp';
 import SearchItems from './search-items';
 import SelectedItems from './selected-items';
 
+const { __ } = wp.i18n;
+const {
+	useState,
+	useEffect,
+} = wp.element;
+
 const typingDelay = 300;
+let typingDelayTimeout = null;
 
-class Selector extends React.Component {
-	constructor( props ) {
-		super( props );
+export default function Selector( { maxItems, onSelect, selected, searchQuery } ) {
+	const [ results, setResults ] = useState( [] );
+	const [ selectedItems, setSelectedItems ] = useState( [] );
+	const [ searching, setSearching ] = useState( false );
 
-		this.state = {
-			search: '',
-			results: [],
-			selected: [],
-			searching: false,
-		};
+	useEffect( () => triggerSearch(), [] );
 
-		this.typingDelayTimeout = null;
-	}
+	useEffect( () => setSelectedItems( selected ), [ selected ] );
 
-	componentDidMount() {
-		if ( '' === this.state.search && 0 === this.state.results.length ) {
-			this.triggerSearch();
-		}
-		if ( this.props.selected !== this.state.selected ) {
-			this.setState( {
-				selected: this.props.selected,
-			} );
-		}
-	}
+	useEffect( () => onSelect( selectedItems ), [ selectedItems ] );
 
-	componentDidUpdate( prevProps, prevState ) {
-		if ( prevState.selected !== this.state.selected ) {
-			this.props.onSelect( this.state.selected );
-		}
-	}
+	const triggerTyping = ( e ) => {
+		clearTimeout( typingDelayTimeout );
+		typingDelayTimeout = setTimeout( triggerSearch, typingDelay, e.target.value );
+	};
 
-	triggerTyping() {
-		clearTimeout( this.typingDelayTimeout );
-		this.typingDelayTimeout = setTimeout( () => {
-			this.triggerSearch();
-		}, typingDelay );
-	}
+	const triggerSearch = ( query ) => {
+		setSearching( true );
+		searchQuery( query ).then( ( newResults ) => {
+			setSearching( false );
+			setResults( newResults );
+		} );
+	};
 
-	triggerSearch() {
-		if ( this.props.searchQuery ) {
-			this.setState( { searching: true } );
-			this.props.searchQuery( this.state.search ).then( ( results ) => {
-				this.setState( {
-					searching: false,
-					results,
-				} );
-			} );
-		}
-	}
-
-	render() {
-		const {
-			search,
-			results,
-			selected,
-			searching,
-		} = this.state;
-
-		const { maxItems } = this.props;
-
-		return (
-			<div className="gumponent-relationship">
-				<div className="gumponent-relationship__search-container">
-					<input
-						type="text"
-						className="gumponent-relationship__search"
-						placeholder="Search"
-						value={ search }
-						onChange={ ( e ) => {
-							this.setState( {
-								search: e.target.value,
-							} );
-							this.triggerTyping();
-						} }
+	return (
+		<div className="gumponent-relationship">
+			<div className="gumponent-relationship__search-container">
+				<input
+					type="text"
+					className="gumponent-relationship__search"
+					placeholder={ __( 'Search' ) }
+					onChange={ triggerTyping }
+				/>
+			</div>
+			<div className="gumponent-relationship__panel">
+				<div className="gumponent-relationship__panel__search-items">
+					<SearchItems
+						disabled={ maxItems > 0 && selected.length >= maxItems }
+						items={ results }
+						loading={ searching }
+						selected={ selectedItems }
+						onSelected={ ( item ) => setSelectedItems( Array.prototype.concat( selectedItems, [ item ] ) ) }
 					/>
 				</div>
-				<div className="gumponent-relationship__panel">
-					<div className="gumponent-relationship__panel__search-items">
-						<SearchItems
-							disabled={ maxItems > 0 && selected.length >= maxItems }
-							items={ results }
-							loading={ searching }
-							selected={ selected }
-							onSelected={ ( item ) => {
-								this.setState( ( prevState ) => {
-									return {
-										selected: [ ...prevState.selected, item ],
-									};
-								} );
-							} }
-						/>
-					</div>
-					<div className="gumponent-relationship__panel__selected-items">
-						<SelectedItems
-							items={ selected }
-							onUpdated={ ( selected ) => this.setState( { selected } ) }
-							onUnselected={ ( item ) => this.setState( ( prevState ) => {
-								return {
-									selected: prevState.selected.filter( ( thing ) => thing.value !== item.value ),
-								};
-							} ) }
-						/>
-					</div>
+				<div className="gumponent-relationship__panel__selected-items">
+					<SelectedItems
+						items={ selectedItems }
+						onUpdated={ ( items ) => setSelectedItems( items ) }
+						onUnselected={ ( item ) => setSelectedItems( selectedItems.filter( ( thing ) => thing.value !== item.value ) ) }
+					/>
 				</div>
 			</div>
-		);
-	}
+		</div>
+	);
 }
-
-export default Selector;

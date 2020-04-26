@@ -1,107 +1,67 @@
 import wp from 'wp';
-import React from 'react';
-import classnames from 'classnames';
-
 import {
 	DragDropContext,
 	Droppable,
 	Draggable,
 } from 'react-beautiful-dnd';
 
+const { __ } = wp.i18n;
 const {
-	Spinner,
+	Tooltip,
+	Button,
 } = wp.components;
 
-class SelectedItems extends React.Component {
-	constructor( props ) {
-		super( props );
-
-		this.state = {
-			loading: false,
-			items: [],
-		};
-
-		if ( this.props.items ) {
-			this.state.items = this.props.items;
-		}
-
-		this.onDragEnd = this.onDragEnd.bind( this );
-	}
-
-	componentDidUpdate( prevProps ) {
-		if ( prevProps.items !== this.props.items ) {
-			this.setState( {
-				items: this.props.items,
-			} );
-		}
-	}
-
-	onDragEnd( result ) {
+export default function SelectedItems( { items, onUpdated, onUnselected } ) {
+	const onDragEnd = ( result ) => {
 		if ( ! result.destination ) {
 			return;
 		}
 
-		const newItems = Array.from( this.state.items );
+		const newItems = Array.from( items );
 		const [ removed ] = newItems.splice( result.source.index, 1 );
 		newItems.splice( result.destination.index, 0, removed );
 
-		this.setState( {
-			items: newItems,
-		} );
+		onUpdated( newItems );
+	};
 
-		this.props.onUpdated( newItems );
-	}
-
-	render() {
-		const {
-			loading,
-			items,
-		} = this.state;
-
-		return (
-			<DragDropContext onDragEnd={ this.onDragEnd }>
-				<Droppable droppableId="selected-items">
-					{ ( provided ) => (
-						<ul
-							className={ classnames( 'gumponent-relationship__items', ( loading ? 'gumponent-relationship__items--loading' : null ) ) }
-							ref={ provided.innerRef }
-						>
-							{ loading &&
-								<Spinner />
-							}
-							{
-								items.map( ( item, index ) => {
-									return (
-										<Draggable draggableId={ item.id } index={ index } key={ index }>
-											{ ( provided ) => (
-												<li
-													className="gumponent-relationship__items__item"
-													ref={ provided.innerRef }
-													{ ...provided.draggableProps }
-													{ ...provided.dragHandleProps }
-												>
-													<a
-														href="#"
-														onClick={ ( e ) => {
-															e.preventDefault();
-															this.props.onUnselected( item );
-														} }
-													>
-														{ item.label }
-													</a>
-												</li>
-											) }
-										</Draggable>
-									);
-								} )
-							}
-							{ provided.placeholder }
-						</ul>
-					) }
-				</Droppable>
-			</DragDropContext>
-		);
-	}
+	return (
+		<DragDropContext onDragEnd={ onDragEnd }>
+			<Droppable droppableId="selected-items">
+				{ ( provided ) => (
+					<ul
+						className="gumponent-relationship__items"
+						ref={ provided.innerRef }
+					>
+						{ items.map( ( item, index ) => {
+							return (
+								<Draggable key={ item.id } draggableId={ `id-${ item.id }` } index={ index }>
+									{ ( innerProvided ) => (
+										<li
+											className="gumponent-relationship__item"
+											ref={ innerProvided.innerRef }
+											{ ...innerProvided.draggableProps }
+											{ ...innerProvided.dragHandleProps }
+										>
+											<div className="gumponent-relationship__item-label">
+												{ item.label }
+											</div>
+											<div className="gumponent-relationship__item-action">
+												<Tooltip text={ __( 'Remove' ) }>
+													<Button
+														onClick={ () => onUnselected( item ) }
+														icon="dismiss"
+													/>
+												</Tooltip>
+											</div>
+										</li>
+									) }
+								</Draggable>
+							);
+						} ) }
+						{ provided.placeholder }
+					</ul>
+				) }
+			</Droppable>
+		</DragDropContext>
+	);
 }
-
-export default SelectedItems;
