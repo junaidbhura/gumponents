@@ -11,16 +11,11 @@ const {
 const typingDelay = 300;
 let typingDelayTimeout = null;
 
-export default function Selector( { maxItems, onSelect, selected, searchQuery } ) {
+export default function Selector( { maxItems, onSelect, items, searchQuery } ) {
 	const [ results, setResults ] = useState( [] );
-	const [ selectedItems, setSelectedItems ] = useState( [] );
 	const [ searching, setSearching ] = useState( false );
 
 	useEffect( () => triggerSearch(), [] );
-
-	useEffect( () => setSelectedItems( selected ), [ selected ] );
-
-	useEffect( () => onSelect( selectedItems ), [ selectedItems ] );
 
 	const triggerTyping = ( e ) => {
 		clearTimeout( typingDelayTimeout );
@@ -48,18 +43,18 @@ export default function Selector( { maxItems, onSelect, selected, searchQuery } 
 			<div className="gumponent-relationship__panel">
 				<div className="gumponent-relationship__panel__search-items">
 					<SearchItems
-						disabled={ maxItems > 0 && selected.length >= maxItems }
+						disabled={ maxItems > 0 && items.length >= maxItems }
 						items={ results }
 						loading={ searching }
-						selected={ selectedItems }
-						onSelected={ ( item ) => setSelectedItems( Array.prototype.concat( selectedItems, [ item ] ) ) }
+						selected={ items }
+						onSelected={ ( item ) => onSelect( Array.prototype.concat( items, [ item ] ) ) }
 					/>
 				</div>
 				<div className="gumponent-relationship__panel__selected-items">
 					<SelectedItems
-						items={ selectedItems }
-						onUpdated={ ( items ) => setSelectedItems( items ) }
-						onUnselected={ ( item ) => setSelectedItems( selectedItems.filter( ( thing ) => thing.value !== item.value ) ) }
+						items={ items }
+						onUpdated={ ( newItems ) => onSelect( newItems ) }
+						onUnselected={ ( item ) => onSelect( items.filter( ( thing ) => thing.value !== item.value ) ) }
 					/>
 				</div>
 			</div>

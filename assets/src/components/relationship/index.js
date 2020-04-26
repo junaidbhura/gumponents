@@ -16,7 +16,7 @@ const {
 	useEffect,
 } = wp.element;
 
-export default function Relationship( { initialItems, label, searchQuery, help, buttonLabel = __( 'Select' ), modalTitle = __( 'Select' ), noSelectionLabel = __( 'No selection' ), minimal = false, max = -1, onSelect, onSetItems } ) {
+export default function Relationship( { initialItems, label, searchQuery, help, buttonLabel = __( 'Select' ), modalTitle = __( 'Select' ), minimal = false, max = -1, onSelect, onSetItems } ) {
 	const [ items, setItems ] = useState( [] );
 	const [ userSelection, setUserSelection ] = useState( [] );
 	const [ loading, setLoading ] = useState( true );
@@ -39,6 +39,11 @@ export default function Relationship( { initialItems, label, searchQuery, help, 
 		onSetItems( userSelection );
 	};
 
+	const openModal = () => {
+		setUserSelection( items );
+		setModalOpen( true );
+	};
+
 	return (
 		<BaseControl
 			label={ label }
@@ -48,11 +53,11 @@ export default function Relationship( { initialItems, label, searchQuery, help, 
 			<Button
 				isSecondary
 				isBusy={ minimal && loading }
-				onClick={ () => setModalOpen( true ) }
+				onClick={ openModal }
 			>
 				{ buttonLabel }
 			</Button>
-			{ ! minimal &&
+			{ ! minimal && 0 !== items.length &&
 				<ul className={ classnames( 'gumponent-relationship__selected-items', { 'gumponents-relationship__selected-items--loading': loading } ) }>
 					{ loading &&
 						<li><Spinner /></li>
@@ -67,9 +72,6 @@ export default function Relationship( { initialItems, label, searchQuery, help, 
 							return <li key={ index }>✓ { item.label }</li>;
 						} )
 					}
-					{ ! loading && 0 === items.length &&
-						<li>{ noSelectionLabel }</li>
-					}
 				</ul>
 			}
 			{ modalOpen &&
@@ -80,7 +82,7 @@ export default function Relationship( { initialItems, label, searchQuery, help, 
 					<Selector
 						maxItems={ max }
 						onSelect={ ( newItems ) => setUserSelection( newItems ) }
-						selected={ items }
+						items={ userSelection }
 						searchQuery={ searchQuery }
 					/>
 					<div className="gumponent-relationship__modal__actions">

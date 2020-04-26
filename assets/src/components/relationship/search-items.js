@@ -1,6 +1,7 @@
 import wp from 'wp';
 import classnames from 'classnames';
 
+const { __ } = wp.i18n;
 const {
 	Spinner,
 	Icon,
@@ -28,7 +29,7 @@ export default function SearchItems( { disabled, items, loading, selected, onSel
 						} }
 					>
 						<div className="gumponent-relationship__item-label">
-							{ item.label }
+							{ '' !== item.label ? item.label : __( '(no title)' ) }
 						</div>
 						<div className="gumponent-relationship__item-action">
 							<Icon
