@@ -43,7 +43,7 @@ export default function SelectedItems( { items, onUpdated, onUnselected } ) {
 											{ ...innerProvided.dragHandleProps }
 										>
 											<div className="gumponent-relationship__item-label">
-												{ item.label }
+												{ '' !== item.label ? item.label : __( '(no title)' ) }
 											</div>
 											<div className="gumponent-relationship__item-action">
 												<Tooltip text={ __( 'Remove' ) }>
