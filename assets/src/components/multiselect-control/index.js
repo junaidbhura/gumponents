@@ -1,3 +1,5 @@
+import './editor.scss';
+
 import wp from 'wp';
 import Select from 'react-select';
 
