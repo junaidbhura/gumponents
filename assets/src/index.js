@@ -15,6 +15,7 @@ import FileControl from './components/file-control';
 import MultiSelectControl from './components/multiselect-control';
 import LinkControl from './components/link-control';
 import GalleryControl from './components/gallery-control';
+import ColorPaletteControl from './components/color-palette-control';
 
 window.gumponents = {
 	// Components.
@@ -29,5 +30,6 @@ window.gumponents = {
 		MultiSelectControl,
 		LinkControl,
 		GalleryControl,
+		ColorPaletteControl,
 	},
 };
