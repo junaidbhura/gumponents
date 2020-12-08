@@ -67,6 +67,15 @@ import { TaxonomyRelationshipControl } = gumponents.components;
 ```js
 import { ColorPaletteControl } = gumponents.components;
 
+...
+
+attributes: {
+	color: {
+		type: 'object',
+	},
+},
+...
+
 <ColorPaletteControl
 	label="Choose a color"
 	value={ color ? color.color : null }
