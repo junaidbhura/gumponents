@@ -17,22 +17,22 @@
     "stylelint-config-wordpress": "^14.0.0"
   },
   "dependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.9.5",
-    "@babel/plugin-transform-react-jsx": "^7.9.4",
-    "@babel/preset-env": "^7.9.5",
-    "@wordpress/browserslist-config": "^2.6.0",
-    "babel-loader": "^8.1.0",
+    "@babel/core": "^7.12.9",
+    "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
+    "@babel/plugin-transform-react-jsx": "^7.12.7",
+    "@babel/preset-env": "^7.12.7",
+    "@wordpress/browserslist-config": "^2.7.0",
+    "babel-loader": "^8.2.2",
     "classnames": "^2.2.6",
     "css-loader": "^2.1.0",
     "mini-css-extract-plugin": "^0.5.0",
-    "node-sass": "^4.14.0",
+    "node-sass": "^4.14.1",
     "react-beautiful-dnd": "^13.0.0",
-    "react-select": "^3.1.0",
+    "react-select": "^3.1.1",
     "sass-loader": "^7.3.1",
     "uglifyjs-webpack-plugin": "^2.2.0",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
-    "webpack-notifier": "^1.8.0"
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-notifier": "^1.12.0"
   }
 }

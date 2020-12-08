@@ -20,15 +20,19 @@ export default function ColorPaletteControl( { label, help, value, colors = null
 			return;
 		}
 
-		let colorObject = {
-			color,
-		};
-		colors.some( ( item ) => {
-			if ( 'slug' in item && 'color' in item && color === item.color ) {
-				colorObject.slug = item.slug;
-				return true;
-			}
-		} );
+		let colorObject = null;
+		if ( 'undefined' !== typeof color ) {
+			colorObject = {
+				color,
+			};
+			colors.some( ( item ) => {
+				if ( 'slug' in item && 'color' in item && color === item.color ) {
+					colorObject.slug = item.slug;
+					return true;
+				}
+				return false;
+			} );
+		}
 
 		onChange( colorObject );
 	};
