@@ -58,6 +58,22 @@ import { TaxonomyRelationshipControl } = gumponents.components;
 />
 ```
 
+### ColorPaletteControl
+
+![color-palette-control](https://user-images.githubusercontent.com/2512525/101442823-31d38c00-3970-11eb-989f-83627e0d782b.gif)
+
+#### Example
+
+```js
+import { ColorPaletteControl } = gumponents.components;
+
+<ColorPaletteControl
+	label="Choose a color"
+	value={ color ? color.color : null }
+	onChange={ color => setAttributes( { color } ) }
+/>
+```
+
 ### MultiSelectControl
 
 ![multi-select-control](https://user-images.githubusercontent.com/2512525/56482870-83ae7080-6505-11e9-9ec6-9815818b4d38.gif)
