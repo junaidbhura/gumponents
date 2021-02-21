@@ -34,7 +34,7 @@ function PostRelationshipControl( props ) {
 export default compose(
 	withSelect( ( select, ownProps ) => {
 		return {
-			initialItems: select( 'gumponents/relationship' ).getPosts( ownProps.value ),
+			initialItems: select( 'gumponents/relationship' ).getPosts( ownProps.value, ownProps.postTypes ),
 		};
 	} ),
 	withDispatch( ( dispatch ) => {

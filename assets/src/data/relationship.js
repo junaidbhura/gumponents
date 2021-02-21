@@ -24,10 +24,11 @@ const actions = {
 		};
 	},
 
-	getPosts( postIds ) {
+	getPosts( postIds, postTypes ) {
 		return {
 			type: 'GET_POSTS',
 			ids: postIds,
+			postTypes,
 		};
 	},
 
@@ -93,12 +94,17 @@ registerStore( 'gumponents/relationship', {
 	},
 
 	controls: {
-		GET_POSTS( { ids } ) {
+		GET_POSTS( { ids, postTypes } ) {
+			if ( 'string' === typeof postTypes ) {
+				postTypes = [ postTypes ];
+			}
+
 			return apiFetch( {
 				path: '/gumponents/relationship/v1/posts/initialize',
 				data: {
 					type: 'post',
 					items: ids,
+					post_types: postTypes,
 				},
 				method: 'post',
 			} );
@@ -116,11 +122,11 @@ registerStore( 'gumponents/relationship', {
 	},
 
 	resolvers: {
-		* getPosts( ids ) {
+		* getPosts( ids, postTypes ) {
 			if ( 0 === ids.length ) {
 				return;
 			}
-			const posts = yield actions.getPosts( ids );
+			const posts = yield actions.getPosts( ids, postTypes );
 			return actions.setPosts( posts );
 		},
 

@@ -37,14 +37,25 @@ class PostsController extends Controller {
 				'callback'            => array( $this, 'get_initial_items' ),
 				'permission_callback' => array( $this, 'get_items_permissions_check' ),
 				'args'                => array(
-					'items' => array(
+					'items'      => array(
 						'required'    => true,
 						'type'        => 'array',
 						'description' => __( 'Items', 'gumponents' ),
 						'items'       => array(
+							'type'              => 'integer',
 							'sanitize_callback' => 'sanitize_text_field',
 						),
 						'default'     => [],
+					),
+					'post_types' => array(
+						'required'    => true,
+						'type'        => 'array',
+						'description' => __( 'Post Types', 'gumponents' ),
+						'items'       => array(
+							'type'              => 'string',
+							'sanitize_callback' => 'sanitize_text_field',
+						),
+						'default'     => [ 'post' ],
 					),
 				),
 			)
@@ -105,7 +116,7 @@ class PostsController extends Controller {
 
 		$results = new WP_Query(
 			array(
-				'post_type'      => array_values( get_post_types() ), // 'any' doesn't show all post types.
+				'post_type'      => $params['post_types'],
 				'posts_per_page' => -1,
 				'post__in'       => $params['items'],
 				'no_found_rows'  => true,
