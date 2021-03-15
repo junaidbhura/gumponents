@@ -82,13 +82,18 @@
 		z-index: 20;
 
 		.components-button {
-			padding: 0;
+			padding: 0 !important;
 			color: #fff;
 			background-color: #0085ba;
 			height: auto;
+			min-width: auto;
 
 			+ .components-button {
 				margin-left: 5px;
+			}
+
+			.dashicon {
+				margin: 0;
 			}
 		}
 	}
