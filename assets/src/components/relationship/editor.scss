@@ -148,11 +148,12 @@ $gumponent-relationship__modal-gutter: 16px;
 			height: auto;
 			background-color: transparent !important;
 			box-shadow: none !important;
+			min-width: auto !important;
 		}
 
-		svg {
+		.dashicon {
 			margin: 3px !important;
-			fill: #fff;
+			color: #fff;
 		}
 	}
 
