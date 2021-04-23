@@ -97,6 +97,7 @@ export default function LinkControl( { value, label, help, onUrl, onChange, butt
 									changes.newWindow = false;
 								}
 
+								setUrl( changes.url );
 								onChange( changes );
 							} }
 						/>
@@ -104,7 +105,10 @@ export default function LinkControl( { value, label, help, onUrl, onChange, butt
 					<TextControl
 						label={ __( 'Link Text' ) }
 						value={ text }
-						onChange={ ( text ) => onChange( { url, text, newWindow } ) }
+						onChange={ ( text ) => {
+							setText( text );
+							onChange( { url, text, newWindow } );
+						} }
 					/>
 					<ToggleControl
 						label={ __( 'New Tab' ) }
