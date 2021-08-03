@@ -7,6 +7,8 @@
 
 namespace JB\Gumponents;
 
+use WP_Screen;
+
 /**
  * Bootstrap the plugin.
  *
@@ -40,11 +42,15 @@ function enqueue_editor_assets() {
 		'wp-i18n',
 		'wp-blocks',
 		'wp-components',
-		'wp-editor',
 		'wp-plugins',
-		'wp-edit-post',
 		'lodash',
 	];
+
+	$screen = get_current_screen();
+	if ( $screen instanceof WP_Screen && 'widgets' !== $screen->base ) {
+		$deps[] = 'wp-editor';
+		$deps[] = 'wp-edit-post';
+	}
 
 	wp_enqueue_script( 'gumponents', plugins_url( 'assets/dist/blocks.js', $plugin_file_path ), $deps, GUMPONENTS_VERSION, false );
 	wp_enqueue_style( 'gumponents', plugins_url( 'assets/dist/editor.css', $plugin_file_path ), [], GUMPONENTS_VERSION );
