@@ -1,4 +1,5 @@
 import './editor.scss';
+import { UrlModal } from './modal';
 
 import wp from 'wp';
 import isEmpty from 'lodash/isEmpty';
@@ -8,34 +9,16 @@ const {
 	BaseControl,
 	Icon,
 } = wp.components;
-const { URLInput } = wp.blockEditor;
 const {
-	Modal,
 	Button,
-	TextControl,
-	ToggleControl,
 } = wp.components;
 const {
 	useState,
-	useEffect,
 } = wp.element;
 
 export default function LinkControl( { value, label, help, onUrl, onChange, buttonLabel = __( 'Select link' ), modalTitle = __( 'URL' ) } ) {
 	const [ modalOpen, setModalOpen ] = useState( false );
-	const [ url, setUrl ] = useState( '' );
-	const [ text, setText ] = useState( '' );
-	const [ newWindow, setNewWindow ] = useState( false );
-
-	useEffect(
-		() => {
-			if ( ! isEmpty( value ) ) {
-				setUrl( value.url );
-				setText( value.text );
-				setNewWindow( value.newWindow );
-			}
-		},
-		[ value ]
-	);
+	const { url, text, newWindow } = value ?? {};
 
 	return (
 		<BaseControl
@@ -68,55 +51,14 @@ export default function LinkControl( { value, label, help, onUrl, onChange, butt
 				</div>
 			}
 			{ modalOpen &&
-				<Modal
+				<UrlModal
+					className="gumponents-url-control"
 					title={ modalTitle }
-					shouldCloseOnClickOutside={ false }
-					className="gumponents-link-control__modal"
 					onRequestClose={ () => setModalOpen( false ) }
-				>
-					<BaseControl
-						label={ __( 'URL' ) }
-						className="gumponents-url-control"
-					>
-						<URLInput
-							value={ url }
-							onChange={ ( newUrl, post ) => {
-								if ( onUrl ) {
-									onUrl( newUrl, post );
-								}
-
-								let changes = {
-									url: newUrl,
-									text,
-									newWindow,
-								};
-								if ( post && '' === text ) {
-									changes.text = post.title;
-								} else if ( '' === newUrl ) {
-									changes.text = '';
-									changes.newWindow = false;
-								}
-
-								setUrl( changes.url );
-								onChange( changes );
-							} }
-						/>
-					</BaseControl>
-					<TextControl
-						label={ __( 'Link Text' ) }
-						value={ text }
-						onChange={ ( text ) => {
-							setText( text );
-							onChange( { url, text, newWindow } );
-						} }
-					/>
-					<ToggleControl
-						label={ __( 'New Tab' ) }
-						help={ __( 'Open link in a new tab?' ) }
-						checked={ newWindow }
-						onChange={ () => onChange( { url, text, newWindow: ! newWindow } ) }
-					/>
-				</Modal>
+					value={ value }
+					onChange={ ( value ) => onChange( value ) }
+					onUrl={ onUrl }
+				/>
 			}
 		</BaseControl>
 	);
