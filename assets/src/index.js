@@ -8,6 +8,7 @@ import './data/media';
 import Img from './components/img';
 import Figure from './components/figure';
 import SelectImage from './components/select-image';
+import LinkButton from './components/link-button';
 import PostRelationshipControl from './components/post-relationship-control';
 import TaxonomyRelationshipControl from './components/taxonomy-relationship-control';
 import ImageControl from './components/image-control';
@@ -23,6 +24,7 @@ window.gumponents = {
 		Img,
 		Figure,
 		SelectImage,
+		LinkButton,
 		PostRelationshipControl,
 		TaxonomyRelationshipControl,
 		ImageControl,
