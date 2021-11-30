@@ -23,7 +23,7 @@ They are not blocks, but rather, what you would use to build advanced blocks.
 #### Example
 
 ```js
-import { PostRelationshipControl } = gumponents.components;
+const { PostRelationshipControl } = gumponents.components;
 
 <PostRelationshipControl
 	label="Select people"
@@ -45,7 +45,7 @@ import { PostRelationshipControl } = gumponents.components;
 #### Example
 
 ```js
-import { TaxonomyRelationshipControl } = gumponents.components;
+const { TaxonomyRelationshipControl } = gumponents.components;
 
 <TaxonomyRelationshipControl
 	label="Select people roles"
@@ -65,7 +65,7 @@ import { TaxonomyRelationshipControl } = gumponents.components;
 #### Example
 
 ```js
-import { ColorPaletteControl } = gumponents.components;
+const { ColorPaletteControl } = gumponents.components;
 
 ...
 
@@ -90,7 +90,7 @@ attributes: {
 #### Example
 
 ```js
-import { MultiSelectControl } = gumponents.components;
+const { MultiSelectControl } = gumponents.components;
 
 ...
 
@@ -126,7 +126,7 @@ const options = [
 #### Example
 
 ```js
-import { LinkControl } = gumponents.components;
+const { LinkControl } = gumponents.components;
 
 ...
 
@@ -154,7 +154,7 @@ attributes: {
 #### Example
 
 ```js
-import { FileControl } = gumponents.components;
+const { FileControl } = gumponents.components;
 
 ...
 
@@ -183,7 +183,7 @@ attributes: {
 #### Example
 
 ```js
-import { ImageControl } = gumponents.components;
+const { ImageControl } = gumponents.components;
 
 ...
 
@@ -213,7 +213,7 @@ attributes: {
 #### Example
 
 ```js
-import { GalleryControl } = gumponents.components;
+const { GalleryControl } = gumponents.components;
 
 ...
 
@@ -243,7 +243,7 @@ attributes: {
 #### Example
 
 ```js
-import { LinkButton } = gumponents.components;
+const { LinkButton } = gumponents.components;
 
 ...
 
@@ -270,7 +270,7 @@ attributes: {
 #### Example
 
 ```js
-import { SelectImage } = gumponents.components;
+const { SelectImage } = gumponents.components;
 
 ...
 
