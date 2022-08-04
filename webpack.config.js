@@ -1,7 +1,7 @@
 // External dependencies.
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 const WebpackNotifierPlugin = require( 'webpack-notifier' );
-const UglifyJsPlugin = require( 'uglifyjs-webpack-plugin' );
+const TerserPlugin = require( 'terser-webpack-plugin' );
 
 module.exports = ( env ) => {
 	// Build configuration.
@@ -37,8 +37,10 @@ module.exports = ( env ) => {
 						'css-loader',
 						{
 							loader: 'sass-loader',
-							query: {
-								outputStyle: 'compressed',
+							options: {
+								sassOptions: {
+									outputStyle: 'compressed',
+								},
 							},
 						},
 					],
@@ -56,16 +58,15 @@ module.exports = ( env ) => {
 		},
 		optimization: {
 			minimize: true,
-			minimizer: [
-				new UglifyJsPlugin( {
-					uglifyOptions: {
-						output: {
-							comments: false,
-							beautify: false,
-						},
+			minimizer: [ new TerserPlugin( {
+				parallel: true,
+				terserOptions: {
+					format: {
+						comments: false,
 					},
-				} ),
-			],
+				},
+				extractComments: false,
+			} ) ],
 		},
 		plugins: [
 			new MiniCssExtractPlugin( {
