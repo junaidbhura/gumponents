@@ -93,6 +93,16 @@ class PostsController extends Controller {
 						'description' => __( 'Post Taxonomies', 'gumponents' ),
 						'default'     => [],
 					),
+					'post_status' => array(
+						'required'    => false,
+						'type'        => 'object',
+						'description' => __( 'Post Status', 'gumponents' ),
+						'items'       => array(
+							'type'              => 'string',
+							'sanitize_callback' => 'sanitize_text_field',
+						),
+						'default'     => [ 'publish' ],
+					),
 					'filter'          => array(
 						'required'          => false,
 						'type'              => 'string',
@@ -153,7 +163,7 @@ class PostsController extends Controller {
 		$filter       = ! empty( $params['filter'] ) ? '_' . $params['filter'] : '';
 
 		$args = array(
-			'post_status'    => 'publish',
+			'post_status'    => $params['post_status'] ?? 'publish',
 			'post_type'      => $params['post_types'],
 			'posts_per_page' => 20,
 			'no_found_rows'  => true,
@@ -199,7 +209,7 @@ class PostsController extends Controller {
 			$result_posts[] = array(
 				'id'    => $result->ID,
 				'value' => $result,
-				'label' => $result->post_title,
+				'label' => 'draft' === $result->post_status ? sprintf( '%s %s', $result->post_title, '(Draft)' ) : $result->post_title,
 			);
 		}
 

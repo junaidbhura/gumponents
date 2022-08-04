@@ -9,7 +9,7 @@ const {
 const { compose } = wp.compose;
 
 function PostRelationshipControl( props ) {
-	const { postTypes, taxonomies, filter } = props;
+	const { postTypes, postStatus, taxonomies, filter } = props;
 	return (
 		<Relationship
 			{ ...props }
@@ -20,6 +20,7 @@ function PostRelationshipControl( props ) {
 						data: {
 							post_types: postTypes,
 							post_taxonomies: taxonomies,
+							post_status: postStatus,
 							search: query,
 							filter,
 						},
