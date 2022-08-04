@@ -93,7 +93,7 @@ class PostsController extends Controller {
 						'description' => __( 'Post Taxonomies', 'gumponents' ),
 						'default'     => [],
 					),
-					'post_status' => array(
+					'post_status'     => array(
 						'required'    => false,
 						'type'        => 'object',
 						'description' => __( 'Post Status', 'gumponents' ),
