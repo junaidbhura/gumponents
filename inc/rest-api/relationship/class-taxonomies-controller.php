@@ -35,6 +35,7 @@ class TaxonomiesController extends Controller {
 						'type'        => 'array',
 						'description' => __( 'Items', 'gumponents' ),
 						'items'       => array(
+							'type'              => 'integer',
 							'sanitize_callback' => 'sanitize_text_field',
 						),
 						'default'     => [],
