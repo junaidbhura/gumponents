@@ -1,0 +1,48 @@
+$gumponent-focal-point-picker__modal-gutter: 16px;
+
+.gumponent-focal-point-picker {
+
+	.components-base-control__label {
+		display: block;
+		margin-bottom: 4px;
+	}
+
+	&__modal {
+
+		&__actions {
+			text-align: right;
+			padding: $gumponent-focal-point-picker__modal-gutter;
+		}
+
+		.components-modal {
+
+			&__header {
+				margin: 0;
+				position: relative;
+				padding: 0 16px !important;
+
+				&-heading {
+					font-size: 1.3em;
+				}
+			}
+
+			&__content {
+				padding: 0;
+				margin-top: 0;
+				position: relative;
+			}
+		}
+
+		@media screen and (min-width: 600px) {
+			width: 50%;
+			transform: none;
+			top: calc(50% - 222px);
+			left: calc(25%);
+			animation: none;
+		}
+
+		.components-focal-point-picker-control {
+			padding: 0 $gumponent-focal-point-picker__modal-gutter $gumponent-focal-point-picker__modal-gutter $gumponent-focal-point-picker__modal-gutter;
+		}
+	}
+}
