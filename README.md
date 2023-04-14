@@ -220,11 +220,11 @@ const { FocalPointPickerControl } = gumponents.components;
 attributes: {
 	image: {
 		type: 'object',
-	    default: {},
+	        default: {},
 	},
 	focalPoint: {
 		type: 'object',
-        default: {},
+            default: {},
     },
 },
 
