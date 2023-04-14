@@ -218,23 +218,24 @@ const { FocalPointPickerControl } = gumponents.components;
 ...
 
 attributes: {
+	image: {
+		type: 'object',
+	    default: {},
+	},
 	focalPoint: {
 		type: 'object',
-	default: {
-			x: 0.5,
-				y: 0.5,
-		},
-	},
+        default: {},
+    },
 },
 
 ...
 
 <FocalPointPickerControl
-	label={ __( 'Focal Point', 'ymt' ) }
-	imageUrl={ heroImage?.src ?? '' }
-	value={ attributes?.focalPoint ?? {} }
-	help={ __( 'Choose a focal point', 'ymt' ) }
-	onChange={ handleFocalPointChange }
+	label='Focal Point'
+	imageUrl={ attributes.image.src }
+	value={ attributes.focalPoint }
+	help='Choose a focal point'
+	onChange={ ( focalPoint ) => setAttributes( { focalPoint } ) }
 />
 ```
 
