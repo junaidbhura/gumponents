@@ -14,16 +14,15 @@ const {
 } = wp.element;
 
 function FocalPointPickerControl( { label = '', value = {}, onChange = () => {}, imageUrl = '', help = '', buttonLabel = __( 'Select', 'gumponents' ), modalTitle = __( 'Select', 'gumponents' ) } ) {
-	
-	if ( ! imageUrl ) {
-		return null;
-	}
-	
 	// Initialize State.
 	const initialFocalPointValue = ( value.x && value.y ) ? value : { x: 0.5, y: 0.5 };
 	const [ modalOpen, setModalOpen ] = useState( false );
 	const [ focalPoint, setFocalPoint ] = useState( initialFocalPointValue );
-	
+
+	if ( ! imageUrl ) {
+		return null;
+	}
+
 	/**
 	 * Handle Set Focal Point.
 	 *
@@ -33,14 +32,14 @@ function FocalPointPickerControl( { label = '', value = {}, onChange = () => {},
 		setFocalPoint( focalPointData );
 		onChange( focalPoint );
 	};
-	
+
 	/**
 	 * Open modal.
 	 */
 	const openModal = () => {
 		setModalOpen( true );
 	};
-	
+
 	return (
 		<BaseControl
 			label={ label }
@@ -53,7 +52,7 @@ function FocalPointPickerControl( { label = '', value = {}, onChange = () => {},
 			>
 				{ buttonLabel }
 			</Button>
-			
+
 			{ modalOpen &&
 				<Modal
 					title={ modalTitle }
