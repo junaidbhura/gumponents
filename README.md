@@ -231,10 +231,10 @@ attributes: {
 ...
 
 <FocalPointPickerControl
-	label='Focal Point'
+	label="Focal Point"
 	imageUrl={ attributes.image.src }
 	value={ attributes.focalPoint }
-	help='Choose a focal point'
+	help="Choose a focal point"
 	onChange={ ( focalPoint ) => setAttributes( { focalPoint } ) }
 />
 ```
