@@ -14,15 +14,15 @@ const {
 } = wp.element;
 
 function FocalPointPickerControl( {
-									label = '',
-									value = { x: 0.5, y: 0.5 },
-									onChange = () => {
-									},
-									imageUrl = '',
-									help = '',
-									buttonLabel = __( 'Select', 'gumponents' ),
-									modalTitle = __( 'Select', 'gumponents' ),
-								} ) {
+	                                  label = '',
+	                                  value = { x: 0.5, y: 0.5 },
+	                                  onChange = () => {
+	                                  },
+	                                  imageUrl = '',
+	                                  help = '',
+	                                  buttonLabel = __( 'Select', 'gumponents' ),
+	                                  modalTitle = __( 'Select', 'gumponents' ),
+                                  } ) {
 	
 	if ( ! imageUrl ) {
 		return null;
