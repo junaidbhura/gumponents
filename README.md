@@ -206,6 +206,39 @@ attributes: {
 />
 ```
 
+### FocalPointPickerControl
+
+![focal-point-picker](https://user-images.githubusercontent.com/11497423/231909988-7b4fdcec-1015-4512-91de-c0455bb3ff00.gif)
+
+#### Example
+
+```js
+const { FocalPointPickerControl } = gumponents.components;
+
+...
+
+attributes: {
+	image: {
+		type: 'object',
+	        default: {},
+	},
+	focalPoint: {
+		type: 'object',
+	        default: {},
+	},
+},
+
+...
+
+<FocalPointPickerControl
+	label='Focal Point'
+	imageUrl={ attributes.image.src }
+	value={ attributes.focalPoint }
+	help='Choose a focal point'
+	onChange={ ( focalPoint ) => setAttributes( { focalPoint } ) }
+/>
+```
+
 ### GalleryControl
 
 ![gallery-control](https://user-images.githubusercontent.com/2512525/58150817-2136c480-7cab-11e9-86b6-19c3a544d831.gif)

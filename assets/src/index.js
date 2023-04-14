@@ -12,6 +12,7 @@ import LinkButton from './components/link-button';
 import PostRelationshipControl from './components/post-relationship-control';
 import TaxonomyRelationshipControl from './components/taxonomy-relationship-control';
 import ImageControl from './components/image-control';
+import FocalPointPickerControl from './components/focal-point-picker-control';
 import FileControl from './components/file-control';
 import MultiSelectControl from './components/multiselect-control';
 import LinkControl from './components/link-control';
@@ -28,6 +29,7 @@ window.gumponents = {
 		PostRelationshipControl,
 		TaxonomyRelationshipControl,
 		ImageControl,
+		FocalPointPickerControl,
 		FileControl,
 		MultiSelectControl,
 		LinkControl,
