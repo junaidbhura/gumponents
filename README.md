@@ -224,8 +224,8 @@ attributes: {
 	},
 	focalPoint: {
 		type: 'object',
-            default: {},
-    },
+	        default: null,
+	},
 },
 
 ...
