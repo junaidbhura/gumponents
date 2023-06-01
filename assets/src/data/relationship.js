@@ -11,6 +11,7 @@ const { registerStore } = wp.data;
 const DEFAULT_STATE = {
 	posts: [],
 	taxonomies: [],
+	items: [],
 };
 
 const { apiFetch } = wp;
@@ -32,10 +33,11 @@ const actions = {
 		};
 	},
 
-	getItems( items ) {
+	getItems( items, path ) {
 		return {
 			type: 'GET_ITEMS',
 			items,
+			path,
 		};
 	},
 
@@ -102,7 +104,7 @@ registerStore( 'gumponents/relationship', {
 		getItems( state, ids ) {
 			const items = [];
 
-			if ( ids.length === 0 || ! state.items ) {
+			if ( ! Array.isArray( ids ) || 0 === ids.length ) {
 				return items;
 			}
 
@@ -112,6 +114,7 @@ registerStore( 'gumponents/relationship', {
 					items.push( item );
 				}
 			} );
+
 			return items;
 		},
 
@@ -145,9 +148,9 @@ registerStore( 'gumponents/relationship', {
 			} );
 		},
 
-		GET_ITEMS( { items } ) {
+		GET_ITEMS( { items, path } ) {
 			return apiFetch( {
-				path: '/ex-departures/v1/departures/get-departure-codes',
+				path,
 				data: {
 					items,
 				},
@@ -175,12 +178,12 @@ registerStore( 'gumponents/relationship', {
 			return actions.setPosts( posts );
 		},
 
-		* getItems( ids ) {
+		* getItems( ids, path ) {
 			if ( 0 === ids.length ) {
 				return;
 			}
-			const posts = yield actions.getItems( ids );
-			return actions.setItems( posts );
+			const items = yield actions.getItems( ids, path );
+			return actions.setItems( items );
 		},
 
 		* getTaxonomies( ids ) {

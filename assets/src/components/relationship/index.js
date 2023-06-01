@@ -65,7 +65,7 @@ export default function Relationship( { initialItems, label, searchQuery, help, 
 					{ ! loading && 0 !== items.length &&
 						items.map( ( item, index ) => {
 							if ( 3 === index ) {
-								return <li>... { `${ items.length - 3 } ${ __( 'more' ) }` }</li>;
+								return <li key={ 4 }>... { `${ items.length - 3 } ${ __( 'more' ) }` }</li>;
 							} else if ( index > 3 ) {
 								return; // eslint-disable-line
 							}

@@ -4,35 +4,42 @@ import Relationship from '../relationship';
 const { apiFetch } = wp;
 const {
 	withSelect,
+	withDispatch,
 } = wp.data;
 const { compose } = wp.compose;
 
 function RelationshipControl( props ) {
-	const { searchApiUrl, searchApiData = {}, searchApiMethod = 'post', onSetItems } = props;
+	const { searchApiPath = '' } = props;
 	return (
 		<Relationship
 			{ ...props }
 			searchQuery={ ( query ) => {
-				console.log( { query, searchApiUrl, searchApiMethod }, {
-							...searchApiData,
-							query,
-						} );
 				return new Promise( ( resolve ) => {
 					apiFetch( {
-						path: `${ searchApiUrl }?query=${ query }`,
-						method: searchApiMethod,
+						path: searchApiPath,
+						method: 'post',
+						data: {
+							query,
+						},
 					} ).then( ( results ) => resolve( results ) );
 				} );
 			} }
-			onSetItems={ onSetItems }
 		/>
 	);
 }
 
 export default compose(
 	withSelect( ( select, ownProps ) => {
+		const { value = [], getItemsApiPath = '' } = ownProps;
 		return {
-			initialItems: select( 'gumponents/relationship' ).getItems( ownProps.value ),
+			initialItems: select( 'gumponents/relationship' ).getItems( value, getItemsApiPath ),
+		};
+	} ),
+	withDispatch( ( dispatch ) => {
+		return {
+			onSetItems( items ) {
+				dispatch( 'gumponents/relationship' ).setItems( items );
+			},
 		};
 	} ),
 )( RelationshipControl );

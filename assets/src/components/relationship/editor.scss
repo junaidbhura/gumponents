@@ -19,7 +19,8 @@ $gumponent-relationship__modal-gutter: 16px;
 			&__header {
 				margin: 0;
 				position: relative;
-				padding: 0 16px !important;
+				padding: 16px 16px 0 16px !important;
+				height: auto;
 
 				&-heading {
 					font-size: 1.3em;
