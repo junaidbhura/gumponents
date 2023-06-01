@@ -32,6 +32,20 @@ const actions = {
 		};
 	},
 
+	getItems( items ) {
+		return {
+			type: 'GET_ITEMS',
+			items,
+		};
+	},
+
+	setItems( items ) {
+		return {
+			type: 'SET_ITEMS',
+			items,
+		};
+	},
+
 	setTaxonomies( taxonomies ) {
 		return {
 			type: 'SET_TAXONOMIES',
@@ -56,6 +70,11 @@ registerStore( 'gumponents/relationship', {
 					...state,
 					posts: unionWith( state.posts, action.items, isEqual ),
 				};
+			case 'SET_ITEMS':
+				return {
+					...state,
+					items: unionWith( state.items, action.items, isEqual ),
+				};
 			case 'SET_TAXONOMIES':
 				return {
 					...state,
@@ -78,6 +97,22 @@ registerStore( 'gumponents/relationship', {
 				}
 			} );
 			return posts;
+		},
+
+		getItems( state, ids ) {
+			const items = [];
+
+			if ( ids.length === 0 || ! state.items ) {
+				return items;
+			}
+
+			ids.forEach( ( id ) => {
+				const item = state.items.find( ( item ) => item.id === id );
+				if ( item ) {
+					items.push( item );
+				}
+			} );
+			return items;
 		},
 
 		getTaxonomies( state, ids ) {
@@ -110,6 +145,16 @@ registerStore( 'gumponents/relationship', {
 			} );
 		},
 
+		GET_ITEMS( { items } ) {
+			return apiFetch( {
+				path: '/ex-departures/v1/departures/get-departure-codes',
+				data: {
+					items,
+				},
+				method: 'post',
+			} );
+		},
+
 		GET_TAXONOMIES( { ids } ) {
 			return apiFetch( {
 				path: '/gumponents/relationship/v1/taxonomies/initialize',
@@ -128,6 +173,14 @@ registerStore( 'gumponents/relationship', {
 			}
 			const posts = yield actions.getPosts( ids, postTypes );
 			return actions.setPosts( posts );
+		},
+
+		* getItems( ids ) {
+			if ( 0 === ids.length ) {
+				return;
+			}
+			const posts = yield actions.getItems( ids );
+			return actions.setItems( posts );
 		},
 
 		* getTaxonomies( ids ) {

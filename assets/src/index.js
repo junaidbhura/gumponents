@@ -18,6 +18,7 @@ import MultiSelectControl from './components/multiselect-control';
 import LinkControl from './components/link-control';
 import GalleryControl from './components/gallery-control';
 import ColorPaletteControl from './components/color-palette-control';
+import RelationshipControl from './components/relationship-control';
 
 window.gumponents = {
 	// Components.
@@ -35,5 +36,6 @@ window.gumponents = {
 		LinkControl,
 		GalleryControl,
 		ColorPaletteControl,
+		RelationshipControl,
 	},
 };
