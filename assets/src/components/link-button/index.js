@@ -6,6 +6,7 @@ import classnames from 'classnames';
 
 const { __ } = wp.i18n;
 const { useState } = wp.element;
+const { decodeEntities } = wp.htmlEntities;
 
 export default function LinkButton( {
 	tagName = 'button',
@@ -33,7 +34,7 @@ export default function LinkButton( {
 				) }
 				onClick={ () => setModalOpen( true ) }
 			>
-				{ label }
+				{ decodeEntities( label ) }
 			</Tag>
 			{ modalOpen &&
 				<UrlModal
