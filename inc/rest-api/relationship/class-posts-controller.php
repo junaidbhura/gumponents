@@ -124,15 +124,21 @@ class PostsController extends Controller {
 	public function get_initial_items( $request ) {
 		$params = $request->get_params();
 
-		$results = new WP_Query(
-			array(
-				'post_type'      => $params['post_types'],
-				'posts_per_page' => -1,
-				'post__in'       => $params['items'],
-				'no_found_rows'  => true,
-				'orderby'        => 'post__in',
-			)
+		$args = array(
+			'post_type'      => $params['post_types'],
+			'posts_per_page' => -1,
+			'post__in'       => $params['items'],
+			'no_found_rows'  => true,
+			'orderby'        => 'post__in',
 		);
+
+		$args = apply_filters(
+			'gumponents_posts_relationship_initial_items_query',
+			$args,
+			$params
+		);
+
+		$results = new WP_Query( $args );
 
 		if ( empty( $results->posts ) ) {
 			return rest_ensure_response( [] );
