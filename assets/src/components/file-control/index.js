@@ -19,7 +19,7 @@ const {
 } = wp.data;
 const { compose } = wp.compose;
 
-function FileControl( { value, file, help, label = __( 'Select file' ), selectLabel = __( 'Select file' ), removeLabel = __( 'Remove file' ), onSetFile, onChange } ) {
+function FileControl( { value, file, help, allowedTypes, label = __( 'Select file' ), selectLabel = __( 'Select file' ), removeLabel = __( 'Remove file' ), onSetFile, onChange } ) {
 	const [ id, setId ] = useState( null );
 
 	useEffect(
@@ -53,6 +53,7 @@ function FileControl( { value, file, help, label = __( 'Select file' ), selectLa
 			<MediaUpload
 				title={ selectLabel }
 				onSelect={ onSelectFile }
+				allowedTypes={ allowedTypes }
 				render={ ( { open } ) => (
 					<Button
 						isDefault
