@@ -56,6 +56,7 @@ install_wp() {
 		return;
 	fi
 
+	cd $HOME
 	mkdir -p $WP_CORE_DIR
 
 	if [[ $WP_VERSION == 'nightly' || $WP_VERSION == 'trunk' ]]; then
