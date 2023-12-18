@@ -3,8 +3,8 @@ name: Coding Standards and Tests
 on: [ push ]
 
 env:
-  WP_TESTS_DIR: /github/home/wp-tests/wordpress-tests-lib
-  WP_CORE_DIR: /github/home/wp-tests/wordpress
+  WP_TESTS_DIR: /home/runner/wp-tests/wordpress-tests-lib
+  WP_CORE_DIR: /home/runner/wp-tests/wordpress
 
 jobs:
 
