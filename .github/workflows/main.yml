@@ -34,21 +34,21 @@ jobs:
 
     - name: Composer cache
       id: composer-cache
-      uses: actions/cache@v1
+      uses: actions/cache@v3
       with:
         path: vendor
         key: composer-${{ hashFiles( '.github/workflows/main.yml' ) }}-${{ hashFiles( 'composer.lock' ) }}
 
     - name: NodeJS cache
       id: node-cache
-      uses: actions/cache@v1
+      uses: actions/cache@v3
       with:
         path: node_modules
         key: node-${{ hashFiles( '.github/workflows/main.yml' ) }}-${{ hashFiles( 'package-lock.json' ) }}
 
     - name: WordPress test suite cache
       id: wp-test-suite
-      uses: actions/cache@v1
+      uses: actions/cache@v3
       with:
         path: /github/home/wp-tests
         key: wp-tests-${{ hashFiles( '.github/workflows/main.yml' ) }}
@@ -61,7 +61,7 @@ jobs:
 
     - name: Install NodeJS dependencies
       if: steps.node-cache.outputs.cache-hit != 'true'
-      run: npm install
+      run: npm ci
 
     - name: Install WordPress test suite
       run: bash ./.bin/install-wp-tests.sh wordpress_test root root mysql latest
