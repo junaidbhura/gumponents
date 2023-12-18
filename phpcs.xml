@@ -7,6 +7,7 @@
 		<exclude name="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket" />
 		<exclude name="WordPress.Security.EscapeOutput.DeprecatedWhitelistCommentFound" />
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax.Found" />
+		<exclude name="Generic.WhiteSpace.ArbitraryParenthesesSpacing.FoundEmpty" />
 	</rule>
 	<rule ref="WordPress-Docs" />
 
