@@ -32,5 +32,10 @@
     "set-coding-standards": "phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs",
     "lint": "phpcs",
     "test": "phpunit"
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true
+    }
   }
 }
