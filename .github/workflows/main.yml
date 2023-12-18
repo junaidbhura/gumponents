@@ -10,8 +10,6 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    container:
-      image: junaidbhura/wp-tests:php-7.4
     services:
       mysql:
         image: mysql:5.7.27
@@ -19,6 +17,13 @@ jobs:
           MYSQL_ROOT_PASSWORD: root
 
     steps:
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        coverage: none
+        tools: composer, cs2pr
+
     - name: Install NodeJS
       uses: actions/setup-node@v1
       with:
