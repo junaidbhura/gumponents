@@ -25,12 +25,12 @@ jobs:
         tools: composer, cs2pr
 
     - name: Install NodeJS
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
         node-version: '13.x'
 
     - name: Checkout repository
-      uses: actions/checkout@v1
+      uses: actions/checkout@v3
 
     - name: Composer cache
       id: composer-cache
