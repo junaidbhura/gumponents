@@ -23,7 +23,7 @@ function PostRelationshipControl( props ) {
 							post_status: postStatus,
 							search: query,
 							filter,
-							additionalParams,
+							additional_params: additionalParams,
 						},
 						method: 'post',
 					} ).then( ( results ) => resolve( results ) );
