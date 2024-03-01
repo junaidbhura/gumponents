@@ -4,14 +4,14 @@
  * Description: Essential Gutenberg components for WordPress.
  * Author: Junaid Bhura
  * Author URI: https://junaid.dev
- * Version: 1.1.3
+ * Version: 1.1.4
  *
  * @package gumponents
  */
 
 namespace JB\Gumponents;
 
-define( 'GUMPONENTS_VERSION', '1.1.3' );
+define( 'GUMPONENTS_VERSION', '1.1.4' );
 
 require_once __DIR__ . '/inc/autoload.php';
 require_once __DIR__ . '/inc/namespace.php';
