@@ -4,7 +4,7 @@
  * Description: Essential Gutenberg components for WordPress.
  * Author: Junaid Bhura
  * Author URI: https://junaid.dev
- * Version: 1.1.4
+ * Version: 1.1.5
  *
  * @package gumponents
  */
