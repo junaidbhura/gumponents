@@ -8,8 +8,8 @@ const { BaseControl } = wp.components;
 export default function MultiSelectControl( { value = [], options = [], label, help, placeholder, onChange, ...reactSelectProps } ) {
 	// Filter out any values that are not in the options list and map them to the option object.
 	const values = value
-		.filter( token => options.some( option => option.value === token ) )
-		.map( token => options.find( option => option.value === token ) );
+		.filter( ( token ) => options.some( ( option ) => option.value === token ) )
+		.map( ( token ) => options.find( ( option ) => option.value === token ) );
 
 	const valuesUpdated = ( values ) => {
 		if ( ! onChange ) {
@@ -24,8 +24,8 @@ export default function MultiSelectControl( { value = [], options = [], label, h
 		// Only return the values that are in the options list.
 		onChange(
 			values
-				.filter( token => options.some( option => option.value === token.value ) )
-				.map( token => token.value )
+				.filter( ( token ) => options.some( ( option ) => option.value === token.value ) )
+				.map( ( token ) => token.value )
 		);
 	};
 
