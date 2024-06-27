@@ -11,7 +11,7 @@
 
 namespace JB\Gumponents;
 
-define( 'GUMPONENTS_VERSION', '1.1.4' );
+define( 'GUMPONENTS_VERSION', '1.1.5' );
 
 require_once __DIR__ . '/inc/autoload.php';
 require_once __DIR__ . '/inc/namespace.php';
