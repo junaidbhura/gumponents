@@ -16,7 +16,7 @@ use WP_Screen;
  */
 function setup() {
 	// Add block assets.
-	add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\\enqueue_editor_assets' );
+	add_action( 'enqueue_block_assets', __NAMESPACE__ . '\\enqueue_editor_assets' );
 
 	// Register REST endpoints.
 	add_action( 'rest_api_init', __NAMESPACE__ . '\\register_rest_endpoints' );
@@ -35,6 +35,13 @@ function register_rest_endpoints() {
  * Enqueue block scripts.
  */
 function enqueue_editor_assets() {
+	/**
+	 * Only enqueue assets in the admin.
+	 */
+	if ( ! is_admin() ) {
+		return;
+	}
+
 	$plugin_dir_path  = dirname( __FILE__, 2 );
 	$plugin_file_path = "{$plugin_dir_path}/gumponents.php";
 
