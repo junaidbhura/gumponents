@@ -1,20 +1,36 @@
 import './editor.scss';
-
 import wp from 'wp';
-const { useState } = wp.element;
 
+const { useState, useEffect } = wp.element;
 const {
 	BaseControl,
 	__experimentalInputControl: InputControl,
 	RangeControl,
+	SelectControl,
 } = wp.components;
-// const { select } = wp.data;
 
-export default function GradientControl( { label, help, value, onChange } ) {
-	const [ firstColor, setFirstColor ] = useState();
-	const [ firstLocation, setFirstLocation ] = useState();
-	const [ secondColor, setSecondColor ] = useState();
-	const [ secondLocation, setSecondLocation ] = useState();
+export default function GradientControl( { label, help, firstColor, secondColor, firstLocation, secondLocation, type, angle, onChange } ) {
+	// Control states.
+	const [ gradientState, setGradientState ] = useState( {
+		firstColor,
+		firstLocation,
+		secondColor,
+		secondLocation,
+		type,
+		angle,
+	} );
+
+	const updateGradientState = ( key, value ) => {
+		setGradientState( ( prevState ) => ( {
+			...prevState,
+			[ key ]: value,
+		} ) );
+	};
+
+	// Emit updated gradient to parent
+	useEffect( () => {
+		onChange( gradientState );
+	}, [ gradientState, onChange ] );
 
 	return (
 		<BaseControl
@@ -22,18 +38,19 @@ export default function GradientControl( { label, help, value, onChange } ) {
 			help={ help }
 			className="gumponents-gradient-control"
 		>
+			<code>{ gradientState.type }-gradient({ gradientState.angle }deg, { gradientState.firstColor } { gradientState.firstLocation }%, { gradientState.secondColor } { gradientState.secondLocation }%)</code>
 			<InputControl
 				label={ 'First Color' }
 				__unstableInputWidth="5em"
 				labelPosition="edge"
 				type="color"
-				value={ firstColor }
-				onChange={ setFirstColor }
+				value={ gradientState.firstColor }
+				onChange={ ( value ) => updateGradientState( 'firstColor', value ) }
 			/>
 			<RangeControl
-				label={ 'Location' }
-				value={ firstLocation }
-				onChange={ setFirstLocation }
+				label={ 'Location (%)' }
+				value={ gradientState.firstLocation }
+				onChange={ ( value ) => updateGradientState( 'firstLocation', value ) }
 				min={ 0 }
 				max={ 100 }
 			/>
@@ -42,15 +59,33 @@ export default function GradientControl( { label, help, value, onChange } ) {
 				__unstableInputWidth="5em"
 				labelPosition="edge"
 				type="color"
-				value={ secondColor }
-				onChange={ setSecondColor }
+				value={ gradientState.secondColor }
+				onChange={ ( value ) => updateGradientState( 'secondColor', value ) }
 			/>
 			<RangeControl
-				label={ 'Location' }
-				value={ secondLocation }
-				onChange={ setSecondLocation }
+				label={ 'Location (%)' }
+				value={ gradientState.secondLocation }
+				onChange={ ( value ) => updateGradientState( 'secondLocation', value ) }
 				min={ 0 }
 				max={ 100 }
+			/>
+			<SelectControl
+				label={ 'Type' }
+				options={ [
+					{ label: 'Linear', value: 'linear' },
+					{ label: 'Radial', value: 'radial' },
+				] }
+				value={ gradientState.type }
+				onChange={ ( value ) => updateGradientState( 'type', value ) }
+				__next40pxDefaultSize
+				__nextHasNoMarginBottom
+			/>
+			<RangeControl
+				label={ 'Angle (deg)' }
+				value={ gradientState.angle }
+				onChange={ ( value ) => updateGradientState( 'angle', value ) }
+				min={ 0 }
+				max={ 360 }
 			/>
 		</BaseControl>
 	);
