@@ -38,7 +38,6 @@ export default function GradientControl( { label, help, firstColor, secondColor,
 			help={ help }
 			className="gumponents-gradient-control"
 		>
-			<code>{ gradientState.type }-gradient({ gradientState.angle }deg, { gradientState.firstColor } { gradientState.firstLocation }%, { gradientState.secondColor } { gradientState.secondLocation }%)</code>
 			<InputControl
 				label={ 'First Color' }
 				__unstableInputWidth="5em"
