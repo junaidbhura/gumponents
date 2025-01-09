@@ -1,4 +1,3 @@
-import './editor.scss';
 import wp from 'wp';
 
 const { useState, useEffect } = wp.element;
