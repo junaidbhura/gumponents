@@ -6,17 +6,15 @@ const {
 	BaseControl,
 	__experimentalInputControl: InputControl,
 	RangeControl,
-	SelectControl,
 } = wp.components;
 
-export default function GradientControl( { label, help, firstColor, secondColor, firstLocation, secondLocation, type, angle, onChange } ) {
+export default function GradientControl( { label, help, firstColor, secondColor, firstLocation, secondLocation, angle, onChange } ) {
 	// Control states.
 	const [ gradientState, setGradientState ] = useState( {
 		firstColor,
 		firstLocation,
 		secondColor,
 		secondLocation,
-		type,
 		angle,
 	} );
 
@@ -67,17 +65,6 @@ export default function GradientControl( { label, help, firstColor, secondColor,
 				onChange={ ( value ) => updateGradientState( 'secondLocation', value ) }
 				min={ 0 }
 				max={ 100 }
-			/>
-			<SelectControl
-				label={ 'Type' }
-				options={ [
-					{ label: 'Linear', value: 'linear' },
-					{ label: 'Radial', value: 'radial' },
-				] }
-				value={ gradientState.type }
-				onChange={ ( value ) => updateGradientState( 'type', value ) }
-				__next40pxDefaultSize
-				__nextHasNoMarginBottom
 			/>
 			<RangeControl
 				label={ 'Angle (deg)' }
