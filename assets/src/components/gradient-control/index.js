@@ -3,8 +3,8 @@ import wp from 'wp';
 const { useState, useEffect } = wp.element;
 const {
 	BaseControl,
-	__experimentalInputControl: InputControl,
 	RangeControl,
+	ColorPalette,
 } = wp.components;
 
 export default function GradientControl( { label, help, firstColor, secondColor, firstLocation, secondLocation, angle, onChange } ) {
@@ -35,14 +35,14 @@ export default function GradientControl( { label, help, firstColor, secondColor,
 			help={ help }
 			className="gumponents-gradient-control"
 		>
-			<InputControl
-				label={ 'First Color' }
-				__unstableInputWidth="5em"
-				labelPosition="edge"
-				type="color"
-				value={ gradientState.firstColor }
-				onChange={ ( value ) => updateGradientState( 'firstColor', value ) }
-			/>
+			<BaseControl label="First Color">
+				<ColorPalette
+					value={ gradientState.firstColor }
+					onChange={ ( value ) => updateGradientState( 'firstColor', value ) }
+					enableAlpha
+					clearable={ false }
+				/>
+			</BaseControl>
 			<RangeControl
 				label={ 'Location (%)' }
 				value={ gradientState.firstLocation }
@@ -50,14 +50,14 @@ export default function GradientControl( { label, help, firstColor, secondColor,
 				min={ 0 }
 				max={ 100 }
 			/>
-			<InputControl
-				label={ 'Second Color' }
-				__unstableInputWidth="5em"
-				labelPosition="edge"
-				type="color"
-				value={ gradientState.secondColor }
-				onChange={ ( value ) => updateGradientState( 'secondColor', value ) }
-			/>
+			<BaseControl label="Second Color">
+				<ColorPalette
+					value={ gradientState.secondColor }
+					onChange={ ( value ) => updateGradientState( 'secondColor', value ) }
+					enableAlpha
+					clearable={ false }
+				/>
+			</BaseControl>
 			<RangeControl
 				label={ 'Location (%)' }
 				value={ gradientState.secondLocation }
