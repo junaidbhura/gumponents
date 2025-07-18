@@ -213,9 +213,10 @@ class PostsController extends Controller {
 		$result_posts = [];
 		foreach ( $results->posts as $result ) {
 			$result_posts[] = array(
-				'id'    => $result->ID,
-				'value' => $result,
-				'label' => 'draft' === $result->post_status ? sprintf( '%s %s', $result->post_title, '(Draft)' ) : $result->post_title,
+				'id'        => $result->ID,
+				'value'     => $result,
+				'label'     => 'draft' === $result->post_status ? sprintf( '%s %s', $result->post_title, '(Draft)' ) : $result->post_title,
+				'permalink' => get_permalink( $result->ID ),
 			);
 		}
 
