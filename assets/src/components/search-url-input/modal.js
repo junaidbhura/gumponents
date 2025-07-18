@@ -1,4 +1,5 @@
 import wp from 'wp';
+import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 
 const { __ } = wp.i18n;
@@ -12,6 +13,7 @@ const {
 } = wp.components;
 const {
 	useState,
+	useEffect,
 	useCallback,
 } = wp.element;
 
@@ -24,6 +26,17 @@ export function SearchUrlModal( { className = '', onRequestClose, title, value, 
 	const [ showSuggestions, setShowSuggestions ] = useState( false );
 	const [ loading, setLoading ] = useState( false );
 	const [ error, setError ] = useState( null );
+
+	useEffect(
+		() => {
+			if ( ! isEmpty( value ) ) {
+				setUrl( value.url );
+				setText( value.text );
+				setNewWindow( value.newWindow );
+			}
+		},
+		[ value ]
+	);
 
 	// Debounced search function
 	const debouncedSearch = useCallback(
@@ -70,11 +83,51 @@ export function SearchUrlModal( { className = '', onRequestClose, title, value, 
 	// Handle search input change
 	const handleSearchChange = ( value ) => {
 		setSearchTerm( value );
+		setUrl( value );
 		debouncedSearch( value );
 	};
 
 	// Handle manual URL input
-	const handleUrlChange = ( newUrl ) => {};
+	const handleUrlChange = ( newUrl ) => {
+		setUrl( newUrl );
+		setSearchTerm( newUrl );
+		setShowSuggestions( false );
+
+		const changes = {
+			url: newUrl,
+			text: text || newUrl,
+			newWindow,
+		};
+
+		if ( onUrl ) {
+			onUrl( newUrl, null );
+		}
+
+		onChange( changes );
+	};
+
+	// Handle suggestion selection
+	const handleSuggestionSelect = ( suggestion ) => {
+		const newUrl = suggestion.url;
+		const newText = text || suggestion.title;
+
+		setUrl( newUrl );
+		setText( newText );
+		setSearchTerm( newUrl );
+		setShowSuggestions( false );
+
+		const changes = {
+			url: newUrl,
+			text: newText,
+			newWindow,
+		};
+
+		if ( onUrl ) {
+			onUrl( newUrl, suggestion );
+		}
+
+		onChange( changes );
+	};
 
 	return (
 		<Modal
@@ -108,6 +161,35 @@ export function SearchUrlModal( { className = '', onRequestClose, title, value, 
 					>
 						{ error }
 					</Notice>
+				) }
+				{ showSuggestions && suggestions.length > 0 && (
+					<div className="gumponents-search-url-input__suggestions">
+						{ suggestions.map( ( suggestion ) => (
+							<button
+								key={ suggestion.id }
+								type="button"
+								className="gumponents-search-url-input__suggestion"
+								onClick={ () => handleSuggestionSelect( suggestion ) }
+							>
+								<div className="gumponents-search-url-input__suggestion-title">
+									{ suggestion.title }
+								</div>
+								<div className="gumponents-search-url-input__suggestion-meta">
+									{ suggestion.type === 'post' && __( 'Post' ) }
+									{ suggestion.type === 'page' && __( 'Page' ) }
+									{ suggestion.subtype && ` • ${ suggestion.subtype }` }
+								</div>
+								<div className="gumponents-search-url-input__suggestion-url">
+									{ suggestion.url }
+								</div>
+							</button>
+						) ) }
+					</div>
+				) }
+				{ showSuggestions && suggestions.length === 0 && ! loading && searchTerm.length >= 3 && (
+					<div className="gumponents-search-url-input__no-results">
+						{ __( 'No results found. You can still enter the URL manually.' ) }
+					</div>
 				) }
 			</BaseControl>
 			<TextControl
