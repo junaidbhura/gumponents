@@ -17,7 +17,7 @@ const {
 	useCallback,
 } = wp.element;
 
-export function SearchUrlModal( { className = '', onRequestClose, title, value, onChange, onUrl } ) {
+export function SearchUrlModal( { className = '', onRequestClose, title, value, postTypes, onChange, onUrl } ) {
 	const [ url, setUrl ] = useState( '' );
 	const [ text, setText ] = useState( '' );
 	const [ newWindow, setNewWindow ] = useState( false );
@@ -56,7 +56,7 @@ export function SearchUrlModal( { className = '', onRequestClose, title, value, 
 					method: 'POST',
 					data: {
 						search: term,
-						post_types: [ 'post', 'page' ], // TODO: Make this dynamic as per component settings.
+						post_types: postTypes,
 						post_status: [ 'publish' ],
 					},
 				} );

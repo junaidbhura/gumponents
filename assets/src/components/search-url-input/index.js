@@ -8,12 +8,13 @@ const { __ } = wp.i18n;
 const {
 	BaseControl,
 	Button,
+	Icon,
 } = wp.components;
 const {
 	useState,
 } = wp.element;
 
-export default function SearchURLInput( { value, label, help, onUrl, onChange, buttonLabel = __( 'Select URL' ), modalTitle = __( 'Search & Select URL' ) } ) {
+export default function SearchURLInput( { value, label, help, postTypes = [ 'post', 'page' ], onUrl, onChange, buttonLabel = __( 'Select URL' ), modalTitle = __( 'Search & Select URL' ) } ) {
 	const [ modalOpen, setModalOpen ] = useState( false );
 	const { url, text, newWindow } = value ?? {};
 
@@ -38,6 +39,12 @@ export default function SearchURLInput( { value, label, help, onUrl, onChange, b
 					>
 						{ '' === text && url }
 						{ text }
+						{ false !== newWindow &&
+							<Icon
+								icon="external"
+								size={ 15 }
+							/>
+						}
 					</a>
 				</div>
 			}
@@ -47,6 +54,7 @@ export default function SearchURLInput( { value, label, help, onUrl, onChange, b
 					title={ modalTitle }
 					onRequestClose={ () => setModalOpen( false ) }
 					value={ value }
+					postTypes={ postTypes }
 					onChange={ ( value ) => onChange( value ) }
 					onUrl={ onUrl }
 				/>
