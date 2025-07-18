@@ -1,3 +1,4 @@
+import './editor.scss';
 import wp from 'wp';
 import { SearchUrlModal } from './modal';
 
