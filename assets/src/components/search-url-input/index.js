@@ -1,4 +1,5 @@
 import wp from 'wp';
+import { SearchUrlModal } from './modal';
 
 const { __ } = wp.i18n;
 const {
@@ -11,7 +12,7 @@ const {
 	useState,
 } = wp.element;
 
-export default function SearchURLInput( { value, label, help, buttonLabel = __( 'Select URL' ) } ) {
+export default function SearchURLInput( { value, label, help, onUrl, onChange, buttonLabel = __( 'Select URL' ), modalTitle = __( 'Search & Select URL' ) } ) {
 	const [ modalOpen, setModalOpen ] = useState( false );
 
 	return (
@@ -26,9 +27,16 @@ export default function SearchURLInput( { value, label, help, buttonLabel = __( 
 			>
 				{ buttonLabel }
 			</Button>
-			{ modalOpen && (
-				<p>{ __( 'Load the Modal here.') }</p>
-			) }
+			{ modalOpen &&
+				<SearchUrlModal
+					className="gumponents-search-url-input"
+					title={ modalTitle }
+					onRequestClose={ () => setModalOpen( false ) }
+					value={ value }
+					onChange={ ( value ) => onChange( value ) }
+					onUrl={ onUrl }
+				/>
+			}
 		</BaseControl>
 	);
 }
