@@ -4,11 +4,11 @@ import debounce from 'lodash/debounce';
 const { __ } = wp.i18n;
 const {
 	BaseControl,
-} = wp.components;
-const {
 	Modal,
 	TextControl,
 	ToggleControl,
+	Spinner,
+	Notice,
 } = wp.components;
 const {
 	useState,
@@ -95,7 +95,20 @@ export function SearchUrlModal( { className = '', onRequestClose, title, value, 
 						placeholder={ __( 'Search posts, pages, or enter URL...' ) }
 						className="gumponents-search-url-input__search-input"
 					/>
+					{ loading && (
+						<div className="gumponents-search-url-input__loading">
+							<Spinner />
+						</div>
+					) }
 				</div>
+				{ error && (
+					<Notice
+						status="error"
+						isDismissible={ false }
+					>
+						{ error }
+					</Notice>
+				) }
 			</BaseControl>
 			<TextControl
 				label={ __( 'URL' ) }
