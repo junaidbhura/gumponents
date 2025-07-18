@@ -19,6 +19,7 @@ import LinkControl from './components/link-control';
 import GalleryControl from './components/gallery-control';
 import ColorPaletteControl from './components/color-palette-control';
 import RelationshipControl from './components/relationship-control';
+import SearchURLInput from './components/search-url-input';
 
 window.gumponents = {
 	// Components.
@@ -37,5 +38,6 @@ window.gumponents = {
 		GalleryControl,
 		ColorPaletteControl,
 		RelationshipControl,
+		SearchURLInput,
 	},
 };
