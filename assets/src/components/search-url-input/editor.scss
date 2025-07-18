@@ -1,5 +1,5 @@
 .gumponents-search-url-input {
-	
+
 	&__search-wrapper {
 		position: relative;
 	}
@@ -80,5 +80,26 @@
 		border: 1px solid #ddd;
 		border-radius: 4px;
 		margin-top: 4px;
+	}
+
+    &__preview {
+		margin-top: 8px;
+		padding: 8px;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		background-color: #f9f9f9;
+
+		a {
+			display: inline-flex;
+			align-items: center;
+			gap: 4px;
+			color: #0073aa;
+			text-decoration: none;
+			word-break: break-all;
+
+			&:hover {
+				color: #005a87;
+			}
+		}
 	}
 }

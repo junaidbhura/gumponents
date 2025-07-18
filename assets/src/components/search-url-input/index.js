@@ -1,12 +1,12 @@
-import './editor.scss';
 import wp from 'wp';
+import isEmpty from 'lodash/isEmpty';
+
+import './editor.scss';
 import { SearchUrlModal } from './modal';
 
 const { __ } = wp.i18n;
 const {
 	BaseControl,
-} = wp.components;
-const {
 	Button,
 } = wp.components;
 const {
@@ -15,6 +15,7 @@ const {
 
 export default function SearchURLInput( { value, label, help, onUrl, onChange, buttonLabel = __( 'Select URL' ), modalTitle = __( 'Search & Select URL' ) } ) {
 	const [ modalOpen, setModalOpen ] = useState( false );
+	const { url, text, newWindow } = value ?? {};
 
 	return (
 		<BaseControl
@@ -28,6 +29,18 @@ export default function SearchURLInput( { value, label, help, onUrl, onChange, b
 			>
 				{ buttonLabel }
 			</Button>
+			{ ! isEmpty( value ) && '' !== url &&
+				<div className="gumponents-search-url-input__preview">
+					<a
+						href={ url }
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						{ '' === text && url }
+						{ text }
+					</a>
+				</div>
+			}
 			{ modalOpen &&
 				<SearchUrlModal
 					className="gumponents-search-url-input"
