@@ -19,7 +19,7 @@ const {
 } = wp.element;
 const { useSelect } = wp.data;
 
-export function SearchUrlModal( { className = '', onRequestClose, title, value, postTypes, onChange, onUrl } ) {
+export function SearchUrlModal( { className = '', onRequestClose, title, value, postTypes, hidePostTypesControl, onChange, onUrl } ) {
 	const [ url, setUrl ] = useState( '' );
 	const [ text, setText ] = useState( '' );
 	const [ newWindow, setNewWindow ] = useState( false );
@@ -161,13 +161,15 @@ export function SearchUrlModal( { className = '', onRequestClose, title, value, 
 			className={ className }
 			onRequestClose={ onRequestClose }
 		>
-			<MultiSelectControl
-				label={ __( 'Post Types' ) }
-				placeholder={ __( 'Select post types...' ) }
-				value={ selectedPostTypes }
-				options={ postTypeOptions }
-				onChange={ setSelectedPostTypes }
-			/>
+			{ ! hidePostTypesControl && (
+				<MultiSelectControl
+					label={ __( 'Post Types' ) }
+					placeholder={ __( 'Select post types...' ) }
+					value={ selectedPostTypes }
+					options={ postTypeOptions }
+					onChange={ setSelectedPostTypes }
+				/>
+			) }
 			<BaseControl
 				label={ __( 'Search or enter URL' ) }
 				help={ __( 'Start typing to search for posts and pages, or enter a full URL' ) }

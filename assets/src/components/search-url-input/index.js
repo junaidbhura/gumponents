@@ -14,7 +14,7 @@ const {
 	useState,
 } = wp.element;
 
-export default function SearchURLInput( { value, label, help, postTypes = [ 'post', 'page' ], onUrl, onChange, buttonLabel = __( 'Select URL' ), modalTitle = __( 'Search & Select URL' ) } ) {
+export default function SearchURLInput( { value, label, help, postTypes = [ 'post', 'page' ], hidePostTypesControl = false, onUrl, onChange, buttonLabel = __( 'Select URL' ), modalTitle = __( 'Search & Select URL' ) } ) {
 	const [ modalOpen, setModalOpen ] = useState( false );
 	const { url, text, newWindow } = value ?? {};
 
@@ -54,6 +54,7 @@ export default function SearchURLInput( { value, label, help, postTypes = [ 'pos
 					title={ modalTitle }
 					onRequestClose={ () => setModalOpen( false ) }
 					value={ value }
+					hidePostTypesControl={ hidePostTypesControl }
 					postTypes={ postTypes }
 					onChange={ ( value ) => onChange( value ) }
 					onUrl={ onUrl }
