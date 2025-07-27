@@ -1,5 +1,18 @@
 .gumponents-search-url-input {
 
+	// Fix modal width to prevent expansion
+	&.components-modal__frame {
+		width: 500px;
+		max-width: 90vw;
+		min-width: 400px;
+	}
+
+	// Ensure modal content respects the fixed width
+	.components-modal__content {
+		max-width: 100%;
+		overflow: hidden;
+	}
+
 	&__search-wrapper {
 		position: relative;
 	}
@@ -25,6 +38,9 @@
 		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 		margin-top: 4px;
 		z-index: 1000;
+		// Ensure suggestions don't expand the modal
+		max-width: 100%;
+		overflow-x: hidden;
 	}
 
 	&__suggestion {
@@ -36,6 +52,9 @@
 		text-align: left;
 		cursor: pointer;
 		transition: background-color 0.2s;
+		// Prevent individual suggestions from expanding
+		max-width: 100%;
+		overflow: hidden;
 
 		&:hover {
 			background-color: #f0f0f0;
@@ -56,6 +75,9 @@
 		font-size: 14px;
 		margin-bottom: 4px;
 		color: #23282d;
+		// Handle long titles
+		word-wrap: break-word;
+		overflow-wrap: break-word;
 	}
 
 	&__suggestion-meta {
@@ -69,6 +91,9 @@
 		color: #999;
 		font-family: monospace;
 		word-break: break-all;
+		// Ensure long URLs don't expand the modal
+		overflow-wrap: break-word;
+		max-width: 100%;
 	}
 
 	&__no-results {
@@ -82,7 +107,7 @@
 		margin-top: 4px;
 	}
 
-    &__preview {
+	&__preview {
 		margin-top: 8px;
 		padding: 8px;
 		border: 1px solid #ddd;
