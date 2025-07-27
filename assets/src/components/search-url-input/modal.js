@@ -1,6 +1,7 @@
 import wp from 'wp';
 import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
+import MultiSelectControl from '../multiselect-control';
 
 const { __ } = wp.i18n;
 const {
@@ -16,6 +17,7 @@ const {
 	useEffect,
 	useCallback,
 } = wp.element;
+const { useSelect } = wp.data;
 
 export function SearchUrlModal( { className = '', onRequestClose, title, value, postTypes, onChange, onUrl } ) {
 	const [ url, setUrl ] = useState( '' );
@@ -23,6 +25,7 @@ export function SearchUrlModal( { className = '', onRequestClose, title, value, 
 	const [ newWindow, setNewWindow ] = useState( false );
 	const [ searchTerm, setSearchTerm ] = useState( '' );
 	const [ suggestions, setSuggestions ] = useState( [] );
+	const [ selectedPostTypes, setSelectedPostTypes ] = useState( Array.isArray( postTypes ) ? postTypes : [ postTypes ].filter( Boolean ) );
 	const [ showSuggestions, setShowSuggestions ] = useState( false );
 	const [ loading, setLoading ] = useState( false );
 	const [ error, setError ] = useState( null );
@@ -56,7 +59,7 @@ export function SearchUrlModal( { className = '', onRequestClose, title, value, 
 					method: 'POST',
 					data: {
 						search: term,
-						post_types: postTypes,
+						post_types: selectedPostTypes.length > 0 ? selectedPostTypes : postTypes,
 						post_status: [ 'publish' ],
 					},
 				} );
@@ -77,7 +80,7 @@ export function SearchUrlModal( { className = '', onRequestClose, title, value, 
 
 			setLoading( false );
 		}, 300 ),
-		[]
+		[ selectedPostTypes ]
 	);
 
 	// Handle search input change
@@ -129,6 +132,28 @@ export function SearchUrlModal( { className = '', onRequestClose, title, value, 
 		onChange( changes );
 	};
 
+	// Fetch all post types.
+	const allPostTypes = useSelect( ( select ) => {
+		const postTypesData = select( 'core' ).getPostTypes( { per_page: -1 } );
+		if ( ! postTypesData ) {
+			return [];
+		}
+		
+		// Extract only name and slug, filter out attachments and non-viewable post types.
+		return postTypesData
+			.filter( ( postType ) => postType.viewable && postType.slug !== 'attachment' )
+			.map( ( postType ) => ({
+				name: postType.labels?.name || postType.name,
+				slug: postType.slug,
+			}) );
+	}, [] );
+
+	// Create options for MultiSelectControl.
+	const postTypeOptions = allPostTypes.map( ( postType ) => ({
+		label: postType.name,
+		value: postType.slug,
+	}) );
+
 	return (
 		<Modal
 			title={ title }
@@ -136,6 +161,13 @@ export function SearchUrlModal( { className = '', onRequestClose, title, value, 
 			className={ className }
 			onRequestClose={ onRequestClose }
 		>
+			<MultiSelectControl
+				label={ __( 'Post Types' ) }
+				placeholder={ __( 'Select post types...' ) }
+				value={ selectedPostTypes }
+				options={ postTypeOptions }
+				onChange={ setSelectedPostTypes }
+			/>
 			<BaseControl
 				label={ __( 'Search or enter URL' ) }
 				help={ __( 'Start typing to search for posts and pages, or enter a full URL' ) }
