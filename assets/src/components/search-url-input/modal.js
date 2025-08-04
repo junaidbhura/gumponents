@@ -138,21 +138,21 @@ export function SearchUrlModal( { className = '', onRequestClose, title, value, 
 		if ( ! postTypesData ) {
 			return [];
 		}
-		
+
 		// Extract only name and slug, filter out attachments and non-viewable post types.
 		return postTypesData
 			.filter( ( postType ) => postType.viewable && postType.slug !== 'attachment' )
-			.map( ( postType ) => ({
+			.map( ( postType ) => ( {
 				name: postType.labels?.name || postType.name,
 				slug: postType.slug,
-			}) );
+			} ) );
 	}, [] );
 
 	// Create options for MultiSelectControl.
-	const postTypeOptions = allPostTypes.map( ( postType ) => ({
+	const postTypeOptions = allPostTypes.map( ( postType ) => ( {
 		label: postType.name,
 		value: postType.slug,
-	}) );
+	} ) );
 
 	return (
 		<Modal

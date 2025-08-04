@@ -36,16 +36,18 @@ export default function SearchURLInput( { value, label, help, postTypes = [ 'pos
 						href={ url }
 						target="_blank"
 						rel="noopener noreferrer"
+						className="gumponents-search-url-input__preview-link"
 					>
 						{ '' === text && url }
 						{ text }
-						{ false !== newWindow &&
-							<Icon
-								icon="external"
-								size={ 15 }
-							/>
-						}
 					</a>
+					{ false !== newWindow &&
+						<Icon
+							icon="external"
+							size={ 15 }
+							className="gumponents-search-url-input__preview-icon"
+						/>
+					}
 				</div>
 			}
 			{ modalOpen &&

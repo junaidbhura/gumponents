@@ -10,7 +10,9 @@
 	// Ensure modal content respects the fixed width
 	.components-modal__content {
 		max-width: 100%;
-		overflow: hidden;
+		// Add scrolling for small screens
+		max-height: 80vh;
+		overflow-y: auto;
 	}
 
 	&__search-wrapper {
@@ -113,18 +115,29 @@
 		border: 1px solid #ddd;
 		border-radius: 4px;
 		background-color: #f9f9f9;
+		display: flex;
+		align-items: center;
+		gap: 4px;
+	}
 
-		a {
-			display: inline-flex;
-			align-items: center;
-			gap: 4px;
-			color: #0073aa;
-			text-decoration: none;
-			word-break: break-all;
+	&__preview-link {
+		color: #0073aa;
+		text-decoration: none;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		flex: 1;
+		min-width: 0;
 
-			&:hover {
-				color: #005a87;
-			}
+		&:hover {
+			color: #005a87;
 		}
+	}
+
+	&__preview-icon {
+		flex-shrink: 0;
+		width: 15px;
+		height: 15px;
+		color: #0073aa;
 	}
 }
