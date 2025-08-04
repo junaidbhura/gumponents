@@ -213,11 +213,24 @@ class PostsController extends Controller {
 		$result_posts = [];
 		foreach ( $results->posts as $result ) {
 			$result_posts[] = array(
-				'id'    => $result->ID,
-				'value' => $result,
-				'label' => 'draft' === $result->post_status ? sprintf( '%s %s', $result->post_title, '(Draft)' ) : $result->post_title,
+				'id'        => $result->ID,
+				'value'     => $result,
+				'label'     => 'draft' === $result->post_status ? sprintf( '%s %s', $result->post_title, '(Draft)' ) : $result->post_title,
+				'permalink' => get_permalink( $result->ID ),
 			);
 		}
+
+		/**
+		 * Pre filters the posts relationship results before they are returned.
+		 *
+		 * @param array $result_posts Array of posts.
+		 * @param array $params       Array of parameters used in the query.
+		 */
+		$result_posts = apply_filters(
+			'gumponents_posts_relationship_pre_results',
+			$result_posts,
+			$params
+		);
 
 		return rest_ensure_response(
 			apply_filters(
@@ -239,5 +252,4 @@ class PostsController extends Controller {
 		$where .= " AND {$wpdb->posts}.post_title LIKE '%" . esc_sql( $wpdb->esc_like( $this->search ) ) . "%'";
 		return $where;
 	}
-
 }
