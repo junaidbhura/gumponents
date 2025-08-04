@@ -216,9 +216,21 @@ class PostsController extends Controller {
 				'id'        => $result->ID,
 				'value'     => $result,
 				'label'     => 'draft' === $result->post_status ? sprintf( '%s %s', $result->post_title, '(Draft)' ) : $result->post_title,
-				'permalink' => $this->get_permalink_with_dynamic_support( $result->ID ),
+				'permalink' => get_permalink( $result->ID ),
 			);
 		}
+
+		/**
+		 * Pre filters the posts relationship results before they are returned.
+		 *
+		 * @param array $result_posts Array of posts.
+		 * @param array $params       Array of parameters used in the query.
+		 */
+		$result_posts = apply_filters(
+			'gumponents_posts_relationship_pre_results',
+			$result_posts,
+			$params
+		);
 
 		return rest_ensure_response(
 			apply_filters(
@@ -239,39 +251,5 @@ class PostsController extends Controller {
 		global $wpdb;
 		$where .= " AND {$wpdb->posts}.post_title LIKE '%" . esc_sql( $wpdb->esc_like( $this->search ) ) . "%'";
 		return $where;
-	}
-
-	/**
-	 * Get permalink with dynamic permalink support if enabled.
-	 *
-	 * @param int $post_id Post ID.
-	 * @return string
-	 */
-	private function get_permalink_with_dynamic_support( $post_id ) {
-		// Get standard permalink.
-		$permalink = get_permalink( $post_id );
-
-		// Check if dynamic permalinks are enabled via filter.
-		$dynamic_permalinks_enabled = boolval( apply_filters( 'gumponents_enable_dynamic_permalinks', true ) );
-
-		// If dynamic permalinks are not enabled.
-		if ( ! $dynamic_permalinks_enabled ) {
-			return $permalink;
-		}
-
-		// Apply the same dynamic permalink logic as the travelopia-dynamic-permalinks plugin.
-		if ( function_exists( 'Travelopia\DynamicPermalinks\update_link_query_results' ) ) {
-			$link_result = [
-				'ID'        => $post_id,
-				'permalink' => $permalink,
-			];
-			$filtered_results = \Travelopia\DynamicPermalinks\update_link_query_results( array( $link_result ) );
-			if ( ! empty( $filtered_results[0]['permalink'] ) ) {
-				$permalink = $filtered_results[0]['permalink'];
-			}
-		}
-
-		// Return modified permalink.
-		return $permalink;
 	}
 }
