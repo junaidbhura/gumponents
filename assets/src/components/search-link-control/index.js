@@ -2,7 +2,7 @@ import wp from 'wp';
 import isEmpty from 'lodash/isEmpty';
 
 import './editor.scss';
-import { SearchUrlModal } from './modal';
+import { SearchLinkModal } from './modal';
 
 const { __ } = wp.i18n;
 const {
@@ -14,7 +14,7 @@ const {
 	useState,
 } = wp.element;
 
-export default function SearchURLInput( { value, label, help, postTypes = [ 'post', 'page' ], hidePostTypesControl = false, onUrl, onChange, buttonLabel = __( 'Select URL' ), modalTitle = __( 'Search & Select URL' ) } ) {
+export default function SearchLinkControl( { value, label, help, postTypes = [ 'post', 'page' ], hidePostTypesControl = false, onUrl, onChange, buttonLabel = __( 'Select URL' ), modalTitle = __( 'Search & Select URL' ) } ) {
 	const [ modalOpen, setModalOpen ] = useState( false );
 	const { url, text, newWindow } = value ?? {};
 
@@ -22,7 +22,7 @@ export default function SearchURLInput( { value, label, help, postTypes = [ 'pos
 		<BaseControl
 			label={ label }
 			help={ help }
-			className="gumponents-search-url-input"
+			className="gumponents-search-link-control"
 		>
 			<Button
 				isDefault
@@ -31,12 +31,12 @@ export default function SearchURLInput( { value, label, help, postTypes = [ 'pos
 				{ buttonLabel }
 			</Button>
 			{ ! isEmpty( value ) && '' !== url &&
-				<div className="gumponents-search-url-input__preview">
+				<div className="gumponents-search-link-control__preview">
 					<a
 						href={ url }
 						target="_blank"
 						rel="noopener noreferrer"
-						className="gumponents-search-url-input__preview-link"
+						className="gumponents-search-link-control__preview-link"
 					>
 						{ '' === text && url }
 						{ text }
@@ -45,14 +45,14 @@ export default function SearchURLInput( { value, label, help, postTypes = [ 'pos
 						<Icon
 							icon="external"
 							size={ 15 }
-							className="gumponents-search-url-input__preview-icon"
+							className="gumponents-search-link-control__preview-icon"
 						/>
 					}
 				</div>
 			}
 			{ modalOpen &&
-				<SearchUrlModal
-					className="gumponents-search-url-input"
+				<SearchLinkModal
+					className="gumponents-search-link-control"
 					title={ modalTitle }
 					onRequestClose={ () => setModalOpen( false ) }
 					value={ value }

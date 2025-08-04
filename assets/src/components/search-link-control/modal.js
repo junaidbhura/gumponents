@@ -19,7 +19,7 @@ const {
 } = wp.element;
 const { useSelect } = wp.data;
 
-export function SearchUrlModal( { className = '', onRequestClose, title, value, postTypes, hidePostTypesControl, onChange, onUrl } ) {
+export function SearchLinkModal( { className = '', onRequestClose, title, value, postTypes, hidePostTypesControl, onChange, onUrl } ) {
 	const [ url, setUrl ] = useState( '' );
 	const [ text, setText ] = useState( '' );
 	const [ newWindow, setNewWindow ] = useState( false );
@@ -116,7 +116,7 @@ export function SearchUrlModal( { className = '', onRequestClose, title, value, 
 
 		setUrl( newUrl );
 		setText( newText );
-		setSearchTerm( newUrl );
+		setSearchTerm( '' ); // Reset search term.
 		setShowSuggestions( false );
 
 		const changes = {
@@ -173,17 +173,17 @@ export function SearchUrlModal( { className = '', onRequestClose, title, value, 
 			<BaseControl
 				label={ __( 'Search or enter URL' ) }
 				help={ __( 'Start typing to search for posts and pages, or enter a full URL' ) }
-				className="gumponents-search-url-input__search"
+				className="gumponents-search-link-control__search"
 			>
-				<div className="gumponents-search-url-input__search-wrapper">
+				<div className="gumponents-search-link-control__search-wrapper">
 					<TextControl
 						value={ searchTerm }
 						onChange={ handleSearchChange }
 						placeholder={ __( 'Search posts, pages, or enter URL...' ) }
-						className="gumponents-search-url-input__search-input"
+						className="gumponents-search-link-control__search-input"
 					/>
 					{ loading && (
-						<div className="gumponents-search-url-input__loading">
+						<div className="gumponents-search-link-control__loading">
 							<Spinner />
 						</div>
 					) }
@@ -197,23 +197,23 @@ export function SearchUrlModal( { className = '', onRequestClose, title, value, 
 					</Notice>
 				) }
 				{ showSuggestions && suggestions.length > 0 && (
-					<div className="gumponents-search-url-input__suggestions">
+					<div className="gumponents-search-link-control__suggestions">
 						{ suggestions.map( ( suggestion ) => (
 							<button
 								key={ suggestion.id }
 								type="button"
-								className="gumponents-search-url-input__suggestion"
+								className="gumponents-search-link-control__suggestion"
 								onClick={ () => handleSuggestionSelect( suggestion ) }
 							>
-								<div className="gumponents-search-url-input__suggestion-title">
+								<div className="gumponents-search-link-control__suggestion-title">
 									{ suggestion.title }
 								</div>
-								<div className="gumponents-search-url-input__suggestion-meta">
+								<div className="gumponents-search-link-control__suggestion-meta">
 									{ suggestion.type === 'post' && __( 'Post' ) }
 									{ suggestion.type === 'page' && __( 'Page' ) }
 									{ suggestion.subtype && ` • ${ suggestion.subtype }` }
 								</div>
-								<div className="gumponents-search-url-input__suggestion-url">
+								<div className="gumponents-search-link-control__suggestion-url">
 									{ suggestion.url }
 								</div>
 							</button>
@@ -221,7 +221,7 @@ export function SearchUrlModal( { className = '', onRequestClose, title, value, 
 					</div>
 				) }
 				{ showSuggestions && suggestions.length === 0 && ! loading && searchTerm.length >= 3 && (
-					<div className="gumponents-search-url-input__no-results">
+					<div className="gumponents-search-link-control__no-results">
 						{ __( 'No results found. You can still enter the URL manually.' ) }
 					</div>
 				) }
