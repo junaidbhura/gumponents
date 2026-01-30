@@ -1,28 +1,29 @@
 # Windows and Mac files
 [Tt]humbs.db
 .DS_Store
-node_modules
 
-# Root.
+# Root
 /*
-!.bin
 !.github
-!.tests
-!/assets
-!/inc
+!resources
+!src
+!tests
 !.editorconfig
-!.eslintignore
-!.eslintrc.json
+!.eslintrc.js
 !.gitignore
-!.stylelintignore
-!.stylelintrc
+!.php-cs-fixer.dist.php
+!.prettierrc.js
+!.stylelintrc.json
+!.wp-env.json
 !composer.json
 !composer.lock
 !gumponents.php
+!package.json
+!package-lock.json
+!phpcs.xml
+!phpstan.neon
+!phpunit.xml.dist
+!tsconfig.json
+!webpack.config.js
 !LICENSE
 !README.md
-!package-lock.json
-!package.json
-!phpcs.xml
-!phpunit.xml.dist
-!webpack.config.js

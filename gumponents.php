@@ -2,19 +2,22 @@
 /**
  * Plugin Name: Gumponents
  * Description: Essential Gutenberg components for WordPress.
- * Author: Junaid Bhura
- * Author URI: https://junaid.dev
- * Version: 1.2.0
+ * Version: 2.0.0
+ * Text Domain: gumponents
+ * Author: Aysnc
+ * Author URI: https://aysnc.dev
  *
- * @package gumponents
+ * @package aysnc/gumponents
  */
 
-namespace JB\Gumponents;
+declare( strict_types = 1 );
 
-define( 'GUMPONENTS_VERSION', '1.2.0' );
+namespace Aysnc\WordPress\Gumponents;
 
-require_once __DIR__ . '/inc/autoload.php';
-require_once __DIR__ . '/inc/namespace.php';
+// Composer autoloader.
+if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+	require_once __DIR__ . '/vendor/autoload.php';
+}
 
-// Kick it off.
-add_action( 'init', __NAMESPACE__ . '\\setup' );
+// Bootstrap the plugin.
+add_action( 'plugins_loaded', [ Plugin::class, 'bootstrap' ] );

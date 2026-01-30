@@ -1,41 +1,42 @@
 {
-  "name": "junaidbhura/gumponents",
+  "name": "aysnc/gumponents",
   "description": "Essential Gutenberg components for WordPress.",
-  "homepage": "https://github.com/junaidbhura/gumponents",
-  "keywords": [
-    "wordpress",
-    "gutenberg",
-    "react"
-  ],
+  "type": "wordpress-plugin",
+  "license": "MIT",
   "authors": [
     {
-      "name":"Junaid Bhura",
-      "email":"root@junaid.dev",
-      "homepage":"https://junaid.dev"
+      "name": "Aysnc",
+      "homepage": "https://aysnc.dev"
     }
   ],
-  "support" : {
-    "issues": "https://github.com/junaidbhura/gumponents/issues",
-    "source": "https://github.com/junaidbhura/gumponents"
+  "autoload": {
+    "psr-4": {
+      "Aysnc\\WordPress\\Gumponents\\": "src",
+      "Aysnc\\WordPress\\Gumponents\\Tests\\": "tests"
+    }
   },
-  "type": "wordpress-plugin",
   "require": {
-    "composer/installers": "~1.0"
+    "php": "^8.3"
   },
   "require-dev": {
-    "squizlabs/php_codesniffer": "*",
-    "phpunit/phpunit": "^9.6.7",
-    "wp-coding-standards/wpcs": "*",
-    "yoast/phpunit-polyfills": "^1.1.0"
+    "aysnc/wordpress-php-cs-fixer": "^0.3.0",
+    "aysnc/wordpress-phpcs": "^0.1.0",
+    "squizlabs/php_codesniffer": "^3.13.5",
+    "phpstan/phpstan": "^2.1",
+    "roots/wordpress": "*",
+    "phpunit/phpunit": "^9.6",
+    "yoast/phpunit-polyfills": "^2.0",
+    "wp-phpunit/wp-phpunit": "^6.9"
   },
   "scripts": {
-    "set-coding-standards": "phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs",
     "lint": "phpcs",
-    "test": "phpunit"
+    "format": "vendor/bin/php-cs-fixer fix",
+    "static-analysis": "phpstan analyse -c phpstan.neon --memory-limit=512M"
   },
   "config": {
     "allow-plugins": {
-      "composer/installers": true
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "roots/wordpress-core-installer": true
     }
   }
 }

@@ -1,0 +1,61 @@
+name: Lint & Test
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+          tools: composer
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: PHP Coding Standards
+        run: composer lint
+
+      - name: PHP Static Analysis
+        run: composer static-analysis
+
+      - name: TypeScript type checking
+        run: npm run typecheck
+
+      - name: JavaScript lint
+        run: npm run lint:js
+
+      - name: CSS lint
+        run: npm run lint:css
+
+      - name: Build
+        run: npm run build
+
+      - name: Start wp-env
+        run: npm run wp-env start
+
+      - name: PHP Tests
+        run: npm run test:php
+
+      - name: Stop wp-env
+        run: npm run wp-env stop
