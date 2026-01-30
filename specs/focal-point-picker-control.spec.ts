@@ -1,17 +1,9 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
 test.describe( 'FocalPointPickerControl component', () => {
-	test.beforeEach( async ( { admin, page } ) => {
+	test.beforeEach( async ( { admin, editor } ) => {
 		await admin.createNewPost();
-		await page.click( 'role=button[name="Toggle block inserter"i]' );
-		await page.fill(
-			'role=searchbox[name="Search for blocks and patterns"i]',
-			'Test: Focal Point'
-		);
-		await page.click(
-			'role=option[name="Test: Focal Point Picker Control"i]'
-		);
-		await page.click( 'role=button[name="Toggle block inserter"i]' );
+		await editor.insertBlock( { name: 'gumponents-test/focal-point-picker-control' } );
 	} );
 
 	test( 'renders select button when imageUrl is provided', async ( {

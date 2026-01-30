@@ -1,15 +1,9 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
 test.describe( 'SelectImage component', () => {
-	test.beforeEach( async ( { admin, page } ) => {
+	test.beforeEach( async ( { admin, editor } ) => {
 		await admin.createNewPost();
-		await page.click( 'role=button[name="Toggle block inserter"i]' );
-		await page.fill(
-			'role=searchbox[name="Search for blocks and patterns"i]',
-			'Test: Select Image'
-		);
-		await page.click( 'role=option[name="Test: Select Image"i]' );
-		await page.click( 'role=button[name="Toggle block inserter"i]' );
+		await editor.insertBlock( { name: 'gumponents-test/select-image' } );
 	} );
 
 	test( 'renders placeholder in empty state', async ( { page } ) => {

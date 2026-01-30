@@ -1,17 +1,9 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
 test.describe( 'SearchLinkControl component', () => {
-	test.beforeEach( async ( { admin, page } ) => {
+	test.beforeEach( async ( { admin, editor } ) => {
 		await admin.createNewPost();
-		await page.click( 'role=button[name="Toggle block inserter"i]' );
-		await page.fill(
-			'role=searchbox[name="Search for blocks and patterns"i]',
-			'Test: Search Link'
-		);
-		await page.click(
-			'role=option[name="Test: Search Link Control"i]'
-		);
-		await page.click( 'role=button[name="Toggle block inserter"i]' );
+		await editor.insertBlock( { name: 'gumponents-test/search-link-control' } );
 	} );
 
 	test( 'renders select URL button', async ( { page } ) => {

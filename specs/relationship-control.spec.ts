@@ -12,17 +12,9 @@ test.describe( 'RelationshipControl component', () => {
 		await requestUtils.deleteAllPosts();
 	} );
 
-	test.beforeEach( async ( { admin, page } ) => {
+	test.beforeEach( async ( { admin, editor } ) => {
 		await admin.createNewPost();
-		await page.click( 'role=button[name="Toggle block inserter"i]' );
-		await page.fill(
-			'role=searchbox[name="Search for blocks and patterns"i]',
-			'Test: Relationship Control'
-		);
-		await page.click(
-			'role=option[name="Test: Relationship Control"i]'
-		);
-		await page.click( 'role=button[name="Toggle block inserter"i]' );
+		await editor.insertBlock( { name: 'gumponents-test/relationship-control' } );
 	} );
 
 	test( 'renders select button', async ( { page } ) => {

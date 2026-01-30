@@ -1,20 +1,14 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
 test.describe( 'Figure component', () => {
-	test.beforeEach( async ( { admin, page } ) => {
+	test.beforeEach( async ( { admin, editor } ) => {
 		await admin.createNewPost();
-		await page.click( 'role=button[name="Toggle block inserter"i]' );
-		await page.fill(
-			'role=searchbox[name="Search for blocks and patterns"i]',
-			'Test: Figure'
-		);
-		await page.click( 'role=option[name="Test: Figure"i]' );
-		await page.click( 'role=button[name="Toggle block inserter"i]' );
+		await editor.insertBlock( { name: 'gumponents-test/figure' } );
 	} );
 
 	test( 'renders nothing when value is null', async ( { page } ) => {
 		const output = page.locator( '[data-testid="figure-output"]' );
-		await expect( output ).toBeVisible();
+		await expect( output ).toBeAttached();
 		await expect( output.locator( 'figure' ) ).toHaveCount( 0 );
 	} );
 

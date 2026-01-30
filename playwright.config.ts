@@ -1,12 +1,18 @@
 /**
  * Playwright configuration for Gumponents e2e tests.
  */
+import path from 'path';
 import { defineConfig, devices } from '@playwright/test';
 
 const baseURL = 'http://localhost:8889';
+const STORAGE_STATE_PATH = path.join(
+	process.cwd(),
+	'artifacts/storage-states/admin.json'
+);
 
 export default defineConfig( {
 	testDir: './specs',
+	testIgnore: [ '**/setup/**' ],
 	outputDir: './tests/e2e/artifacts',
 	fullyParallel: false,
 	forbidOnly: !! process.env.CI,
@@ -20,8 +26,17 @@ export default defineConfig( {
 	},
 	projects: [
 		{
+			name: 'setup',
+			testDir: './specs/setup',
+			testMatch: '**/*.setup.ts',
+		},
+		{
 			name: 'chromium',
-			use: { ...devices[ 'Desktop Chrome' ] },
+			dependencies: [ 'setup' ],
+			use: {
+				...devices[ 'Desktop Chrome' ],
+				storageState: STORAGE_STATE_PATH,
+			},
 		},
 	],
 	webServer: {

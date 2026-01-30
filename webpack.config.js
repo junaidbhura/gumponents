@@ -4,11 +4,15 @@ const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
 module.exports = [
 	{
 		...defaultConfig,
-		entry: './resources/index.ts',
+		entry: {
+			index: './resources/index.ts',
+		},
 	},
 	{
 		...defaultConfig,
-		entry: './tests/e2e/plugins/gumponents-test-blocks/src/index.ts',
+		entry: {
+			index: './tests/e2e/plugins/gumponents-test-blocks/src/index.ts',
+		},
 		output: {
 			...defaultConfig.output,
 			path: path.resolve(
