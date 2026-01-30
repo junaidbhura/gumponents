@@ -27,3 +27,11 @@
 !webpack.config.js
 !LICENSE
 !README.md
+!ROADMAP.md
+!CLAUDE.md
+!specs
+!playwright.config.ts
+
+# Build outputs
+tests/e2e/plugins/gumponents-test-blocks/build/
+tests/e2e/artifacts/

@@ -1,4 +1,9 @@
 {
   "phpVersion": "8.3",
-  "plugins": ["."]
+  "plugins": ["."],
+  "env": {
+    "tests": {
+      "plugins": [".", "./tests/e2e/plugins/gumponents-test-blocks"]
+    }
+  }
 }
