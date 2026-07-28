@@ -3,7 +3,7 @@ import {
 	DragDropContext,
 	Droppable,
 	Draggable,
-} from 'react-beautiful-dnd';
+} from '@hello-pangea/dnd';
 
 const { __ } = wp.i18n;
 const {
