@@ -15,6 +15,7 @@ node_modules
 !.eslintrc.json
 !.gitignore
 !.npmrc
+!.nvmrc
 !.stylelintignore
 !.stylelintrc
 !composer.json
